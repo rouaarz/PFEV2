@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+.App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 100s linear;
+    }
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  #intro{
+      
+      width:100%;
+      height:80vh;
+      background: url("../../assets/TestHome.png") top center;
+      background-size:cover;
+      position: relative;
+    
+  }
+   h1 {
+    
+    margin: 0;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 56px;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+  }
+  
+   h2 {
+    font-size: 18px;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0;
+    line-height: 1px;
+    margin: 0 0 5px 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #aaaaaa;
+    font-family: "Poppins", sans-serif;
+  }
+  .welcome1{
+    position: relative;
+    top: 35%;
+   
+  }
+  .TS{
+    position: relative;
+    left: 2%;
+  }
+  /*TYPEWRITER */
+  .typewriter  {
+    position: relative;
+    left: 2%;
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: .15em solid orange; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 5 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation: 
+      typing 3.5s steps(40, end),
+      blink-caret .75s step-end infinite;
+     
+  }
+  
+  /* The typing effect */
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+  }
+  .btn-get-started{
+    position: relative;
+    top:45%;
+    left: 2%;
+    font-family: "Raleway", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 10px 35px;
+    border-radius: 50px;
+    transition: 0.5s;
+    margin-top: 30px;
+    border: 2px solid #fff;
+    color: #fff;
+  }
+  .btn-get-started:hover {
+    background: #5fcf80;
+    border: 2px solid #5fcf80;
+  }
+  .About{
+    width: 400px;
+  height: 66px;
+  color: #35363A;
+  margin-left: 40%;
+  margin-right: 5%;
+  }
+  .aboutdesc{
+    position:relative;
+    left: 5%;
+    font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 250;
+  font-size: 35px;
+  line-height: 66px;
+  /* identical to box height */
+  
+  
+  color: #35363A;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05); /* Ombre douce */
+  transition: all 0.1s ease-in-out; /* Animation fluide */
+  }
+
+.aboutdesc:hover {
+    transform: scale(1.02); /* Effet subtil d'agrandissement */
+    color: #1A5276; /* Change légèrement la couleur au survol */
+}
+
+  .Servicesh1{
+    color: #35363A;
+  margin-left: auto;
+  margin-right: auto;
+  }
+  .box1{
+    position: relative;
+  width: 229px;
+  height: 256px;
+  left: 15%;
+  
+  background: #FFFFFF;
+  box-shadow: 0px 4px 5px 5px rgba(176, 176, 176, 0.25);
+  border-radius: 15px;
+  }
+  .box2{
+    position: absolute;
+  width: 229px;
+  height: 256px;
+  left: 40%;
+  top: 52%;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 5px 5px rgba(176, 176, 176, 0.25);
+  border-radius: 15px;
+  }
+  .box3{
+    position: absolute;
+  width: 229px;
+  height: 256px;
+  left: 65%;
+  top: 52%;
+  
+  background: #FFFFFF;
+  box-shadow: 0px 4px 5px 5px rgba(176, 176, 176, 0.25);
+  border-radius: 15px;
+  }
+  .courses{
+   position: relative;
+   left: 30%;
+   top: 5%;
+    width: 85px;
+  height: 85px;
+  }
+  .TC{
+    position: relative;
+   left: 2%;
+   top: 20%;
+   text-align: center;
+   font-family: 'Poppins';
+  font-style: normal;
+  }
+  .TT{
+    position: relative;
+    left: 2%;
+    top: 25%;
+    text-align: center;
+    font-family: 'Poppins';
+   font-style: normal;
+  }
+  
+ 
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  
+  
+  .accordion {
+    width: 90%;
+    max-width: 1000px;
+    margin: 2rem auto;
+  }
+  .accordion-item {
+    background-color: #fff;
+    color: #111;
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.25);
+  }
+  .accordion-item-header {
+    padding: 0.5rem 3rem 0.5rem 1rem;
+    min-height: 3.5rem;
+    line-height: 1.25rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+  }
+  .accordion-item-header::after {
+    content: "\002B";
+    font-size: 2rem;
+    position: absolute;
+    right: 1rem;
+  }
+  .accordion-item-header.active::after {
+    content: "\2212";
+  }
+  .accordion-item-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+  .accordion-item-body-content {
+    padding: 1rem;
+    line-height: 1.5rem;
+    border-top: 1px solid;
+    border-image: linear-gradient(to right, transparent, #34495e, transparent) 1;
+  }
+  
+  @media(max-width:767px) {
+    html {
+      font-size: 14px;
+    }
+  }
