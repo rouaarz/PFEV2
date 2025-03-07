@@ -1,0 +1,26 @@
+<div class="SignIn" id="intro">
+    <p class="sign">Sign in to <br/> 
+        <span class="account">Your Account</span>
+    </p>
+    <p class="signdesc">
+        Create an account and discover the potential of the services you use.
+    </p>
+
+    <div class="container" id="signinbx">
+        <p class="welcome">Welcome to <span class="Test">TESTINY</span></p> 
+        <p class="Sin">Sign in</p>
+
+        <!-- Message d'erreur général -->
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+
+        <label for="staticEmail" class="form-label" id="label1">Username</label>
+        <input type="text" class="form-control" id="staticEmail" required placeholder="Enter Your username" #usernameRef>
+
+        <label for="inputPassword" class="form-label" id="label2">Password</label>
+        <input type="password" class="form-control" id="inputPassword" required placeholder="Enter Password" #passwordRef>
+
+        <button (click)="log($event)" type="submit" class="btn btn-primary log" id="signbtn">Login</button>
+    </div>
+</div>

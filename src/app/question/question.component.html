@@ -1,1 +1,95 @@
-<p>question works!</p>
+<div class="container">
+  <h2>Gestion des Questions</h2>
+
+  <form [formGroup]="questionForm" (ngSubmit)="submitQuestion()">
+    <label>Énoncé :</label>
+    <input type="text" formControlName="enonce" required />
+
+    <label>Type de question :</label>
+    <select formControlName="type">
+      <option value="QCM">QCM</option>
+      <option value="Code">Code</option>
+      <option value="Text">Texte libre</option>
+    </select>
+
+    <label>Niveau :</label>
+    <select formControlName="niveau">
+      <option value="FACILE">Facile</option>
+      <option value="MOYEN">Moyen</option>
+      <option value="DIFFICILE">Difficile</option>
+    </select>
+
+    <!-- Gestion des réponses pour QCM -->
+    <div *ngIf="isQCM">
+      <h3>Options de réponse :</h3>
+      <div formArrayName="answerOptions">
+        <div *ngFor="let option of answerOptions.controls; let i = index" [formGroupName]="i">
+          <input type="text" formControlName="text" placeholder="Réponse" required />
+          <input type="checkbox" formControlName="isCorrect" class="checkbox"/> Correcte ?
+          <button type="button" (click)="removeAnswerOption(i)" *ngIf="answerOptions.length > 1">🗑</button>
+        </div>
+      </div>
+      <button type="button" (click)="addAnswerOption()">➕ Ajouter une option</button>
+    </div>
+
+    <!-- Gestion des réponses en Code -->
+    <div *ngIf="isCode">
+      <h3>Réponses en Code :</h3>
+      <button type="button" (click)="addCodeAnswer()">➕ Ajouter une réponse</button>
+
+      <div formArrayName="codeAnswers">
+        <div *ngFor="let codeAnswer of codeAnswers.controls; let i = index" [formGroupName]="i">
+          <label>Code :</label>
+          <ace-editor #editor formControlName="codeSnippet" 
+          [options]="editorOptions" 
+          style="height: 300px; width: 100%;">
+        </ace-editor>
+
+          <label>Langage :</label>
+          <select formControlName="language">
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+            <option value="php">PHP</option>
+          </select>
+
+          <button type="button" (click)="runCode(i)">▶ Exécuter</button>
+          <button type="button" (click)="removeCodeAnswer(i)" *ngIf="codeAnswers.length > 1">🗑 Supprimer</button>
+
+          <pre class="output">Résultat : {{ executionResults[i] || "Aucun résultat encore." }}</pre>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit">✅ Enregistrer</button>
+    <button type="button" (click)="resetForm()">❌ Annuler</button>
+  </form>
+
+  <hr />
+
+  <h3>Liste des Questions</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Énoncé</th>
+        <th>Type</th>
+        <th>Niveau</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let question of questions">
+        <td>{{ question.enonce }}</td>
+        <td>{{ question.type }}</td>
+        <td>{{ question.niveau }}</td>
+        <td>
+          <button (click)="editQuestion(question)">✏ Modifier</button>
+          <button (click)="deleteQuestion(question.id)">🗑 Supprimer</button>
+          <button >➕ Assign to test</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

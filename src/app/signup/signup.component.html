@@ -1,0 +1,49 @@
+<div class="SignUp" id="intro">
+  <p class="sign">Sign Up to <br /> 
+    <span class="account">Our Website</span>
+  </p>
+  <p class="signdesc">Create an account and discover the potential of the services you use.</p>
+
+  <div class="container" id="signinbx">
+    <p class="welcome">Welcome to <span class="Test">TESTINY</span></p> 
+    <p class="Sup">Sign Up</p>
+    <p class="NA1">Have an Account?</p>
+    <a routerLink="/signin" class="signUp">Sign in</a>
+
+    <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+      <label for="username">Nom d'utilisateur</label>
+      <input id="username" formControlName="username" type="text" required />
+      <p *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched">
+        ❌ Le nom d'utilisateur doit contenir entre 3 et 20 caractères.
+      </p>
+    
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" required />
+      <p *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+        ❌ Veuillez entrer une adresse email valide.
+      </p>
+    
+      <label for="password">Mot de passe</label>
+      <input id="password" formControlName="password" type="password" required />
+      <p *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+        ❌ Le mot de passe doit contenir au moins 6 caractères.
+      </p>
+    
+      <label for="confirmPassword">Confirmer le mot de passe</label>
+      <input id="confirmPassword" formControlName="confirmPassword" type="password" required />
+      <p *ngIf="signupForm.hasError('passwordMismatch')">
+        ❌ Les mots de passe ne correspondent pas.
+      </p>
+    
+      <label for="role">Rôle</label>
+      <select id="role" formControlName="role">
+        <option value="developpeur">Développeur</option>
+        <option value="chefprojet">Chef de projet</option>
+      </select>
+    
+      <button type="submit" [disabled]="signupForm.invalid">S'inscrire</button>
+    </form>
+    
+    <!-- Affichage du message d'erreur global -->
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    

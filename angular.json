@@ -32,7 +32,9 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [ "node_modules/aos/dist/aos.js",
-          "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
+          "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+          "node_modules/ace-builds/src-min-noconflict/ace.js",
+          "node_modules/ace-builds/src-min-noconflict/ext-language_tools.js"]
           },
           "configurations": {
             "production": {

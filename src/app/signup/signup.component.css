@@ -1,0 +1,564 @@
+#signinbx{
+    position: absolute;
+width: 539px;
+height: 741px;
+left: 35%;
+top: 10%;
+
+background: #FFFFFF;
+box-shadow: 0px 4px 35px rgba(0, 0, 0, 0.08);
+border-radius: 40px;
+}
+.welcome{
+    position: static;
+width: 250px;
+height: 32px;
+left: 5%;
+top: 5%;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 21px;
+line-height: 32px;
+/* identical to box height */
+
+
+color: #000000;
+}
+.Test{
+    color: #34A853;
+}
+.Sin{
+    position: absolute;
+width: 182px;
+height: 83px;
+left: 5%;
+top: 10%;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 55px;
+line-height: 82px;
+color: #000000;
+}
+.NA{
+    position: absolute;
+    width: 86px;
+    height: 20px;
+    right: 2%;
+    top: 5%;
+    
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    /* identical to box height */
+    
+    
+    color: #8D8D8D;
+}
+.signUp{
+    position: absolute;
+width: 150px;
+height: 20px;
+right: -10%;
+top:8%;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 13px;
+line-height: 20px;
+/* identical to box height */
+
+
+color: #34A853;
+
+}
+.Sup{
+    position:static;
+width: 220px;
+height: 83px;
+left: 5%;
+top: 7%;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 55px;
+line-height: 82px;
+/* identical to box height */
+
+
+color: #000000;
+}
+.NA1{
+    position: absolute;
+    width: 122px;
+    height: 20px;
+    right: 2%;
+    top: 5%;
+    
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    /* identical to box height */
+    
+    
+    color: #8D8D8D;
+}
+#staticEmail1{
+    box-sizing: border-box;
+
+    position: absolute;
+    left: 5%;
+    
+    top: 25%;
+   width: 451px ;
+   height: 57px;
+    
+    background: #FFFFFF;
+    border: 1px solid #4285F4;
+    border-radius: 9px;
+}
+#label1v0{
+    position: absolute;
+left: 5%;
+
+top: 20%;
+width: 306px;
+height: 24px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+color: #000000;
+}
+#labelname{
+    position: absolute;
+left: 5%;
+
+top: 35%;
+
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #000000;
+}
+#name1{
+    box-sizing: border-box;
+width: 216px;
+height: 57px;
+position: absolute;
+left: 5%;
+
+top: 40%;
+
+
+background: #FFFFFF;
+border: 1px solid #ADADAD;
+border-radius: 9px;
+}
+#labellastname{
+    position: absolute;
+right: 9%;
+
+top: 35%;
+width: 216px;
+height:24px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #000000;
+}
+#lastname{
+    box-sizing: border-box;
+    width: 216px;
+    height: 57px;
+position: absolute;
+right: 10%;
+
+top: 40%;
+
+
+background: #FFFFFF;
+border: 1px solid #ADADAD;
+border-radius: 9px;
+}
+#label2v0{
+    position: absolute;
+left: 5%;
+
+top: 50%;
+
+width: 306px;
+height: 24px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #000000;
+
+}
+#inputPassword2{
+    box-sizing: border-box;
+    width: 451px ;
+    height: 57px;
+position: absolute;
+left: 5%;
+
+top: 55%;
+
+
+background: #FFFFFF;
+border: 1px solid #ADADAD;
+border-radius: 9px;
+}
+#confirm{
+    position: absolute;
+left: 5%;
+top: 65%;
+
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #000000;
+
+}
+#password-confirm{
+    box-sizing: border-box;
+width: 451px;
+height: 57px;
+position: absolute;
+left: 5%;
+top: 70%;
+
+
+background: #FFFFFF;
+border: 1px solid #ADADAD;
+border-radius: 9px;
+}
+#serviceprovider{
+    box-sizing: border-box;
+width: 451px;
+height: 57px;
+position: absolute;
+left: 5%;
+
+top: 80%;
+
+background: #FFFFFF;
+border: 1px solid #ADADAD;
+border-radius: 9px;
+
+
+}
+#serviceprovider1{
+    box-sizing: border-box;
+width: 451px;
+height: 57px;
+position: absolute;
+left: 5%;
+
+top: 85%;
+
+background: #FFFFFF;
+border: 1px solid #ADADAD;
+border-radius: 9px;
+
+
+}
+
+#signupbtn{
+    position: absolute;
+    width: 451px;
+    height: 54px;
+    left: 5%;
+    top: 90%;
+    
+    background: #0163E0;
+    border-radius: 10px;
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #FFFFFF;
+
+}
+#intro{
+    
+    width:100%;
+    height:80vh;
+    background: url("../../assets/TestHome.png") top center;
+    background-size:cover;
+    position: relative;
+  
+}
+.sign{
+    position: absolute;
+width: 200px;
+height: 51px;
+left: 5%;
+top: 25%;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 34px;
+line-height: 51px;
+/* identical to box height */
+
+
+color: #FFFFFF;
+}
+.account{
+    position: absolute;
+width: 246px;
+height: 36px;
+left: 2%;
+top: 80%;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 36px;
+/* identical to box height */
+
+
+color: #FFFFFF;
+}
+.signdesc{
+    position: absolute;
+width: 311px;
+height: 115px;
+left: 5%;
+top:45%;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 20px;
+
+color: #FFFFFF;
+}
+#label1{
+    position: absolute;
+left: 5%;
+
+top: 30%;
+width: 306px;
+height: 24px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #000000;
+}
+#staticEmail{
+    box-sizing: border-box;
+    position: absolute;
+    left: 5%;
+    top: 38%;
+   width: 451px ;
+   height: 57px;
+    background: #FFFFFF;
+    border: 1px solid #4285F4;
+    border-radius: 9px;
+}
+#label2{
+    position: absolute;
+left: 5%;
+
+top: 52%;
+
+width: 306px;
+height: 24px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #000000;
+
+}
+#inputPassword{
+    box-sizing: border-box;
+    width: 451px ;
+    height: 57px;
+position: absolute;
+left: 5%;
+
+top: 58%;
+
+
+background: #FFFFFF;
+border: 1px solid #ADADAD;
+border-radius: 9px;
+}
+.remember{
+    position: absolute;
+width: 130px;
+height: 20px;
+left: 5%;
+top: 70%;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 20px;
+/* identical to box height */
+
+
+color: #000000;
+
+}
+.remlabel{
+    width: 108px;
+}
+#signbtn{
+    position: absolute;
+width: 451px;
+height: 54px;
+left: 6%;
+top: 87%;
+
+background: #0163E0;
+border-radius: 10px;
+
+}
+/* Conteneur principal */
+#signinbx {
+    width: 90%;
+    max-width: 450px;
+    margin: 5% auto;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 30px;
+    text-align: left;
+}
+
+/* Titres */
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.signin-link {
+    float: right;
+    font-size: 14px;
+    font-weight: 600;
+    color: #34A853;
+    text-decoration: none;
+}
+
+.signin-link:hover {
+    text-decoration: underline;
+}
+
+/* Labels */
+label {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+/* Inputs */
+input, select {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Input group pour nom & prénom */
+.name-group {
+    display: flex;
+    gap: 10px;
+}
+
+.name-group input {
+    flex: 1;
+}
+
+/* Bouton de soumission */
+button {
+    width: 100%;
+    height: 50px;
+    background: #0163E0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #014ab3;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    #signinbx {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .name-group {
+        flex-direction: column;
+    }
+}
