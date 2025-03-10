@@ -1,0 +1,12 @@
+<div class="score-container">
+    <h2>Score du test</h2>
+    
+    <div *ngIf="score !== null" class="score-value">
+      <p>Votre score : <strong>{{ score }}%</strong></p>
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+</div>
+  

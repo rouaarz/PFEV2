@@ -11,7 +11,7 @@ export class NavbarAfterLoginComponent {
   constructor(private router: Router) {}
 
   logout(): void {
-    localStorage.removeItem('id');
+    sessionStorage.clear();
     this.router.navigate(['/']); // Redirige vers la page d'accueil après la déconnexion
   }
 }

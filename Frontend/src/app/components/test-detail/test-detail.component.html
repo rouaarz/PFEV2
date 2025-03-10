@@ -1,0 +1,19 @@
+<div *ngIf="loading">Loading test details...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="testDetails">
+  <h2>Test Details</h2>
+  <p><strong>Title:</strong> {{ testDetails.titre }}</p>
+  <p><strong>Description:</strong> {{ testDetails.description }}</p>
+  <p><strong>Duration:</strong> {{ testDetails.duree ? testDetails.duree + ' min' : 'Unlimited' }}</p>
+  <p><strong>Type:</strong> {{ testDetails.type }}</p>
+  <p><strong>Status:</strong> {{ testDetails.statut }}</p>
+  <p><strong>Created on:</strong> {{ testDetails.dateCreation | date:'dd/MM/yyyy HH:mm' }}</p>
+
+  <h3>Questions:</h3>
+  <ul>
+    <li *ngFor="let question of testDetails.testQuestions; let i = index">
+      {{ i + 1 }}. {{ question.questionText }} - ({{ question.points }} points)
+    </li>
+  </ul>
+</div>

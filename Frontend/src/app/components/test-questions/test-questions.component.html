@@ -1,0 +1,125 @@
+<!-- 
+<div *ngIf="questions.length > 0; else noQuestions">
+  <h2>Questions du Test</h2>
+  
+  <div *ngFor="let question of questions" class="question-card">
+    <h3>{{ question.enonce }}</h3>
+    <p><strong>Niveau :</strong> {{ question.niveau }}</p>
+
+    <div *ngIf="question.type === 'QCM'">
+      <div *ngFor="let option of question.answerOptions" class="answer-option">
+        <input 
+          type="checkbox" 
+          [id]="'option_' + option.id"
+          [(ngModel)]="option.selected" 
+          [value]="option.id" 
+          name="qcmQuestion_{{ question.id }}" 
+        />
+        <label [for]="'option_' + option.id">{{ option.text }}</label>
+      </div>
+    </div>
+
+    <div *ngIf="question.type === 'Code'" class="code-question">
+      <textarea placeholder="Écrivez votre code ici..."></textarea>
+    </div>
+
+    <div *ngIf="question.type === 'Text'" class="text-question">
+      <textarea placeholder="Votre réponse ici..."></textarea>
+    </div>
+
+    <div class="card-footer">
+      <button >Soumettre</button>
+
+    </div>
+  </div>
+</div>
+hnee less question lkolyodhohrou fared page 
+<ng-template #noQuestions>
+  <p>Aucune question disponible pour ce test.</p>
+</ng-template> -->
+<div class="page-header">
+  <h1 class="title">{{ testTitle }}</h1>
+</div>
+
+<!-- Timer de compte à rebours -->
+<div class="countdown-timer">
+  <div class="time-box">
+    <span class="time-number">{{ remainingHours }}</span>
+    <span class="time-label">Heures</span>
+  </div>
+  <span class="separator">:</span>
+  <div class="time-box">
+    <span class="time-number">{{ remainingMinutes }}</span>
+    <span class="time-label">Minutes</span>
+  </div>
+  <span class="separator">:</span>
+  <div class="time-box">
+    <span class="time-number">{{ remainingSeconds }}</span>
+    <span class="time-label">Secondes</span>
+  </div>
+</div>
+<div class="progress-bar-container">
+  <div class="progress-bar" 
+       [style.width]="(currentQuestionIndex + 1) / questions.length * 100 + '%'">
+  </div>
+</div>
+<!-- Question -->
+<div class="question-container">
+  <h3 class="question-title">{{ questions[currentQuestionIndex]?.enonce }}</h3>
+  <p class="question-level">{{ questions[currentQuestionIndex]?.niveau }}</p>
+
+  <!-- QCM Question -->
+  <!-- <div *ngIf="questions[currentQuestionIndex]?.type === 'QCM'" class="options-container">
+    <div *ngFor="let option of questions[currentQuestionIndex]?.answerOptions" class="option">
+      <input type="checkbox" 
+       (change)="toggleSelection(option.id, $event)" 
+       [checked]="selectedOptionIds.includes(option.id)"
+       [id]="'option_' + option.id"
+       name="qcmQuestion_{{ questions[currentQuestionIndex].id }}" />
+
+      <label [for]="'option_' + option.id">{{ option?.text }}</label>
+    </div>
+    
+  </div> -->
+  <div *ngIf="questions[currentQuestionIndex]?.type === 'QCM'" class="options-container">
+    <div *ngFor="let option of questions[currentQuestionIndex]?.answerOptions" class="option">
+      <input type="checkbox" 
+             (change)="toggleSelection(option.id, $event)" 
+             [checked]="isChecked(questions[currentQuestionIndex]?.id, option.id)" 
+             [id]="'option_' + option.id"
+             name="qcmQuestion_{{ questions[currentQuestionIndex].id }}" />
+  
+      <label [for]="'option_' + option.id">{{ option?.text }}</label>
+    </div>
+  </div>
+  
+  <!-- Text Question -->
+  <div *ngIf="questions[currentQuestionIndex]?.type === 'Text'" class="text-container">
+    <textarea placeholder="Votre réponse ici..." (input)="markAnswered()"></textarea>
+  </div>
+  <div *ngIf="questions[currentQuestionIndex]?.type === 'Code'" class="code-question">
+    <textarea placeholder="💻 Écrivez votre code ici..." (input)="markAnswered()"></textarea>
+  </div>
+  
+</div>
+
+<div class="navigation-buttons">
+  <!-- Bouton Précédente -->
+  <button class="btn prev-btn" 
+          (click)="previousQuestion()" 
+          [disabled]="currentQuestionIndex === 0"
+          [ngClass]="{'disabled-btn': currentQuestionIndex === 0}">
+    Précédente
+  </button>
+
+  <button *ngIf="currentQuestionIndex < questions.length - 1" 
+        class="btn next-btn" 
+        (click)="nextQuestion()" 
+        [disabled]="!isAnswered">Envoyer</button>
+  <button *ngIf="isLastQuestion()" (click)="terminerTest()" class="btn submit-btn ">
+    terminer
+  </button>
+</div>
+<ng-template #noQuestions>
+  <p>Aucune question disponible pour ce test.</p>
+</ng-template>
