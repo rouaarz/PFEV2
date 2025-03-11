@@ -35,48 +35,67 @@ export class SigninComponent implements AfterViewInit {
       alert("⚠️ Veuillez remplir tous les champs.");
       return;
     }
-  
+
     // this.authService.login({ username, password }).subscribe({
     //   next: (response) => {
-    //     const token = response.accessToken; // Récupération du token
-    //     const developpeurId = response.developpeurId; // Vérifier s'il est retourné
+    //     console.log("Réponse de l'API :", response);  // Vérifiez la structure de la réponse
+    //     const token = response.accessToken;
+    //     const developpeurId = response.id; 
     //     if (developpeurId) {
     //       localStorage.setItem('developpeurId', developpeurId.toString());
-    //       console.log("developpeurId saved:", developpeurId); // Vérification
+    //       console.log("developpeurId saved:", developpeurId);
     //     } else {
     //       console.warn("⚠️ developpeurId manquant dans la réponse !");
     //     }
     //     if (token) {
-    //       localStorage.setItem('accessToken', token); // Stocker le token
-    //       console.log("Token saved:", token); // Vérification
+    //       localStorage.setItem('accessToken', token);
+    //       console.log("Token saved:", token);
     //       alert("✅ Connexion réussie ! Bienvenue 🎉");
-    //       this.router.navigate(['/tests']); // Redirection
+    //       this.router.navigate(['/tests']);
     //     } else {
     //       alert("❌ Token manquant dans la réponse.");
     //     }
     //   },
     //   error: (err: HttpErrorResponse) => {
     //     console.error('Erreur de connexion:', err);
-    //     // Gestion des erreurs
     //     alert("❌ Échec de la connexion, veuillez réessayer.");
     //   }
     // });
+    
     this.authService.login({ username, password }).subscribe({
       next: (response) => {
-        console.log("Réponse de l'API :", response);  // Vérifiez la structure de la réponse
+        console.log("Réponse de l'API :", response); // Pour debug
+    
         const token = response.accessToken;
-        const developpeurId = response.id; 
+        const developpeurId = response.id;
+        const roles = response.roles; // ⚠️ Vérifie que ce champ existe dans ta réponse
+    
         if (developpeurId) {
           localStorage.setItem('developpeurId', developpeurId.toString());
-          console.log("developpeurId saved:", developpeurId);
-        } else {
-          console.warn("⚠️ developpeurId manquant dans la réponse !");
         }
+    
         if (token) {
           localStorage.setItem('accessToken', token);
-          console.log("Token saved:", token);
-          alert("✅ Connexion réussie ! Bienvenue 🎉");
-          this.router.navigate(['/tests']);
+    
+          if (roles && Array.isArray(roles)) {
+            localStorage.setItem('roles', JSON.stringify(roles)); // Si besoin plus tard
+    
+            // ✅ Redirection selon le rôle
+            if (roles.includes('ROLE_ADMIN') || roles.includes('ROLE_CHEF')) {
+              alert("✅ Connexion réussie en tant qu'ADMIN ou CHEF !");
+              this.router.navigate(['/Question']);
+            } else if (roles.includes('ROLE_DEVELOPPEUR')) {
+              alert("✅ Connexion réussie en tant que DEVELOPPEUR !");
+              this.router.navigate(['/tests']);
+            } else {
+              alert("⚠️ Rôle non reconnu, redirection par défaut.");
+              this.router.navigate(['/']); // Par défaut
+            }
+    
+          } else {
+            alert("❌ Rôle utilisateur introuvable !");
+          }
+    
         } else {
           alert("❌ Token manquant dans la réponse.");
         }
@@ -86,7 +105,6 @@ export class SigninComponent implements AfterViewInit {
         alert("❌ Échec de la connexion, veuillez réessayer.");
       }
     });
-    
     
   }
   

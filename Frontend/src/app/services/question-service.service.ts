@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Question } from '../models/Question';
 
@@ -20,8 +20,14 @@ export class QuestionService {
     return this.http.get<Question>(`${this.apiUrl}/${id}`);
   }
 
-  addQuestion(question: Question): Observable<Question> {
-    return this.http.post<Question>(`${this.apiUrl}/add`, question);
+  addQuestion(question: Question, token: string): Observable<Question> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    // return this.http.post<Question>(`${this.apiUrl}/add`, question);
+    return this.http.post<Question>(`${this.apiUrl}/add`, question, {
+      headers: headers,
+      responseType: 'json'  // Ajoute cette ligne pour t'assurer que la réponse est traitée comme du JSON
+    });
   }
 
   updateQuestion(id: number, question: Question): Observable<Question> {

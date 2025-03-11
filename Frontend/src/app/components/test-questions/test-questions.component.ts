@@ -46,9 +46,16 @@ export class TestQuestionsComponent implements OnInit {
   constructor(private testService: TestService,private router: Router, private route: ActivatedRoute,private http: HttpClient) { }
 
   ngOnInit(): void {
+    const token = localStorage.getItem('accessToken');
+  if (!token) {
+    alert('⚠ Vous devez être connecté pour accéder au test.');
+    this.router.navigate(['/signin']);
+    return; // Arrêter l'exécution
+  }
     this.loadSavedResponses();
     this.testId = Number(this.route.snapshot.paramMap.get('testId'));
-   
+    this.selectedOptionIds = this.responses[this.questions[this.currentQuestionIndex]?.id] || [];
+    this.markAnswered();
     const storedId = localStorage.getItem('developpeurId');
     if (!storedId) {
       console.error("❌ developpeurId est undefined !");
@@ -62,6 +69,8 @@ export class TestQuestionsComponent implements OnInit {
       next: (data) => {
         this.questions = data;
         console.log('Questions :', this.questions);
+        this.selectedOptionIds = this.responses[this.questions[this.currentQuestionIndex]?.id] || [];
+        this.markAnswered();
       },
       error: (error) => {
         console.error('Erreur lors du chargement des questions :', error);
@@ -154,7 +163,9 @@ export class TestQuestionsComponent implements OnInit {
     }
     alert("Test terminé ! Vos réponses ont été envoyées.");
     this.enregistrerReponse(this.questions[this.currentQuestionIndex].id, this.selectedOptionIds);
+
     this.router.navigate(['/test', this.testId, 'score', this.developpeurId]);
+    localStorage.removeItem('responses');
 
   }
   nextQuestion() {
@@ -171,8 +182,10 @@ export class TestQuestionsComponent implements OnInit {
       this.terminerTest();
     } else if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
-      this.isAnswered = false; // Réinitialise pour la nouvelle question
-      this.selectedOptionIds = []; // Réinitialiser la sélection pour la nouvelle question
+      this.selectedOptionIds = this.responses[this.questions[this.currentQuestionIndex].id] || []; // ✅ Charger les réponses enregistrées
+    this.markAnswered(); 
+      // this.isAnswered = false; // Réinitialise pour la nouvelle question
+      // this.selectedOptionIds = []; // Réinitialiser la sélection pour la nouvelle question
     }
   }
   
@@ -183,7 +196,7 @@ export class TestQuestionsComponent implements OnInit {
   
     if (!token) {
       alert('Vous devez être connecté pour soumettre vos réponses.');
-      this.router.navigate(['/login']); // Rediriger vers la page de login si pas de token
+      this.router.navigate(['/signin']); // Rediriger vers la page de login si pas de token
       return;
     }
   
