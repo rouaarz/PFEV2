@@ -155,4 +155,18 @@ export class ScoreComponent implements OnInit {
       },
     });
   }
+  calculateScore(testId: number) {
+    this.scoreService.calculateScore(testId, this.token).subscribe({
+      next: (response) => {
+        if (response.status === 'success') {
+          this.score = response.score;
+        } else {
+          this.errorMessage = response.message;
+        }
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message || 'Erreur lors du calcul du score';
+      }
+    });
+  }
 }

@@ -76,6 +76,14 @@ body {
   margin: 0;
   padding: 0;
 }
+.almost-done {
+  stroke: red !important;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.5; }
+}
 
 /* En-tête */
 .page-header {

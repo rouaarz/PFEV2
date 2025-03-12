@@ -66,4 +66,9 @@ export class ScoreService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<any>(`${this.apiUrl}/${testId}/${developpeurId}`, { headers });
   }
+  // Calculer le score d'un test donné
+  calculateScore(testId: number, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(`${this.apiUrl}/calculer/${testId}`, { headers });
+  }
 }

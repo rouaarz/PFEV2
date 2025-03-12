@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms'; // <-- Ajoute cette ligne
 import { HttpClient,HTTP_INTERCEPTORS,HttpHeaders  } from '@angular/common/http';  // Assure-toi que c'est bien importé
 import { Router } from '@angular/router'; // Importe le Router
 import { AuthInterceptor } from '../../interceptors/auth.interceptor'; // Importer l'intercepteur
+import { ScoreService } from '../../services/score.service';
 
 @Component({
   selector: 'app-test-questions',
@@ -32,6 +33,8 @@ export class TestQuestionsComponent implements OnInit {
   selectedOptionIds: number[] = [];  // Liste des options sélectionnées
   developpeurId!: number; // Valeur constante pour l'ID du développeur
   responses: { [key: number]: number[] } = {}; // Stocke les réponses par question
+  testTermine: boolean = false;
+  token!: string | null; // Ajoute cette ligne
 
   totalTime!: number ; // Temps total en secondes
   remainingTime: number = this.totalTime; // Temps restant
@@ -42,12 +45,14 @@ export class TestQuestionsComponent implements OnInit {
   remainingHours: number = 0;
   remainingMinutes: number = 0;
   remainingSeconds: number = 0;
-
-  constructor(private testService: TestService,private router: Router, private route: ActivatedRoute,private http: HttpClient) { }
+  score: number | null = null;
+  errorMessage: string | null = null;
+  constructor(private scoreService: ScoreService, private testService: TestService,private router: Router, private route: ActivatedRoute,private http: HttpClient) { }
 
   ngOnInit(): void {
-    const token = localStorage.getItem('accessToken');
-  if (!token) {
+    // const token = localStorage.getItem('accessToken');
+    this.token = localStorage.getItem('accessToken') ?? ''; // Si null, remplace par une chaîne vide
+    if (!this.token) {
     alert('⚠ Vous devez être connecté pour accéder au test.');
     this.router.navigate(['/signin']);
     return; // Arrêter l'exécution
@@ -113,38 +118,99 @@ export class TestQuestionsComponent implements OnInit {
     });
   }
   // Fonction de mise à jour du timer
+  // updateTimer() {
+  //   this.remainingTime--;
+  //   this.remainingHours = Math.floor(this.remainingTime / 3600); // Calcul des heures restantes
+  //   this.remainingMinutes = Math.floor((this.remainingTime % 3600) / 60); // Calcul des minutes restantes
+  //   this.remainingSeconds = this.remainingTime % 60; // Calcul des secondes restantes
+
+  //   const timerElement = document.querySelector('.timer-text');
+  //   const progressCircle = document.querySelector('.timer-progress') as SVGCircleElement;
+
+  //   if (timerElement && progressCircle) {
+  //     timerElement.textContent = `${this.remainingHours}:${this.remainingMinutes}:${this.remainingSeconds}`;
+  
+  //     // Calcul du pourcentage restant
+  //     const offset = (440 * this.remainingTime) / this.totalTime;
+  //     progressCircle.style.strokeDashoffset = offset.toString();
+  
+  //     // Ajouter la classe 'almost-done' quand il reste moins de 10 secondes
+  //     if (this.remainingTime <= 10) {
+  //       progressCircle.classList.add('almost-done');
+  //     } else {
+  //       progressCircle.classList.remove('almost-done');
+  //     }
+  
+  //     // Arrêter le timer quand le temps est écoulé
+  //     if (this.remainingTime <= 0) {
+  //       clearInterval(this.timerInterval);
+  //       alert('⏰ Le temps est écoulé ! Le test va être soumis automatiquement.');
+  //       this.terminerTest();
+
+  //     }
+  //   }
+  // }
   updateTimer() {
-    this.remainingTime--;
-    this.remainingHours = Math.floor(this.remainingTime / 3600); // Calcul des heures restantes
-    this.remainingMinutes = Math.floor((this.remainingTime % 3600) / 60); // Calcul des minutes restantes
-    this.remainingSeconds = this.remainingTime % 60; // Calcul des secondes restantes
-
-    const timerElement = document.querySelector('.timer-text');
-    const progressCircle = document.querySelector('.timer-progress') as SVGCircleElement;
-
-    if (timerElement && progressCircle) {
-      timerElement.textContent = `${this.remainingHours}:${this.remainingMinutes}:${this.remainingSeconds}`;
+    if (this.remainingTime > 0) {
+      this.remainingTime--;
+      this.remainingHours = Math.floor(this.remainingTime / 3600);
+      this.remainingMinutes = Math.floor((this.remainingTime % 3600) / 60);
+      this.remainingSeconds = this.remainingTime % 60;
   
-      // Calcul du pourcentage restant
-      const offset = (440 * this.remainingTime) / this.totalTime;
-      progressCircle.style.strokeDashoffset = offset.toString();
+      const timerElement = document.querySelector('.timer-text');
+      const progressCircle = document.querySelector('.timer-progress') as SVGCircleElement;
   
-      // Ajouter la classe 'almost-done' quand il reste moins de 10 secondes
-      if (this.remainingTime <= 10) {
-        progressCircle.classList.add('almost-done');
-      } else {
-        progressCircle.classList.remove('almost-done');
+      if (timerElement && progressCircle) {
+        timerElement.textContent = `${this.remainingHours}:${this.remainingMinutes}:${this.remainingSeconds}`;
+        const offset = (440 * this.remainingTime) / this.totalTime;
+        progressCircle.style.strokeDashoffset = offset.toString();
+  
+        if (this.remainingTime <= 10) {
+          progressCircle.classList.add('almost-done');
+        } else {
+          progressCircle.classList.remove('almost-done');
+        }
       }
+    } else {
+      clearInterval(this.timerInterval); // Stop le timer
+      alert('⏰ Le temps est écoulé ! Calcul du score...');
   
-      // Arrêter le timer quand le temps est écoulé
-      if (this.remainingTime <= 0) {
-        clearInterval(this.timerInterval);
-        alert('Le temps est écoulé !');
-        this.submitTest();
-      }
+      // Lancer le calcul du score
+      this.onFinishTest();
+  
+      // Attendre un peu avant la redirection (ex: 2 secondes pour s’assurer que le score est bien récupéré)
+      setTimeout(() => {
+        this.terminerTest();
+      }, 2000); 
     }
   }
-
+  
+  onFinishTest() {
+    if (!this.token) {
+      this.errorMessage = "Erreur : Token manquant.";
+      return;
+    }
+  
+    this.scoreService.calculateScore(this.testId, this.token).subscribe({
+      next: (response) => {
+        if (response.status === 'success') {
+          this.score = response.score;
+          console.log("✅ Score calculé :", this.score);
+  
+          // Une fois le score récupéré, terminer le test proprement
+          this.terminerTest();
+        } else {
+          this.errorMessage = response.message;
+        }
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message || 'Erreur lors du calcul du score';
+        console.error("❌ Erreur lors du calcul du score :", this.errorMessage);
+      }
+    });
+  }
+  
+  
   // Fonction pour démarrer le timer
   startTimer() {
     this.timerInterval = setInterval(() => {
@@ -154,20 +220,42 @@ export class TestQuestionsComponent implements OnInit {
   isLastQuestion(): boolean {
     return this.currentQuestionIndex === this.questions.length - 1;
   }
+  // terminerTest() {
+  //   console.log("🔍 developpeurId dans terminerTest():", this.developpeurId);
+  //   if (!this.developpeurId) {
+  //     console.error("Erreur : developpeurId est undefined !");
+  //     alert("Votre identifiant de développeur est introuvable. Veuillez réessayer.");
+  //     return;
+  //   }
+  //   alert("Test terminé ! Vos réponses ont été envoyées.");
+  //   this.enregistrerReponse(this.questions[this.currentQuestionIndex].id, this.selectedOptionIds);
+
+  //   this.router.navigate(['/test', this.testId, 'score', this.developpeurId]);
+  //   localStorage.removeItem('responses');
+
+  // }
   terminerTest() {
+    if (this.testTermine) return; // ✅ Évite double soumission
+    this.testTermine = true; // ✅ Bloque une autre tentative
+  
     console.log("🔍 developpeurId dans terminerTest():", this.developpeurId);
-    if (!this.developpeurId) {
-      console.error("Erreur : developpeurId est undefined !");
-      alert("Votre identifiant de développeur est introuvable. Veuillez réessayer.");
+    if (!this.developpeurId || !this.testId) {
+      console.error("Erreur : developpeurId ou testId est undefined !");
+      alert("Erreur : Identifiants manquants. Veuillez réessayer.");
       return;
     }
+  
     alert("Test terminé ! Vos réponses ont été envoyées.");
     this.enregistrerReponse(this.questions[this.currentQuestionIndex].id, this.selectedOptionIds);
+  
+    // ✅ Petite pause pour laisser finir le POST si besoin
+    setTimeout(() => {
 
-    this.router.navigate(['/test', this.testId, 'score', this.developpeurId]);
-    localStorage.removeItem('responses');
-
+      this.router.navigate(['/test', this.testId, 'score', this.developpeurId]);
+      localStorage.removeItem('responses');
+    }, 500);
   }
+  
   nextQuestion() {
     console.log("isAnswered:", this.isAnswered);
     if (!this.isAnswered) {
@@ -184,9 +272,7 @@ export class TestQuestionsComponent implements OnInit {
       this.currentQuestionIndex++;
       this.selectedOptionIds = this.responses[this.questions[this.currentQuestionIndex].id] || []; // ✅ Charger les réponses enregistrées
     this.markAnswered(); 
-      // this.isAnswered = false; // Réinitialise pour la nouvelle question
-      // this.selectedOptionIds = []; // Réinitialiser la sélection pour la nouvelle question
-    }
+}
   }
   
 
