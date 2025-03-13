@@ -250,6 +250,7 @@ import { CodeExecutionService } from '../services/code-execution.service';
   imports: [ReactiveFormsModule, FormsModule, HttpClientModule, CommonModule, AceEditorModule]
 })
 export class QuestionComponent implements OnInit, OnDestroy {
+  token!: string;
   questionForm: FormGroup;
   questions: Question[] = [];
   executionResults: string[] = [];
@@ -272,6 +273,9 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
  
   ngOnInit() {
+    this.token = localStorage.getItem('accessToken') || '';
+    console.log("🛠 token:", this.token);
+
     this.loadQuestions();
     this.questionForm.get('type')?.valueChanges.subscribe(() => this.updateQuestionFields());
   }
@@ -374,7 +378,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
       );
     } else {
       this.subscriptions.add(
-        this.questionService.addQuestion(questionData).subscribe(() => {
+        this.questionService.addQuestion(questionData,this.token).subscribe(() => {
           this.resetForm();
           this.loadQuestions();
         })

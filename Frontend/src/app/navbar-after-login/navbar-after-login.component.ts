@@ -8,10 +8,4 @@ import { Router } from '@angular/router';
   styleUrl: './navbar-after-login.component.css'
 })
 export class NavbarAfterLoginComponent {
-  constructor(private router: Router) {}
-
-  logout(): void {
-    localStorage.removeItem('id');
-    this.router.navigate(['/']); // Redirige vers la page d'accueil après la déconnexion
-  }
 }

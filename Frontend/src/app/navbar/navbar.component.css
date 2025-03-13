@@ -10,6 +10,19 @@
     color: #494948;
     max-height: 40px;
   }
+  .logout-btn {
+    background-color: #ff4c4c;  /* Rouge pour la déconnexion */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .logout-btn:hover {
+    background-color: #ff0000; /* Rouge foncé au survol */
+  }
+  
   a{
     text-decoration: none;
   }

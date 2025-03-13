@@ -1,0 +1,24 @@
+<!-- test-list.component.html -->
+<div *ngIf="loading" class="loader">Chargement des tests...</div>
+<div *ngIf="error" class="error">
+  ❌ {{ error }}  
+  <button (click)="fetchTests()">Réessayer</button>
+</div>
+
+<div class="test-cards-container">
+  <div *ngFor="let test of tests" class="test-card">
+    <div class="card-header">
+      <span class="badge">{{ test.type }}</span>
+      <h3>{{ test.titre }}</h3>
+    </div>
+    <p class="description">{{ test.description | slice:0:100 }}...</p>
+    <div class="card-footer">
+      <span>⏱️ {{ test.duree ? test.duree + ' min' : 'Unlimited' }}</span>
+      <span>🔁 {{ test.limiteTentatives ? test.limiteTentatives : 'Unlimited' }}</span>
+      <span>📅 Expiration: {{ test.dateExpiration | date:'dd/MM/yyyy' }}</span>
+      <button class="start-button" (click)="goToQuestions(test.id)">🚀 commencer le test</button>
+
+      
+    </div>
+  </div>
+</div>

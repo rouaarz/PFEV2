@@ -1,0 +1,345 @@
+/* 
+.question-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 10px 0;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+.question-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.question-card p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.answer-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.answer-options input[type="radio"], .answer-options input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.qcm-option {
+  display: flex;
+  align-items: center;
+}
+
+.code-question textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.text-question textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.card-footer {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.card-footer button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card-footer button:hover {
+  background-color: #45a049;
+} */
+/* Style général des cartes de questions */
+/* Style général */
+/* Conteneur principal */
+/* Conteneur principal */
+/* Container principal */
+body { 
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.almost-done {
+  stroke: red !important;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.5; }
+}
+
+/* En-tête */
+.page-header {
+  text-align: center;
+  padding: 20px 0;
+  background-color: #ffffff; /* Gris acier */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #001130; /* Bleu nuit */
+  margin: 0;
+}
+
+/* Timer */
+.countdown-timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.time-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff; /* Gris acier */
+  border: 1px solid none; /* Bleu acier */
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.time-number {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #1B263B;
+}
+
+.time-label {
+  font-size: 0.9rem;
+  color: #4A6FA5;
+}
+
+.separator {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #D4AF37; /* Doré */
+}
+
+/* Conteneur des questions */
+.question-container {
+  padding: 15px;
+  background-color: #f2f4f7;; /* Gris acier */
+  border-radius: 10px;
+  border: 1px solid #DCDED6; /* Bleu acier */
+  box-shadow: 0px 4px 6px rgba(122, 121, 121, 0.2);
+  margin-bottom: 25px;
+}
+
+.question-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #1B263B; /* Bleu nuit */
+}
+
+.question-level {
+  font-size: 1rem;
+  color: #4A6FA5;
+}
+
+/* QCM */
+.options-container {
+  margin-top: 15px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: #ffffff;
+  border: 1px solid #D4AF37; /* Bleu acier */
+  box-shadow: 0px 4px 6px rgba(122, 121, 121, 0.2);
+  margin: 4px 0;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.option:hover {
+  background-color: #D4AF37; /* Doré */
+  transform: scale(1.03);
+}
+
+.option.selected {
+  background-color: #4A6FA5; /* Bleu acier */
+  color: white;
+}
+
+.option input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Questions ouvertes */
+.text-container textarea, 
+.code-question textarea {
+  width: 100%;
+  height: 100px;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #D4AF37; /* Doré */
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+  transition: border-color 0.3s ease;
+  background-color: #F9FAFC; /* Presque blanc */
+  color: #1B263B;
+}
+
+.text-container textarea:focus, 
+.code-question textarea:focus {
+  border-color: #4A6FA5;
+  outline: none;
+}
+
+/* Boutons */
+.navigation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+/* Styles généraux des boutons */
+/* Styles pour la barre de progression */
+.progress-bar-container {
+  width: 100%;
+  height: 10px;
+  background-color: #e0e0e0;  /* Couleur de fond */
+  border-radius: 5px;
+  margin: 20px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4A6FA5;  /* Couleur de la barre de progression */
+  border-radius: 5px;
+  transition: width 0.3s ease-in-out; /* Animation fluide */
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+/* Bouton précédent */
+.prev-btn {
+  background-color: #9AC8EB; /* Gris */
+  color: black;
+}
+
+.prev-btn:hover {
+  background-color: #82CEF9; /* Doré */
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Bouton suivant */
+.next-btn {
+  background-color: #4A6FA5; /* Bleu acier */
+  color: white;
+}
+
+.next-btn:hover {
+  background-color:  #1B263B; /* Bleu foncé */
+  transform: scale(1.05);
+}
+
+/* Bouton soumettre */
+/* Styles du bouton de soumission */
+.submit-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;  /* Assure un espacement suffisant */
+  padding: 10px;
+  position: fixed;  /* Fixe le bouton en bas */
+  bottom: 20px;  /* Distance depuis le bas de la fenêtre */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;  /* Assure que le bouton est au-dessus des autres éléments */
+  background-color: white;  /* Optionnel, pour le fond */
+}
+
+.submit-btn {
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  background-color: #D4AF37; /* Doré */
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #b1b1b1;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Désactivation des boutons */
+.btn:disabled {
+  background-color: #d3d3d3;
+  color: #888;
+  cursor: not-allowed;
+  transform: none;
+}
+/* Style pour les boutons désactivés */
+.disabled-btn {
+  background-color: gray;  /* Couleur grise */
+  cursor: not-allowed;     /* Curseur de type "non autorisé" */
+}
+
+
+/* Messages d’alerte */
+.alert {
+  color: #1B263B;
+  font-size: 1rem;
+  background-color: #F9FAFC;
+  padding: 8px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* Question Code */
+.code-question textarea {
+  width: 100%;
+  height: 200px;
+  font-family: monospace;
+  font-size: 14px;
+  background-color: #F9FAFC;
+  border: 1px solid #D4AF37;
+  border-radius: 5px;
+  padding: 10px;
+  resize: vertical;
+  color: #1B263B;
+}
