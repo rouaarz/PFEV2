@@ -68,28 +68,3 @@
   </form>
 
   <hr />
-
-  <h3>Liste des Questions</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Énoncé</th>
-        <th>Type</th>
-        <th>Niveau</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let question of questions">
-        <td>{{ question.enonce }}</td>
-        <td>{{ question.type }}</td>
-        <td>{{ question.niveau }}</td>
-        <td>
-          <button (click)="editQuestion(question)">✏ Modifier</button>
-          <button (click)="deleteQuestion(question.id)">🗑 Supprimer</button>
-          <button >➕ Assign to test</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>

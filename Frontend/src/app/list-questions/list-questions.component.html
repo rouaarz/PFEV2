@@ -1,0 +1,38 @@
+<h3>Liste des Questions</h3>
+
+
+<input 
+  type="text" 
+  [(ngModel)]="searchTerm" 
+  placeholder="Rechercher une question..." 
+  class="form-control mb-3"
+/>
+<button (click)="searchQuestions()" class="btn btn-primary">🔍 Rechercher</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Énoncé</th>
+      <th>Type</th>
+      <th>Niveau</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let question of filteredQuestions | paginate: { itemsPerPage: 3, currentPage: currentPage }">
+      <td>{{ question.enonce }}</td>
+      <td>{{ question.type }}</td>
+      <td>{{ question.niveau }}</td>
+      <td>
+        <button (click)="onEdit(question)">✏ Modifier</button>
+        <button (click)="onDeleteQuestion(question.id)">🗑 Supprimer</button>
+        <button>➕ Assign to test</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Pagination Controls -->
+<pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+
+

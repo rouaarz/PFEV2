@@ -257,6 +257,8 @@ export class QuestionComponent implements OnInit, OnDestroy {
   editorOptions = { theme: 'monokai', mode: 'javascript' };
   private subscriptions = new Subscription();
 
+
+
   constructor(private fb: FormBuilder, private questionService: QuestionService, private codeService: CodeExecutionService ) {
     this.questionForm = this.fb.group({
       enonce: ['', Validators.required],
@@ -273,6 +275,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
     this.loadQuestions();
     this.questionForm.get('type')?.valueChanges.subscribe(() => this.updateQuestionFields());
   }
+
 
   get answerOptions(): FormArray {
     return this.questionForm.get('answerOptions') as FormArray;

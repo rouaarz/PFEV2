@@ -1,0 +1,24 @@
+<div class="activation-container">
+    <h2>Gestion des Comptes Inactifs</h2>
+    <p *ngIf="error" class="error">{{ error }}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom d'utilisateur</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button (click)="activateUser(user.email)">Activer</button>
+            <button (click)="deleteUser(user.email)" class="delete">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

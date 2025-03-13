@@ -1,0 +1,17 @@
+<h2>Comptes Activés</h2>
+
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Nom</th>
+    <th>Action</th>
+  </tr>
+  <tr *ngFor="let user of usersActifs">
+    <td>{{ user.username }}</td>
+    <td>{{ user.email }}</td>
+    <td><button (click)="deactivateUser(user.email)">Désactiver</button></td>
+  </tr>
+</table>
+
+<p *ngIf="error" style="color: red;">{{ error }}</p>
+
