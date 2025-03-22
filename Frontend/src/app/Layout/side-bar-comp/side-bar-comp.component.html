@@ -1,0 +1,70 @@
+
+<mat-drawer-container class="allSidebar">
+  <mat-drawer [class]="OpenedSideBar ? 'sidebar' : 'sidebar close'" mode="side" opened="true">
+    <div class="logo">
+      <img src="" alt="">
+    </div>
+    <ul>
+      <li>
+        <a [routerLink]="['/dash']" [ngClass]="{'active': current === '/dash'}">
+          <mat-icon class="icon">grid_view</mat-icon>
+          <p class="nav-item">
+            Dashboard
+          </p>
+        </a>
+      </li>
+     <li>
+        <a [routerLink]="['/admin/List-Question']" [ngClass]="{'active': current === '/admin/List-Question'}">
+          <mat-icon class="icon">engineering</mat-icon>
+          <p class="nav-item">
+            Gerer les questions
+          </p>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['']" [ngClass]="{'active': current === ''}">
+          <mat-icon class="icon">engineering</mat-icon>
+          <p class="nav-item">
+            Gerer les tests
+          </p>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/admin/list-Chefs']" [ngClass]="{'active': current === '/admin/list-Chefs'}">
+          <mat-icon class="icon">engineering</mat-icon>
+          <p class="nav-item">
+            Gerer Les chefs
+          </p>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/admin/activation-Compte']" [ngClass]="{'active': current === '/admin/activation-Compte'}">
+          <mat-icon class="icon">engineering</mat-icon>
+          <p class="nav-item">
+            Gerer les comptes
+          </p>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/edit-profile']" [ngClass]="{'active': current === '/edit-profile'}">
+          <mat-icon class="icon">person</mat-icon>
+          <p class="nav-item">
+            Edit Profile
+          </p>
+        </a>
+      </li>
+      
+      
+      <li>
+        <a class="close_sidebar" (click)="OpenedSideBar=!OpenedSideBar">
+          <mat-icon class="icon">
+            {{OpenedSideBar ? 'arrow_left' : 'arrow_right'}}
+          </mat-icon>
+        </a>
+      </li>
+    </ul>
+  </mat-drawer>
+  <mat-drawer-content [ngStyle]="{'margin-left': OpenedSideBar ? '230px' : '130px'}">
+    <ng-content></ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>

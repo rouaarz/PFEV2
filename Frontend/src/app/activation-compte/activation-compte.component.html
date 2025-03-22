@@ -1,24 +1,39 @@
-<div class="activation-container">
-    <h2>Gestion des Comptes Inactifs</h2>
-    <p *ngIf="error" class="error">{{ error }}</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Nom d'utilisateur</th>
-          <th>Email</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>
-            <button (click)="activateUser(user.email)">Activer</button>
-            <button (click)="deleteUser(user.email)" class="delete">Supprimer</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="container">
+  <h2>Gestion des Comptes Inactifs</h2>
+  <p *ngIf="error" class="error">{{ error }}</p>
+  <button [routerLink]="['/admin/comptes-actifs']" class="btn btn-primary btn-gold-blue"> <i class="fas fa-user-check"></i>comptes-actifs</button>
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <input 
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      placeholder="Rechercher un compte..." 
+      class="form-control w-50"
+    />
+    <button (click)="searchComptes()" class="btn-rechercher">
+      <i class="fas fa-search"></i>Rechercher
+    </button>
   </div>
-  
+  <table>
+    <thead>
+      <tr>
+        <th>Nom d'utilisateur</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <div class="btn-container">
+            <button (click)="activateUser(user.email)" class="btn btn-success btn-sm-custom"> <i class="fas fa-user-plus"></i></button>
+            <button (click)="deleteUser(user.email)"  class="btn btn-danger btn-sm-custom"> <i class="fas fa-trash-alt"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+</div>

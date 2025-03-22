@@ -1,17 +1,41 @@
-<h2>Comptes Activés</h2>
+<div class="container">
+  <h2>Comptes Activés</h2>
 
-<table>
-  <tr>
-    <th>Email</th>
-    <th>Nom</th>
-    <th>Action</th>
-  </tr>
-  <tr *ngFor="let user of usersActifs">
-    <td>{{ user.username }}</td>
-    <td>{{ user.email }}</td>
-    <td><button (click)="deactivateUser(user.email)">Désactiver</button></td>
-  </tr>
-</table>
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <input 
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      placeholder="Rechercher un compte..." 
+      class="form-control w-50"
+    />
+    <button (click)="searchComptes()" class="btn-rechercher">
+      <i class="fas fa-search"></i> Rechercher
+    </button>
+  </div>
 
-<p *ngIf="error" style="color: red;">{{ error }}</p>
+  <table class="table-container">
+    <thead>
+      <tr>
+        <th>Nom d'utilisateur</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <button (click)="deactivateUser(user.email)" class="btn btn-warning">
+            <i class="fas fa-ban"></i> Désactiver
+          </button>
+        </td> 
+      </tr>
+    </tbody>
+  </table>
 
+  <p *ngIf="error" style="color: red;">{{ error }}</p>
+
+  <!-- Pagination controls -->
+  <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+</div>

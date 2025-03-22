@@ -241,6 +241,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AceEditorModule } from 'ngx-ace-editor-wrapper';
 import { CodeExecutionService } from '../services/code-execution.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question',
@@ -260,7 +261,8 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private fb: FormBuilder, private questionService: QuestionService, private codeService: CodeExecutionService ) {
+
+  constructor(private fb: FormBuilder, private questionService: QuestionService, private codeService: CodeExecutionService,private router: Router ) {
     this.questionForm = this.fb.group({
       enonce: ['', Validators.required],
       type: ['QCM', Validators.required],
@@ -374,6 +376,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
         this.questionService.updateQuestion(this.editingQuestion.id, questionData).subscribe(() => {
           this.resetForm();
           this.loadQuestions();
+          this.router.navigate(['/admin/List-Question']);
         })
       );
     } else {
@@ -381,6 +384,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
         this.questionService.addQuestion(questionData,this.token).subscribe(() => {
           this.resetForm();
           this.loadQuestions();
+          this.router.navigate(['/admin/List-Question']);
         })
       );
     }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "./navbar/navbar.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -13,5 +13,17 @@ import { CommonModule } from '@angular/common';
 
 })
 export class AppComponent {
+  isDashboardPage = false;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(() => {
+      this.isDashboardPage = this.router.url.includes('/dash');
+    });
+  }
+  
+
+  isAdminRoute(): boolean {
+    return this.router.url.startsWith('/admin');
+  }
   title = 'FrontendFinal';
 }

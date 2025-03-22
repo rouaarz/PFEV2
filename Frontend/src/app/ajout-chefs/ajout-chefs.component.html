@@ -1,0 +1,78 @@
+<div class="container">
+  <h2 *ngIf="!idChef">Ajouter un Chef de Projet</h2>
+  <h2 *ngIf="idChef">Modifier Chef de Projet</h2>
+
+  <form (ngSubmit)="ajouterChef()">
+    <div *ngFor="let error of errorMessages" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <div class="form-group">
+      <label for="username">Nom d'utilisateur :</label>
+      <input
+        type="text"
+        id="username"
+        [(ngModel)]="chefDeProjet.username"
+        name="username"
+        (blur)="verifierUsername()"
+        required
+        class="form-control"
+      />
+      <small *ngIf="usernameExists" class="text-danger">⚠️ Ce nom est déjà utilisé.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="chefDeProjet.email"
+        name="email"
+        (blur)="verifierEmail()"
+        required
+        class="form-control"
+      />
+      <small *ngIf="emailExists" class="text-danger">⚠️ Cet email est déjà utilisé.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Mot de passe :</label>
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="chefDeProjet.password"
+        name="password"
+        required
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="specialite">Spécialité :</label>
+      <input
+        type="text"
+        id="specialite"
+        [(ngModel)]="chefDeProjet.specialite"
+        name="specialite"
+        required
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="score">Score :</label>
+      <input
+        type="number"
+        id="score"
+        [(ngModel)]="chefDeProjet.score"
+        name="score"
+        required
+        class="form-control"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      {{ idChef ? 'Modifier' : 'Ajouter' }}
+    </button>
+  </form>
+</div>

@@ -3,12 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor'; // Importer l'intercepteur
+import { ChartdemandeComponent } from './chartdemande/chartdemande/chartdemande.component';
+import { ChartsubscribersComponent } from './chartsubscribers/chartsubscribers/chartsubscribers.component';
 
 @NgModule({
  
   imports: [
     BrowserModule,
-    HttpClientModule, // Assurez-vous que HttpClientModule est importé
+    HttpClientModule, 
+    ChartdemandeComponent,
+    ChartsubscribersComponent,
+
   ],
   providers: [
     {

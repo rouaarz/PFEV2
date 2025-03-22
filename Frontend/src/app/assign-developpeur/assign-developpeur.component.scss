@@ -1,0 +1,481 @@
+@import '@fortawesome/fontawesome-free/css/all.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700&display=swap');
+
+
+$color-primary-theme: #30336b;
+
+
+body {
+  background: #f5f5f5;
+  font-size: 30px;
+  font-family: 'Poppins', sans-serif;
+}
+
+table {
+  border: 1px solid #a39485;
+  font-size: 0.9em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  width: 97%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+th {
+  text-align: left;
+}
+
+thead {
+  font-weight: bold;
+  color: #fff;
+  background: #3e3662;
+}
+
+td, th {
+  padding: 1em 0.5em;
+  vertical-align: middle;
+}
+
+td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+@media all and (max-width: 768px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  th {
+    text-align: right;
+  }
+
+  table {
+    position: relative;
+    padding-bottom: 0;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  thead {
+    float: left;
+    white-space: nowrap;
+  }
+
+  tbody {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  tr {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  th {
+    border-bottom: 1px solid #a39485;
+  }
+
+  td {
+    border-bottom: 1px solid #000;
+  }
+}
+
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.wrapper .icon {
+  position: relative;
+  background: #fff;
+  border-radius: 50%;
+  margin: 5px;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip {
+  position: absolute;
+  top: 0;
+  font-size: 14px;
+  background: #fff;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 20px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border-width: 2px;
+}
+
+.wrapper .tooltip::before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  background: #fff;
+  bottom: -3px;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon:hover .tooltip {
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+
+.wrapper .info:hover,
+.wrapper .info:hover .tooltip,
+.wrapper .info:hover .tooltip::before {
+  background: #1DA1F2;
+  color: #fff;
+}
+
+
+
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  overflow: hidden;
+}
+
+.popup.open {
+  display: flex;
+}
+
+.popup-content {
+  background: rgba(253, 253, 253, 0.7);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+}
+
+.form-group {
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.close {
+  color: #272343;
+  text-transform: uppercase;
+  font-size: 12px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  text-decoration: none;
+  display: inline-block;
+  background: #fff;
+  padding: 10px 18px;
+  transition: all 0.3s ease-in-out;
+  border-radius: 30%;
+}
+
+.close:hover {
+  background: #272343;
+  color: #fff;
+}
+
+
+.bottom_pagination {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px;
+}
+
+.search {
+  display: inline-block;
+  position: relative;
+  margin: 50px 10px 10px 30px;
+}
+
+.search input[type="text"] {
+  width: 200px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search button[type="submit"] {
+  background-color: #272343;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: .9s ease;
+}
+
+.search button[type="submit"]:hover {
+  transform: scale(1.1);
+  color: rgb(255, 255, 255);
+  background-color: #514887;
+}
+
+.search_btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.drop {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+}
+
+.drop input[type="checkbox"] {
+  display: none;
+}
+
+.drop input[type="checkbox"]:checked ~ .drop-items {
+  opacity: 1;
+  max-height: 400px;
+  padding: 0.6rem 0;
+}
+
+.drop .control {
+  position: relative;
+  color: #fff;
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.8em 1.2em;
+  background: $color-primary-theme;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.drop .control:hover {
+  opacity: 0.75;
+}
+
+.drop .control::after {
+  content: "";
+  display: inline-block;
+  height: 0.5em;
+  width: 0.5em;
+  margin-left: 0.8em;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23fff' xmlns='http://www.w3.org/2000/svg' width='16' height='13.838' viewBox='0 0 16 13.838'%3E%3Cpath d='M15.78,12.753a1.529,1.529,0,0,1-1.311,2.314H1.53A1.529,1.529,0,0,1,.219,12.753L6.69,1.969a1.528,1.528,0,0,1,2.619,0L15.78,12.753Z' transform='translate(16 15.067) rotate(180)'/%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: transform 0.3s ease;
+}
+
+.drop .drop-items {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  transition: all 0.3s ease;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  z-index: 99;
+}
+
+.drop .drop-items .item-drop a {
+  display: block;
+  color: #555;
+  text-decoration: none;
+  padding: 0.6rem;
+  transition: all 0.3s ease;
+}
+
+.drop .drop-items .item-drop a:hover {
+  background: #eee;
+}
+
+.drop .overlay-close {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9;
+  transform: translate(100%, 0);
+  pointer-events: none;
+}
+button {
+  width: 180px; /* Taille uniforme pour tous les boutons */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px; /* Taille uniforme du texte et des icônes */
+}
+
+button i {
+  margin-right: 5px; /* Espacement entre l'icône et le texte */
+}
+/* Boutons avec des couleurs personnalisées */
+/* Ajoutez ceci dans votre fichier CSS (par exemple, styles.css) */
+
+.shining-text {
+    font-size: 2rem;
+    color: #fff; /* Couleur de base du texte */
+    text-transform: uppercase; /* Facultatif, mais souvent utilisé pour l'effet de brillance */
+    position: relative;
+    display: inline-block;
+    animation: shine 1.5s infinite linear;
+  }
+  
+  /* Animation du texte brillant */
+  @keyframes shine {
+    0% {
+      text-shadow: 0 0 10px rgba(38, 25, 25, 0.5), 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+    50% {
+      text-shadow: 0 0 20px rgb(69, 67, 67), 0 0 30px rgba(255, 255, 255, 1);
+    }
+    100% {
+      text-shadow: 0 0 10px rgba(69, 67, 67, 0.5), 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+  }
+  
+/* Bouton Rechercher */
+.btn-rechercher {
+  background-color:hsl(219, 47%, 57%); /* Bleu */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-rechercher:hover {
+  background-color: hsl(219, 47%, 57%); /* Bleu foncé */
+}
+
+/* Bouton Ajouter */
+.btn-ajouter {
+  background-color: #17a2b8; /* Vert */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-ajouter:hover {
+  background-color: #17a2b8; /* Vert foncé */
+}
+
+/* Bouton Modifier */
+.btn-modifier {
+  background-color: #ffc107; /* Jaune */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-modifier:hover {
+  background-color: #e0a800; /* Jaune foncé */
+}
+
+/* Bouton Supprimer */
+.btn-supprimer {
+  background-color: #dc3545; /* Rouge */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-supprimer:hover {
+  background-color: #c82333; /* Rouge foncé */
+}
+
+/* Bouton "Assign to test" */
+.btn-assign-test {
+  background-color: #17a2b8; /* Cyan */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+/* Réduction de la taille des boutons */
+.btn-sm-custom {
+  padding: 5px 8px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px; /* Ajuste la taille */
+  height: 35px;
+  border-radius: 5px;
+}
+
+.btn-container {
+  display: flex;
+  gap: 5px; /* Espacement entre les boutons */
+  flex-wrap: wrap; /* S'assure que les boutons ne dépassent pas */
+}
+
+
+.btn-assign-test:hover {
+  background-color: #138496; /* Cyan foncé */
+}
+
+

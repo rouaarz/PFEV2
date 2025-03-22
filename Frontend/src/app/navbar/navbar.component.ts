@@ -13,8 +13,11 @@ import { Router } from '@angular/router'; // Importe le Router
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
+ 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+    
+  }
 
   // Méthode de déconnexion
   logout(): void {

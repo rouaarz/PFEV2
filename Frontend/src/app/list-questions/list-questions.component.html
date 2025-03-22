@@ -1,13 +1,19 @@
-<h3>Liste des Questions</h3>
+<div class="container">
+<div class="d-flex align-items-center gap-2 mb-3">
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    placeholder="Rechercher une question..."
+    class="form-control w-50"
+  />
+  <button (click)="searchQuestions()" class="btn-rechercher">
+    <i class="fas fa-search"></i> Rechercher
+  </button>
+</div>
 
-
-<input 
-  type="text" 
-  [(ngModel)]="searchTerm" 
-  placeholder="Rechercher une question..." 
-  class="form-control mb-3"
-/>
-<button (click)="searchQuestions()" class="btn btn-primary">🔍 Rechercher</button>
+<button (click)="goToAddQuestion()" class="btn-assign-test text-white d-flex align-items-center">
+  <i class="fas fa-plus"></i> Ajouter
+</button>
 
 <table>
   <thead>
@@ -24,15 +30,20 @@
       <td>{{ question.type }}</td>
       <td>{{ question.niveau }}</td>
       <td>
-        <button (click)="onEdit(question)">✏ Modifier</button>
-        <button (click)="onDeleteQuestion(question.id)">🗑 Supprimer</button>
-        <button>➕ Assign to test</button>
+        <div class="d-flex gap-2">
+          <button class="btn btn-warning btn-sm-custom" (click)="onEdit(question)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button (click)="onDeleteQuestion(question.id)" class="btn btn-danger btn-sm-custom">
+            <i class="fas fa-trash"></i> 
+          </button>
+          <button class="btn btn-primary btn-sm-custom">
+            <i class="fas fa-tasks"></i> 
+          </button>
+        </div>
       </td>
     </tr>
   </tbody>
 </table>
 
-<!-- Pagination Controls -->
-<pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
-
-
+<pagination-controls (pageChange)="currentPage = $event"></pagination-controls></div>

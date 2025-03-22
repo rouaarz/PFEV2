@@ -1,0 +1,41 @@
+<div class="container">
+    <h2>{{ isEditing ? 'Modifier' : 'Ajouter' }} un Chef de Projet</h2>
+    <form (ngSubmit)="isEditing ? modifierChef() : ajouterChef()">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" [(ngModel)]="chefDeProjet.username" name="username"
+          required class="form-control">
+        <div *ngIf="usernameExists" class="text-danger">Ce nom d'utilisateur est déjà utilisé.</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" id="email" [(ngModel)]="chefDeProjet.email" name="email"
+          required class="form-control">
+        <div *ngIf="emailExists" class="text-danger">Cet email est déjà utilisé.</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" [(ngModel)]="chefDeProjet.password" name="password"
+          required class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="specialite">Spécialité :</label>
+        <input type="text" id="specialite" [(ngModel)]="chefDeProjet.specialite" name="specialite"
+          required class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="score">Score :</label>
+        <input type="number" id="score" [(ngModel)]="chefDeProjet.score" name="score"
+          required class="form-control">
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="usernameExists || emailExists">
+        {{ isEditing ? 'Modifier' : 'Ajouter' }}
+      </button>
+    </form>
+  </div>
+  

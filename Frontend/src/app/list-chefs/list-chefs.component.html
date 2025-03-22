@@ -1,0 +1,67 @@
+<div class="container">
+  <h2>Liste des Chefs de Projet</h2>
+
+  <!-- Barre de recherche -->
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <input 
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      placeholder="Rechercher un chef de projet..." 
+      class="form-control w-50"
+    />
+    <button (click)="searchChefs()" class="btn-rechercher">
+      <i class="fas fa-search"></i>Rechercher
+    </button>
+  </div>
+
+  <!-- Bouton Ajouter Chef -->
+  <button (click)="goToAddChefs()" class="btn-assign-test text-white d-flex align-items-center">
+    <i class="fas fa-plus"></i> Ajouter
+  </button>
+
+  <!-- Tableau des Chefs de Projet -->
+  <table >
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom d'utilisateur</th>
+        <th>Email</th>
+        <th>Spécialité</th>
+        <th>Score</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let chef of chefs | paginate: { itemsPerPage: 3, currentPage: currentPage }">
+        <td>{{ chef.id }}</td>
+        <td>{{ chef.username }}</td>
+        <td>{{ chef.email }}</td>
+        <td>{{ chef.specialite }}</td>
+        <td>{{ chef.score }}</td>
+        <td>
+          <div class="btn-container">
+            <!-- Modifier -->
+            <button class="btn btn-warning btn-sm-custom" (click)="modifierChef(chef)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <!-- Supprimer -->
+            <button class="btn btn-danger btn-sm-custom" (click)="supprimerChef(chef.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+            <!-- Assigner Développeur -->
+            <button class="btn btn-primary btn-sm-custom" (click)="assignDeveloppeur(chef.id)">
+              <i class="fas fa-user-plus"></i>
+            </button>
+            <!-- Voir Développeurs Assignés -->
+            <button class="btn btn-info btn-sm-custom" [routerLink]="['/admin/developpeurs-assignes', chef.id]">
+              <i class="fas fa-users"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+</div>

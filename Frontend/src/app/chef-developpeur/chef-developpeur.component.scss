@@ -1,0 +1,81 @@
+$primary-color: #2d2a52; // Bleu foncé pour la cohérence avec le menu latéral
+$secondary-color: #042446; // Bleu clair pour les bordures et accents
+$text-color: #333;
+$bg-light: #f8f9fa;
+$hover-bg: #e9ecef;
+$box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+$transition: 0.3s ease;
+
+@mixin box-shadow {
+    box-shadow: $box-shadow;
+}
+
+@mixin button-hover {
+    transition: background $transition, transform 0.2s ease;
+    &:hover {
+        background: darken($primary-color, 10%);
+        transform: scale(1.05);
+    }
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border-top: 4px solid $secondary-color;
+    @include box-shadow;
+}
+
+h2 {
+    color: $primary-color;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 3px solid $secondary-color;
+    padding-bottom: 10px;
+}
+
+.list-group {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+
+    .list-group-item {
+        background: #f1f3f5;
+        border: none;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        padding: 12px;
+        font-size: 16px;
+        color: $text-color;
+        transition: transform 0.2s ease, box-shadow $transition;
+
+        &:hover {
+            transform: scale(1.02);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            background: $hover-bg;
+        }
+    }
+}
+
+.btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 8px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: $primary-color;
+    border-radius: 8px;
+    @include button-hover;
+
+    i {
+        font-size: 14px;
+    }
+}

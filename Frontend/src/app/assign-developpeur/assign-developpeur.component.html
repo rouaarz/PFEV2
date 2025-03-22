@@ -1,0 +1,57 @@
+<div class="container">
+  <h2 class="shining-text">Chef de Projet : {{ chefDeProjet.username }}</h2>
+  <h3>Liste des Développeurs</h3>
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <input 
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      placeholder="Rechercher un compte..." 
+      class="form-control w-50"
+    />
+    <button (click)="searchDeveloppeurs()" class="btn-rechercher" placeholder="Rechercher par nom ou email" >
+      <i class="fas fa-search"></i>Rechercher
+    </button>
+
+  </div>
+  
+  <p *ngIf="filteredDeveloppeurs.length === 0" class="alert alert-warning">
+    Aucun développeur disponible.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Technologies</th>
+        <th>Spécialité</th>
+        <th>Expérience</th>
+        <th>Score</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dev of filteredDeveloppeurs | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+        <td>{{ dev.id }}</td>
+        <td>{{ dev.username }}</td>
+        <td>{{ dev.email }}</td>
+        <td>{{ dev.technologies }}</td>
+        <td>{{ dev.specialite }}</td>
+        <td>{{ dev.experience }}</td>
+        <td>{{ dev.score }}</td>
+        <td>
+          <button class="btn btn-primary" 
+                  (click)="assignDeveloppeur(dev.id)" 
+                  [disabled]="isAssigned(dev.id)"> <i class="fas fa-plus-circle"></i>
+            Assigner
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+
+  <button class="btn btn-secondary mt-3" [routerLink]="['/admin/list-Chefs']">⬅ Retour</button>
+</div>
