@@ -117,39 +117,7 @@ export class TestQuestionsComponent implements OnInit {
 
     });
   }
-  // Fonction de mise à jour du timer
-  // updateTimer() {
-  //   this.remainingTime--;
-  //   this.remainingHours = Math.floor(this.remainingTime / 3600); // Calcul des heures restantes
-  //   this.remainingMinutes = Math.floor((this.remainingTime % 3600) / 60); // Calcul des minutes restantes
-  //   this.remainingSeconds = this.remainingTime % 60; // Calcul des secondes restantes
-
-  //   const timerElement = document.querySelector('.timer-text');
-  //   const progressCircle = document.querySelector('.timer-progress') as SVGCircleElement;
-
-  //   if (timerElement && progressCircle) {
-  //     timerElement.textContent = `${this.remainingHours}:${this.remainingMinutes}:${this.remainingSeconds}`;
-  
-  //     // Calcul du pourcentage restant
-  //     const offset = (440 * this.remainingTime) / this.totalTime;
-  //     progressCircle.style.strokeDashoffset = offset.toString();
-  
-  //     // Ajouter la classe 'almost-done' quand il reste moins de 10 secondes
-  //     if (this.remainingTime <= 10) {
-  //       progressCircle.classList.add('almost-done');
-  //     } else {
-  //       progressCircle.classList.remove('almost-done');
-  //     }
-  
-  //     // Arrêter le timer quand le temps est écoulé
-  //     if (this.remainingTime <= 0) {
-  //       clearInterval(this.timerInterval);
-  //       alert('⏰ Le temps est écoulé ! Le test va être soumis automatiquement.');
-  //       this.terminerTest();
-
-  //     }
-  //   }
-  // }
+ 
   updateTimer() {
     if (this.remainingTime > 0) {
       this.remainingTime--;
@@ -220,20 +188,7 @@ export class TestQuestionsComponent implements OnInit {
   isLastQuestion(): boolean {
     return this.currentQuestionIndex === this.questions.length - 1;
   }
-  // terminerTest() {
-  //   console.log("🔍 developpeurId dans terminerTest():", this.developpeurId);
-  //   if (!this.developpeurId) {
-  //     console.error("Erreur : developpeurId est undefined !");
-  //     alert("Votre identifiant de développeur est introuvable. Veuillez réessayer.");
-  //     return;
-  //   }
-  //   alert("Test terminé ! Vos réponses ont été envoyées.");
-  //   this.enregistrerReponse(this.questions[this.currentQuestionIndex].id, this.selectedOptionIds);
 
-  //   this.router.navigate(['/test', this.testId, 'score', this.developpeurId]);
-  //   localStorage.removeItem('responses');
-
-  // }
   terminerTest() {
     if (this.testTermine) return; // ✅ Évite double soumission
     this.testTermine = true; // ✅ Bloque une autre tentative
