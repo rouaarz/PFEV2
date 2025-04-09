@@ -1,32 +1,73 @@
-import { Component, Renderer2 } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
-
+import { Component, AfterViewInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [], 
+  standalone: true,
+  imports: [CommonModule,RouterModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-  faqItems = [
-    { question: "How does it work?", answer: "You create an account as developer or a recruiter. A developer can take tests, and the recruiter can upload technical IT tests.", active: false },
-    { question: "How can I pass a test?", answer: "Once your recruiter uploads a test, it will appear in your dashboard, and you can take it.", active: false },
-    { question: "How does the anti-cheat work?", answer: "Your camera & mic must be opened, you have to be alone in the room and verify all conditions to be redirected to the test page.", active: false },
-    { question: "What are the tips to pass the test safely?", answer: "You should look at the test, stay in a quiet environment, don't change tabs, and clear the background behind you.", active: false },
-    { question: "How do I get the result of my test?", answer: "Once you complete the test (generally a quiz), you get your score.", active: false }
-  ];
+export class HomeComponent implements AfterViewInit {
+  @ViewChild('testsScroller') testsScroller!: ElementRef;
+  @ViewChild('prevTest') prevTest!: ElementRef;
+  @ViewChild('nextTest') nextTest!: ElementRef;
 
-  constructor(private renderer: Renderer2) {}
+  private cardWidth: number = 350; // Largeur approximative d'une carte + gap
 
-  toggleFAQ(item: any) {
-    item.active = !item.active;
+  ngAfterViewInit() {
+    this.initSliderNavigation();
   }
 
+  private initSliderNavigation() {
+    const scroller = this.testsScroller.nativeElement;
+    const prevBtn = this.prevTest.nativeElement;
+    const nextBtn = this.nextTest.nativeElement;
+
+    // Défilement vers la droite
+    nextBtn.addEventListener('click', () => {
+      scroller.scrollBy({
+        left: this.cardWidth,
+        behavior: 'smooth'
+      });
+    });
+
+    // Défilement vers la gauche
+    prevBtn.addEventListener('click', () => {
+      scroller.scrollBy({
+        left: -this.cardWidth,
+        behavior: 'smooth'
+      });
+    });
+
+    // Mettre à jour l'état des boutons
+    scroller.addEventListener('scroll', () => this.updateButtonStates());
+    
+    // État initial
+    this.updateButtonStates();
+  }
+
+  private updateButtonStates() {
+    const scroller = this.testsScroller.nativeElement;
+    const prevBtn = this.prevTest.nativeElement;
+    const nextBtn = this.nextTest.nativeElement;
+    
+    const isAtStart = scroller.scrollLeft <= 0;
+    const isAtEnd = scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth - 1;
+
+    // Style pour le bouton précédent
+    prevBtn.style.opacity = isAtStart ? '0.5' : '1';
+    prevBtn.style.cursor = isAtStart ? 'not-allowed' : 'pointer';
+
+    // Style pour le bouton suivant
+    nextBtn.style.opacity = isAtEnd ? '0.5' : '1';
+    nextBtn.style.cursor = isAtEnd ? 'not-allowed' : 'pointer';
+  }
+
+  // Pour le redimensionnement
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.updateButtonStates();
+  }
 }
-
-
-
-  
-
-

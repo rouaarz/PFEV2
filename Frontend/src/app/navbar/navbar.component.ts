@@ -9,7 +9,7 @@ import { Router } from '@angular/router'; // Importe le Router
   standalone: true, // Déclare le composant comme autonome
   imports: [CommonModule, RouterModule], // Importer les modules nécessaires
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;

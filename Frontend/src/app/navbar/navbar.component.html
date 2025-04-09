@@ -1,26 +1,35 @@
-<div class="Navbar">
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container-fluid">
-        <a class="logo" href="#">TESTINY</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a routerLink="/" routerLinkActive="active" class="nav-link">Home</a>
-            <a routerLink="/tests" routerLinkActive="active" class="nav-link">Tests</a>
-            <a routerLink="/student/examslist" routerLinkActive="active" class="nav-link">Technical Test</a>
-  
-            <div class="left">
-              <a *ngIf="!isLoggedIn" routerLink="/signup"><button type="button" class="btn signup-btn">Sign Up</button></a>
-              <a *ngIf="!isLoggedIn" routerLink="/signin"><button type="button" class="btn signin-btn">Login</button></a>
-              <button *ngIf="isLoggedIn" (click)="logout()" id="logoutBtn" type="button" class="btn logout-btn">Logout</button>
-
-            </div>
-          </div>
+<header id="header" class="header">
+    <div class="nav-container">
+        <div class="header-left">
+            <a href="#" class="logo">
+                <i class="fas fa-code"></i>
+                <span>TechAssess</span>
+            </a>
+            <button class="mobile-menu-btn" aria-label="Menu mobile">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-      </div>
-    </nav>
-  </div>
-  
+        <div class="nav-right-group">
+        <nav class="nav-links">
+            <div class="nav-close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+            <a href="#" class="active">Accueil</a>
+            &nbsp;  &nbsp; 
+            <a href="#tests">Tests</a>
+            &nbsp;  &nbsp;  
+            <a href="#features">Fonctionnalités</a>
+            &nbsp;  &nbsp;
+            <a href="#features">Solutions</a>
+            &nbsp;  &nbsp;
+            <a href="#contact">Contact</a>
+            &nbsp;  &nbsp;
+        </nav>
+        
+        <div class="auth-buttons">
+            <a [routerLink]="['/signin']" class="btn btn-login">Connexion</a>
+            &nbsp;  &nbsp;
+            <a [routerLink]="['/signup']" class="btn btn-primary">S'inscrire</a>
+        </div>
+    </div></div>
+</header>

@@ -26,4 +26,10 @@ export class AppComponent {
     return this.router.url.startsWith('/admin');
   }
   title = 'FrontendFinal';
+  
+  shouldShowNavbar(): boolean {
+    const hiddenRoutes = ['/signin', '/signup','/forgot-password','/Confirmationemail','/reset-password'];
+    return !hiddenRoutes.some(route => this.router.url.includes(route));
+  }
 }
+ 

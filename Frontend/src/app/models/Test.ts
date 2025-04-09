@@ -1,5 +1,5 @@
 export interface Test {
-    id?: number;
+    id: number;
     titre: string;
     description: string;
     duree: number | null;
@@ -11,6 +11,4 @@ export interface Test {
     dateExpiration: string | null;
     administrateur: { id: number; nom: string };
     testQuestions: { id: number; question: string; points: number }[];
-    version: 0, // ⚡ Ajoute cette ligne si `@Version` est utilisé
-
   }

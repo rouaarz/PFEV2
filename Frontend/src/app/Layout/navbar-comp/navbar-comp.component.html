@@ -1,10 +1,63 @@
-
 <div class="header">
   <div class="title">
     <p>Admin</p>
   </div>
+
   <div class="right-side">
-    
+    <!-- Notification Icon -->
+    <div class="action notification-icon">
+      
+      <!-- Avec badge si newItemsCount > 0 -->
+      <button mat-icon-button
+              *ngIf="newItemsCount > 0"
+              [matBadge]="newItemsCount"
+              matBadgeColor="warn"
+              (click)="toggleNotifications()">
+        <mat-icon class="notification-active">notifications</mat-icon>
+      </button>
+
+      <!-- Sans badge si newItemsCount == 0 -->
+      <button mat-icon-button
+              *ngIf="newItemsCount === 0"
+              (click)="toggleNotifications()">
+        <mat-icon>notifications</mat-icon>
+      </button>
+
+      <div class="notification-panel" *ngIf="showNotifications">
+        <div class="notification-header">
+          <h3>Notifications</h3>
+          <span class="badge">{{notifications.length}}</span>
+        </div>
+        
+        <div class="notification-content">
+          <div *ngIf="notifications.length === 0" class="empty-notifications">
+            <mat-icon>notifications_off</mat-icon>
+            <p>Aucune nouvelle notification</p>
+          </div>
+          
+          <div *ngIf="notifications.length > 0" class="notification-list">
+            <div *ngFor="let notif of notifications" 
+     class="notification-item" 
+     [class.read]="notif.lu"
+     (click)="goToNotification(notif.link)">
+  <div class="notification-dot" *ngIf="!notif.lu"></div>
+  <div class="notification-text">
+    <p class="message">{{ notif.message }}</p>
+    <p class="time">{{ notif.dateNotification | date:'HH:mm, dd MMM' }}</p>
+  </div>
+  <mat-icon class="chevron">chevron_right</mat-icon>
+</div>
+          </div>
+        </div>
+        
+        <div class="notification-footer" *ngIf="notifications.length > 0">
+          <button mat-button (click)="markAllAsRead()">Marquer tout comme lu</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Logout Button -->
     <div class="action">
       <button mat-raised-button color="primary" (click)="logout()">
         <mat-icon>logout</mat-icon> Logout

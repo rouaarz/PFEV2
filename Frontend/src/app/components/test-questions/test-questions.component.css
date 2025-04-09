@@ -84,10 +84,6 @@ body {
 @keyframes blink {
   50% { opacity: 0.5; }
 }
-.editor-container {
-  width: 100%;
-  height: 300px; /* Ajuste la taille selon tes besoins */
-}
 
 /* En-tête */
 .page-header {

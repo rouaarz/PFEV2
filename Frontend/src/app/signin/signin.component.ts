@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
@@ -8,14 +8,24 @@ import { CommonModule } from '@angular/common';
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css'],
-  imports: [CommonModule],
-  standalone: true, 
+  imports: [CommonModule,RouterModule],
+  standalone: true,
 })
 export class SigninComponent implements AfterViewInit {
 
+
   @ViewChild('usernameRef') usernameRef!: ElementRef;
   @ViewChild('passwordRef') passwordRef!: ElementRef;
-  errorMessage: string = ''; // Stocke l'erreur pour affichage
+  errorMessage: string = '';
+  private slideInterval: any;
+  private currentSlide = 0;
+  // Dans votre composant
+ showPassword: boolean = false;
+
+ togglePasswordVisibility(): void {
+  this.showPassword = !this.showPassword;
+}
+  
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -23,7 +33,32 @@ export class SigninComponent implements AfterViewInit {
     if (!this.usernameRef || !this.passwordRef) {
       alert("Erreur : Les champs d'entrée ne sont pas accessibles !");
     }
+    this.initSlideshow();
   }
+
+  ngOnDestroy(): void {
+    if (this.slideInterval) {
+      clearInterval(this.slideInterval);
+    }
+  }
+
+  private initSlideshow(): void {
+    const slides = document.querySelectorAll('.slide');
+    if (slides.length > 0) {
+      // Activer la première slide
+      slides[0].classList.add('active');
+      
+      this.slideInterval = setInterval(() => {
+        slides[this.currentSlide].classList.remove('active');
+        this.currentSlide = (this.currentSlide + 1) % slides.length;
+        slides[this.currentSlide].classList.add('active');
+      }, 5000);
+    }
+  }
+
+  // ... le reste de votre code existant ...
+
+  
   log(event: Event): void {
     event.preventDefault();
     this.errorMessage = ''; // Réinitialisation de l'erreur

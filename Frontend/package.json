@@ -1,4 +1,4 @@
-{ 
+{
   "name": "frontend-final",
   "version": "0.0.0",
   "scripts": {
@@ -26,12 +26,17 @@
     "aos": "^2.3.4",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.8",
+    "ionicons": "^7.4.0",
+    "material-icons": "^1.13.14",
+    "ng-particles": "^3.12.0",
     "ng2-charts": "^8.0.0",
     "ngx-ace-editor-wrapper": "^9.1.12",
     "ngx-ace-wrapper": "^17.0.0",
     "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "tsparticles": "^3.8.1",
+    "tsparticles-slim": "^2.12.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
@@ -40,12 +45,15 @@
     "@angular/compiler-cli": "^19.2.2",
     "@types/aos": "^3.0.7",
     "@types/jasmine": "~5.1.0",
+    "autoprefixer": "^10.4.21",
     "jasmine-core": "~5.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.15",
     "typescript": "~5.7.2"
   }
 }

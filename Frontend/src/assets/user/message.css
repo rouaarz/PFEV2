@@ -1,0 +1,107 @@
+:root {  
+    --purple: rgb(89, 164, 255);
+    --violet: rgb(0, 85, 255);
+    --pink: rgb(219, 31, 106); 
+    --fs:30px;
+  }
+  
+  @keyframes background-pan {
+    from {
+      background-position: 0% ;
+    }
+    to {
+      background-position: -200% ;
+    }
+  }
+  
+  @keyframes scale {
+    from, to {
+      transform: scale(0);
+    } 
+    50% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    } 
+    to {
+      transform: rotate(180deg);
+    }
+  }
+  
+ 
+  
+.Nouveau{
+    color: white;
+    font-family: "Rubik", sans-serif;
+    font-size: 30px;
+    font-weight: 100;
+    margin: 0px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .Nouveau > .magic {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .Nouveau > .magic > .magic-star {
+    display: block;
+    height: var(--size);
+    left: var(--star-left);
+    position: absolute;
+    top: var(--star-top);
+    width: var(--size);
+    --size: clamp(60px, 1.5vw, 30px);
+    animation: scale 700ms ease forwards;
+  }
+  
+  .Nouveau > .magic > .magic-star > svg {
+    animation: rotate 1000ms linear infinite;
+    display: block;
+    opacity: 0.7;
+  }
+  
+  .Nouveau> .magic > .magic-star > svg > path {
+    fill: var(--pink);
+  }
+  
+  .Nouveau > .magic > .magic-text {
+    animation: background-pan 3s linear infinite;
+    background: linear-gradient(
+      to right,
+      var(--purple),
+      var(--violet),
+      var(--pink),
+      var(--purple)
+    );
+    background-size: 200%;
+    background-clip: text; /* Add this line */
+    -webkit-background-clip: text; /* Add this line for Safari support */
+    color: transparent; /* Add this line */
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: var(--fs);
+  }
+
+  .form-group {
+    position: relative;
+    margin-bottom: 25px;
+    overflow: hidden; }
+    
+  
+  input {
+    width: 100%;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #999;
+    padding: 6px 30px;
+    font-family: Poppins;
+    box-sizing: border-box; }
+   
+  
+  

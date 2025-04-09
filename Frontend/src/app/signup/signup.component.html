@@ -1,49 +1,132 @@
-<div class="SignUp" id="intro">
-  <p class="sign">Sign Up to <br /> 
-    <span class="account">Our Website</span>
-  </p>
-  <p class="signdesc">Create an account and discover the potential of the services you use.</p>
+<div class="signin-container">
+  <!-- Colonne image avec diaporama -->
+  <div class="signin-image">
+    <!-- Conteneur du diaporama -->
+    <div class="slideshow-container">
+      <!-- Images du diaporama -->
+      <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80');"></div> 
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1593642634524-b40b5baae6bb');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1579389083078-4e7018379f7e');"></div>
+      <div class="slide fade" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+    </div>
+    
+    <div class="image-overlay">
+      <a [routerLink]="['/']" class="platform-logo" style="text-decoration: none; color: inherit;">
+        <svg viewBox="0 0 24 24" fill="#4361ee">
+          <path d="M12 2L1 12l3 9h16l3-9L12 2zm0 4.5l7.53 5.5L20 19H4l.47-7.5L12 6.5z"/>
+        </svg>
+        <span class="logo-text">TechAssess</span>
+      </a>
+      
+      <h1>Join Our Community</h1>
+      <p>Create an account and discover the potential of the services you use.</p>
+    </div>
+  </div>
 
-  <div class="container" id="signinbx">
-    <p class="welcome">Welcome to <span class="Test">TESTINY</span></p> 
-    <p class="Sup">Sign Up</p>
-    <p class="NA1">Have an Account?</p>
-    <a routerLink="/signin" class="signUp">Sign in</a>
+  <!-- Colonne formulaire -->
+  <div class="signin-form">
+    <div class="form-container">
+      <h2>Welcome to <span class="brand">TechAssess</span></h2>
+      <p class="subtitle">Sign Up to get started</p>
 
-    <form [formGroup]="signupForm" (ngSubmit)="signUp()">
-      <label for="username">Nom d'utilisateur</label>
-      <input id="username" formControlName="username" type="text" required />
-      <p *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched">
-        ❌ Le nom d'utilisateur doit contenir entre 3 et 20 caractères.
-      </p>
-    
-      <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email" required />
-      <p *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
-        ❌ Veuillez entrer une adresse email valide.
-      </p>
-    
-      <label for="password">Mot de passe</label>
-      <input id="password" formControlName="password" type="password" required />
-      <p *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
-        ❌ Le mot de passe doit contenir au moins 6 caractères.
-      </p>
-    
-      <label for="confirmPassword">Confirmer le mot de passe</label>
-      <input id="confirmPassword" formControlName="confirmPassword" type="password" required />
-      <p *ngIf="signupForm.hasError('passwordMismatch')">
-        ❌ Les mots de passe ne correspondent pas.
-      </p>
-    
-      <label for="role">Rôle</label>
-      <select id="role" formControlName="role">
-        <option value="developpeur">Développeur</option>
-        <option value="chefprojet">Chef de projet</option>
-      </select>
-    
-      <button type="submit" [disabled]="signupForm.invalid">S'inscrire</button>
-    </form>
-    
-    <!-- Affichage du message d'erreur global -->
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-    
+      <!-- Message d'erreur -->
+      <div *ngIf="errorMessage" class="error-message">
+        <svg viewBox="0 0 24 24">
+          <path fill="currentColor" d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+        </svg>
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="signupForm" (ngSubmit)="signUp()" class="form-content">
+        <div class="input-group">
+          <input id="username" formControlName="username" type="text" required>
+          <label for="username">Username</label>
+          <div class="underline"></div>
+          <p *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched" class="input-error">
+            ❌ Username must be between 3 and 20 characters
+          </p>
+        </div>
+        
+        <div class="input-group">
+          <input id="email" formControlName="email" type="email" required>
+          <label for="email">Email</label>
+          <div class="underline"></div>
+          <p *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="input-error">
+            ❌ Please enter a valid email address
+          </p>
+        </div>
+        
+        <div class="input-group password-group">
+          <input id="password" formControlName="password" [type]="showPassword ? 'text' : 'password'" required>
+          <label for="password">Password</label>
+          <div class="underline"></div>
+          <!-- Icône eye -->
+          <span class="toggle-password" (click)="togglePasswordVisibility()">
+            <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 6.5C7 6.5 2.73 9.61 1 14c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.89 0-7.19-2.54-8.48-6 1.29-3.46 4.59-6 8.48-6s7.19 2.54 8.48 6c-1.29 3.46-4.59 6-8.48 6zm0-10a4 4 0 100 8 4 4 0 000-8z"/>
+            </svg>
+            <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 4.5C7.05 4.5 2.73 8.01 1 12c1.73 3.99 6.05 7.5 11 7.5 2.38 0 4.61-.71 6.5-1.92l1.42 1.42 1.41-1.41-18-18-1.41 1.41L4.55 6.5C3.22 7.89 2.27 9.62 1.76 11.5c.66 2.56 2.27 4.77 4.49 6.27l1.45-1.45C6.4 15.28 6 13.7 6 12c0-3.31 2.69-6 6-6 .66 0 1.3.1 1.9.29L14.6 8.2A4.002 4.002 0 0012 8c-2.21 0-4 1.79-4 4 0 .6.13 1.17.36 1.68L9.5 16c.96-.96 2.23-1.5 3.5-1.5 1.74 0 3.25 1.01 4.03 2.46l1.44-1.44A9.947 9.947 0 0022 12c-1.73-3.99-6.05-7.5-11-7.5z"/>
+            </svg>
+          </span>
+          <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" class="input-error">
+            <div *ngIf="signupForm.get('password')?.hasError('required')">❌ Password is required</div>
+            <div *ngIf="!signupForm.get('password')?.hasError('required')">
+              ❌ Password must:
+              <ul>
+                <li *ngIf="signupForm.get('password')?.hasError('minlength')">Be at least 8 characters long</li>
+                <li *ngIf="signupForm.get('password')?.hasError('passwordComplexity')">Include at least one number and one uppercase letter</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="input-group password-group">
+          <input id="confirmPassword" formControlName="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" required>
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="underline"></div>
+          <!-- Icône eye -->
+          <span class="toggle-password" (click)="toggleConfirmPasswordVisibility()">
+            <svg *ngIf="showConfirmPassword" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 6.5C7 6.5 2.73 9.61 1 14c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.89 0-7.19-2.54-8.48-6 1.29-3.46 4.59-6 8.48-6s7.19 2.54 8.48 6c-1.29 3.46-4.59 6-8.48 6zm0-10a4 4 0 100 8 4 4 0 000-8z"/>
+            </svg>
+            <svg *ngIf="!showConfirmPassword" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 4.5C7.05 4.5 2.73 8.01 1 12c1.73 3.99 6.05 7.5 11 7.5 2.38 0 4.61-.71 6.5-1.92l1.42 1.42 1.41-1.41-18-18-1.41 1.41L4.55 6.5C3.22 7.89 2.27 9.62 1.76 11.5c.66 2.56 2.27 4.77 4.49 6.27l1.45-1.45C6.4 15.28 6 13.7 6 12c0-3.31 2.69-6 6-6 .66 0 1.3.1 1.9.29L14.6 8.2A4.002 4.002 0 0012 8c-2.21 0-4 1.79-4 4 0 .6.13 1.17.36 1.68L9.5 16c.96-.96 2.23-1.5 3.5-1.5 1.74 0 3.25 1.01 4.03 2.46l1.44-1.44A9.947 9.947 0 0022 12c-1.73-3.99-6.05-7.5-11-7.5z"/>
+            </svg>
+          </span>
+          <p *ngIf="signupForm.hasError('passwordMismatch')" class="input-error">
+            ❌ Passwords don't match
+          </p>
+        </div>
+        
+        <div class="input-group">
+          <select id="role" formControlName="role">
+            <option value="" disabled selected>Select your role</option>
+            <option value="developpeur">Developer</option>
+            <option value="chefprojet">Project Manager</option>
+          </select>
+          <div class="underline"></div>
+        </div>
+
+        <button type="submit" [disabled]="signupForm.invalid" class="btn-signin">
+          <span>Sign Up</span>
+          <svg viewBox="0 0 24 24">
+            <path fill="currentColor" d="M10 17l5-5-5-5v10z"/>
+          </svg>
+        </button>
+
+        <div class="divider">
+          <span>Already have an account?</span>
+        </div>
+
+        <a routerLink="/signin" class="btn-signup">
+          Sign In
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
