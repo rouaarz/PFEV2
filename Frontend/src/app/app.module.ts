@@ -1,19 +1,30 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor'; // Importer l'intercepteur
 import { ChartdemandeComponent } from './chartdemande/chartdemande/chartdemande.component';
-import { ChartsubscribersComponent } from './chartsubscribers/chartsubscribers/chartsubscribers.component';
+import { ChartsubscribersComponent } from './chartsubscribers/chartsubscribers.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
- 
+  
   imports: [
     BrowserModule,
-    HttpClientModule, 
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    FormsModule,
     ChartdemandeComponent,
-    ChartsubscribersComponent,
-
   ],
   providers: [
     {
@@ -22,6 +33,6 @@ import { ChartsubscribersComponent } from './chartsubscribers/chartsubscribers/c
       multi: true
     }
   ],
-  bootstrap: []
+  bootstrap: [] // Démarrer avec AppComponent
 })
 export class AppModule { }

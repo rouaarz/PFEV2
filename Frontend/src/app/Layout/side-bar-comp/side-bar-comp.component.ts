@@ -15,6 +15,8 @@ import { CommonModule } from '@angular/common';
 export class SideBarCompComponent implements OnInit {
   OpenedSideBar: boolean = true;
   current!: string;
+  roles = JSON.parse(localStorage.getItem('roles') || '[]'); // ⚠️ Vérifie que `roles` est bien stocké
+
   private router = inject(Router);
   questionsMenuOpen: boolean = false;
 

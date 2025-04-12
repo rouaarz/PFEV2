@@ -118,7 +118,7 @@ export class SigninComponent implements AfterViewInit {
             // ✅ Redirection selon le rôle
             if (roles.includes('ROLE_ADMIN') || roles.includes('ROLE_CHEF')) {
               alert("✅ Connexion réussie en tant qu'ADMIN ou CHEF !");
-              this.router.navigate(['/Question']);
+              this.router.navigate(['/dash']);
             } else if (roles.includes('ROLE_DEVELOPPEUR')) {
               alert("✅ Connexion réussie en tant que DEVELOPPEUR !");
               this.router.navigate(['/tests']);

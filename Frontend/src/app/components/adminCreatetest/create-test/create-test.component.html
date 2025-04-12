@@ -1,0 +1,36 @@
+
+ <div class="stepper-container">
+  <div class="mt-4 text-center">
+    <i class="fas fa-arrow-left btn-back" (click)="navigateToTestManagement()"></i>
+  </div>
+  
+
+  <mat-stepper [linear]="true" #stepper>
+    <mat-step label="Informations de Base">
+      <app-basic-info (testCreated)="onTestCreated($event)"></app-basic-info>
+    </mat-step>
+
+    <mat-step label="Assigner des Questions">
+      <app-assign-questions 
+        [testId]="testId" 
+        (questionsFinalized)="onQuestionsFinalized()">
+      </app-assign-questions>
+    </mat-step>
+
+    <mat-step label="Publication">
+      <ng-container *ngIf="!loading; else loadingTpl">
+        <app-publish-test 
+          [testId]="testId" 
+          (testPublished)="onTestPublished()">
+        </app-publish-test>
+      </ng-container>
+   
+      <ng-template #loadingTpl>
+        <div class="loading-container">
+          <mat-spinner diameter="50"></mat-spinner>
+          <p>Publication en cours... Veuillez patienter.</p>
+        </div>
+      </ng-template>
+    </mat-step>
+  </mat-stepper>
+</div>

@@ -1,0 +1,88 @@
+<!-- 
+   <div class="page-container">
+    <h1 class="page-title">Créer un Nouveau Test</h1>
+    
+    <form (ngSubmit)="createTest()" class="test-form">
+      <div class="form-field">
+        <label for="titre">Titre du Test</label>
+        <input id="titre" type="text" placeholder="Titre du Test" [(ngModel)]="test.titre" name="titre" required>
+      </div>
+  
+      <div class="form-field">
+        <label for="description">Description</label>
+        <textarea id="description" placeholder="Description" [(ngModel)]="test.description" name="description"></textarea>
+      </div>
+  
+      <div class="form-field">
+        <label for="type">Type de Test</label>
+        <input id="type" type="text" placeholder="Type de Test" [(ngModel)]="test.type" name="type">
+      </div>
+  
+      <div class="form-field">
+        <label for="duree">Durée (en minutes)</label>
+        <input id="duree" type="number" placeholder="Durée" [(ngModel)]="test.duree" name="duree">
+      </div>
+  
+      <div class="form-field">
+        <label for="limiteTentatives">Limite de Tentatives</label>
+        <input id="limiteTentatives" type="number" placeholder="Limite Tentatives" [(ngModel)]="test.limiteTentatives" name="limiteTentatives">
+      </div>
+  
+      <div class="button-group">
+        <button class="btn-submit" type="submit">Créer le Test</button>
+      </div>
+    </form>
+  </div>
+   -->
+<div class="page-container">
+  <h1 class="page-title">{{ testId ? 'Modifier le Test' : 'Créer un Nouveau Test' }}</h1>
+
+  <form (ngSubmit)="onSubmit()" class="test-form">
+    <div class="form-field">
+      <label for="titre">Titre du Test</label>
+      <input id="titre" type="text" placeholder="Titre du Test" [(ngModel)]="test.titre" name="titre" required>
+    </div>
+
+    <div class="form-field">
+      <label for="description">Description</label>
+      <textarea id="description" placeholder="Description" [(ngModel)]="test.description" name="description"></textarea>
+    </div>
+
+    <div class="form-field">
+      <label for="type">Type de Test</label>
+      <input id="type" type="text" placeholder="Type de Test" [(ngModel)]="test.type" name="type">
+    </div>
+    <div class="form-field">
+
+      <label for="niveauDifficulte">Niveau de difficulté :</label>
+      <select [(ngModel)]="test.niveauDifficulte" name="niveauDifficulte">
+        <option value="">-- Sélectionner --</option>
+        <option value="Facile" style="background-color: #d4edda;">Facile</option>
+        <option value="Intermédiaire" style="background-color: #fff3cd;">Intermédiaire</option>
+        <option value="Difficile" style="background-color: #f8d7da;">Difficile</option>
+      </select>
+      
+
+    </div>
+
+    <div class="form-field">
+      <label for="duree">Durée (en minutes)</label>
+      <input id="duree" type="number" placeholder="Durée" [(ngModel)]="test.duree" name="duree">
+    </div>
+
+    <div class="form-field">
+      <label for="limiteTentatives">Limite de Tentatives</label>
+      <input id="limiteTentatives" type="number" placeholder="Limite Tentatives" [(ngModel)]="test.limiteTentatives"
+        name="limiteTentatives">
+    </div>
+
+    <div class="form-field" *ngIf="testId">
+      <label for="dateCreation">Date de Création</label>
+      <input id="dateCreation" type="text" [value]="test.dateCreation" disabled>
+    </div>
+
+    <div class="button-group">
+      <button class="btn-submit" type="submit">{{ testId ? 'Modifier le Test' : 'Créer le Test' }}</button>
+    </div>
+  </form>
+</div>

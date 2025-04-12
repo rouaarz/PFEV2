@@ -1,0 +1,73 @@
+<!-- 
+<div class="invitation-container">
+  <div *ngIf="isLoading" class="loader"></div>
+
+  <div *ngIf="invitationDetails">
+    <h2>Invitation à passer le test : {{ invitationDetails.test.titre }}</h2>
+
+    <p><strong>ID du test :</strong> {{ invitationDetails.test.id }}</p>
+    <p><strong>Description :</strong> {{ invitationDetails.test.description }}</p>
+    <p><strong>Type :</strong> {{ invitationDetails.test.type }}</p>
+    <p><strong>Durée :</strong> {{ invitationDetails.test.duree || 'Non spécifiée' }}</p>
+
+    <p><strong>Statut de l'invitation :</strong> <span [ngClass]="{
+      'accepted': invitationDetails.statut === 'ACCEPTED',
+      'declined': invitationDetails.statut === 'DECLINED'
+    }">{{ invitationDetails.statut }}</span></p>
+    
+    <p><strong>Date de l'invitation :</strong> {{ invitationDetails.dateInvitation | date }}</p>
+
+    <div class="action-buttons">
+      <button 
+        class="accept-btn" 
+        (click)="onAccept()" 
+        [disabled]="invitationDetails.statut === 'DECLINED' || invitationDetails.statut === 'ACCEPTED'">
+        Accepter
+      </button>
+
+      <button 
+        class="decline-btn" 
+        (click)="onDecline()" 
+        [disabled]="invitationDetails.statut === 'DECLINED' || invitationDetails.statut === 'ACCEPTED'">
+        Refuser
+      </button>
+    </div>
+  </div>
+</div> -->
+<div class="invitation-container">
+  <div *ngIf="isLoading" class="loader"></div>
+
+  <div *ngIf="invitationDetails">
+    <h2>Invitation à passer le test : {{ invitationDetails.test.titre }}</h2>
+
+    <p><strong>ID du test :</strong> {{ invitationDetails.test.id }}</p>
+    <p><strong>Description :</strong> {{ invitationDetails.test.description }}</p>
+    <p><strong>Type :</strong> {{ invitationDetails.test.type }}</p>
+    <p><strong>Durée :</strong> {{ invitationDetails.test.duree || 'Non spécifiée' }}</p>
+
+    <p><strong>Statut de l'invitation :</strong> <span [ngClass]="{
+      'accepted': invitationDetails.statut === 'ACCEPTED',
+      'declined': invitationDetails.statut === 'DECLINED'
+    }">{{ invitationDetails.statut }}</span></p>
+
+    <p><strong>Date de l'invitation :</strong> {{ invitationDetails.dateInvitation | date }}</p>
+
+    <div class="action-buttons">
+      <button 
+        class="accept-btn" 
+        (click)="onAccept()" 
+        [disabled]="isProcessing || invitationDetails.statut === 'DECLINED' || invitationDetails.statut === 'ACCEPTED'">
+        <span *ngIf="isProcessing" class="button-loader"></span>
+        <span *ngIf="!isProcessing">Accepter</span>
+      </button>
+
+      <button 
+        class="decline-btn" 
+        (click)="onDecline()" 
+        [disabled]="isProcessing || invitationDetails.statut === 'DECLINED' || invitationDetails.statut === 'ACCEPTED'">
+        <span *ngIf="isProcessing" class="button-loader"></span>
+        <span *ngIf="!isProcessing">Refuser</span>
+      </button>
+    </div>
+  </div>
+</div>

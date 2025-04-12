@@ -1,7 +1,9 @@
 <div class="container">
   <h2 *ngIf="!idChef">Ajouter un Chef de Projet</h2>
   <h2 *ngIf="idChef">Modifier Chef de Projet</h2>
-
+  <div class="loader-container" *ngIf="isLoading">
+    <div class="spinner"></div>
+  </div>
   <form (ngSubmit)="ajouterChef()">
     <div *ngFor="let error of errorMessages" class="alert alert-danger">
       {{ error }}
@@ -18,7 +20,7 @@
         required
         class="form-control"
       />
-      <small *ngIf="usernameExists" class="text-danger">⚠️ Ce nom est déjà utilisé.</small>
+      <small *ngIf="usernameExists" class="text-danger"> Ce nom est déjà utilisé.</small>
     </div>
 
     <div class="form-group">
@@ -32,10 +34,10 @@
         required
         class="form-control"
       />
-      <small *ngIf="emailExists" class="text-danger">⚠️ Cet email est déjà utilisé.</small>
+      <small *ngIf="emailExists" class="text-danger"> Cet email est déjà utilisé.</small>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="password">Mot de passe :</label>
       <input
         type="password"
@@ -45,7 +47,7 @@
         required
         class="form-control"
       />
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label for="specialite">Spécialité :</label>
@@ -59,7 +61,7 @@
       />
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="score">Score :</label>
       <input
         type="number"
@@ -69,7 +71,7 @@
         required
         class="form-control"
       />
-    </div>
+    </div> -->
 
     <button type="submit" class="btn btn-primary">
       {{ idChef ? 'Modifier' : 'Ajouter' }}

@@ -3,7 +3,7 @@
         <div class="header-left">
             <a href="#" class="logo">
                 <i class="fas fa-code"></i>
-                <span>TechAssess</span>
+                <span>...</span>
             </a>
             <button class="mobile-menu-btn" aria-label="Menu mobile">
                 <i class="fas fa-bars"></i>
@@ -16,7 +16,7 @@
             </div>
             <a href="#" class="active">Accueil</a>
             &nbsp;  &nbsp; 
-            <a href="#tests">Tests</a>
+            <a routerLink="/tests">Tests</a>
             &nbsp;  &nbsp;  
             <a href="#features">Fonctionnalités</a>
             &nbsp;  &nbsp;
@@ -27,9 +27,16 @@
         </nav>
         
         <div class="auth-buttons">
-            <a [routerLink]="['/signin']" class="btn btn-login">Connexion</a>
-            &nbsp;  &nbsp;
-            <a [routerLink]="['/signup']" class="btn btn-primary">S'inscrire</a>
-        </div>
+            <ng-container *ngIf="!isLoggedIn; else loggedIn">
+              <a [routerLink]="['/signin']" class="btn btn-login">Connexion</a>
+              &nbsp;  &nbsp;
+              <a [routerLink]="['/signup']" class="btn btn-primary">S'inscrire</a>
+            </ng-container>
+          
+            <ng-template #loggedIn>
+              <button (click)="logout()" class="btn btn-danger">Déconnexion</button>
+            </ng-template>
+          </div>
+          
     </div></div>
 </header>

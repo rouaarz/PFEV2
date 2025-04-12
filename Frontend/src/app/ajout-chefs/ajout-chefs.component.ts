@@ -29,6 +29,8 @@ export class AjoutChefsComponent implements OnInit {
   emailExists = false;
   errorMessages: string[] = [];
   idChef?: number;
+  token = localStorage.getItem('accessToken') ?? '';
+  isLoading = false;  // Add this line to track the loading state
 
   constructor(
     private chefService: ChefDeProjetService,
@@ -58,6 +60,7 @@ export class AjoutChefsComponent implements OnInit {
 
   ajouterChef() {
     this.errorMessages = [];
+    this.isLoading = true;  // Set loading state to true before starting the request
 
     // Vérification du format de l'email
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -65,15 +68,19 @@ export class AjoutChefsComponent implements OnInit {
       this.errorMessages.push('⚠️ Veuillez entrer une adresse email valide.');
     }
 
-    if (this.errorMessages.length > 0) return;
-
-    this.chefService.ajouterChef(this.chefDeProjet).subscribe({
+    if (this.errorMessages.length > 0) {
+      this.isLoading = false;  // Hide loader if errors are found
+      return;
+    }
+    this.chefService.ajouterChef(this.chefDeProjet, this.token).subscribe({
       next: () => {
+        this.isLoading = false;  // Hide loader after the process is done
         alert('✅ Chef de projet ajouté avec succès !');
-        this.router.navigate(['/list-Chefs']);
+        this.router.navigate(['admin/list-Chefs']);
       },
       error: (error) => {
         console.error('Erreur lors de l\'ajout', error);
+        this.isLoading = false;  // Hide loader if there is an error
         this.errorMessages.push('❌ Une erreur est survenue.');
       },
     });

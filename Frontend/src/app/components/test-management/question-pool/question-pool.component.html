@@ -1,0 +1,10 @@
+<div class="modal">
+    <h3>Choisir une question</h3>
+    <ul class="list-group">
+      <li *ngFor="let q of questions" class="list-group-item d-flex justify-content-between align-items-center">
+        {{ q.intitule }} <!-- Remplacer par ton champ question -->
+        <button (click)="selectQuestion(q)" class="btn btn-primary btn-sm">➕ Ajouter</button>
+      </li>
+    </ul>
+  </div>
+  

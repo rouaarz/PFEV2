@@ -1,0 +1,139 @@
+/* Card container */
+.card {
+  padding: 20px; /* Réduit l'espace interne */
+  background-color: #f3f4f7;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);  /* Ombre plus marquée */
+  margin: 15px 0; /* Réduit l'espace externe */
+}
+
+/* Title */
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #E1A624;  /* Couleur dorée */
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* Label styling */
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Select box */
+.select {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Developer list container */
+.developer-list {
+  margin-top: 2rem;
+}
+
+.scroll-box {
+  max-height: 250px;
+  overflow-y: auto;
+  background-color: rgb(255, 255, 255);
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+}
+
+/* Developer list item */
+.developer-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+/* Developer name and email */
+.developer-text {
+  font-size: 1rem;
+  color: #333;
+}
+
+.developer-email {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* Ensure the last item has no margin bottom */
+.developer-item:last-child {
+  margin-bottom: 0;
+}
+
+.my-button {
+  padding: 0.75rem 2rem;  /* Ajuste la taille du bouton, moins grand */
+  background: linear-gradient(to right, #3b82f6, #317AC1);  /* Dégradé bleu-violet */
+  color: white;
+  font-size: 1rem;  /* Taille de texte réduite */
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 30px;  /* Bord arrondi pour un look moderne */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);  /* Ombre légère */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;  /* Empêche qu'il prenne toute la largeur */
+  margin: 20px auto;  /* Centre le bouton */
+  width: auto;  /* Laisse la largeur ajuster au contenu */
+}
+
+.my-button:hover {
+  background: linear-gradient(to right, #2563eb, #4f46e5);  /* Changement de couleur au survol */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);  /* Ombre plus marquée */
+  transform: translateY(-2px);  /* Effet plus léger */
+}
+
+/* Ajout du conteneur pour une grille à 2 cartes par ligne */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Deux cartes par ligne */
+  gap: 20px; /* Espacement entre les cartes */
+  justify-items: center;
+  margin: 2rem auto;
+  padding: 0 15px;
+}
+
+/* Ajustements pour mobile */
+@media (max-width: 480px) {
+  .my-button {
+    font-size: 0.9rem;  /* Taille de texte plus petite */
+    padding: 0.6rem 1.5rem;  /* Moins de padding sur mobile */
+  }
+  .card-container {
+    grid-template-columns: 1fr; /* Une seule carte par ligne sur mobile */
+  }
+  .card {
+    padding: 1rem;
+  }
+  button {
+    font-size: 0.9rem;
+  }
+}

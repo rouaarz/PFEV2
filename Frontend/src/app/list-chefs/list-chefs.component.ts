@@ -16,7 +16,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 })
 export class ListChefsComponent implements OnInit {
 
-
+  token!: string;
 
   developpeursAssignes: any[] = [];
   chefSelectionne: any = null;
@@ -29,10 +29,24 @@ export class ListChefsComponent implements OnInit {
 
   ngOnInit() {
     this.getChefs();
+    this.token = localStorage.getItem('accessToken') || '';
+    console.log("🛠 token:", this.token);
   }
 
   // Récupérer la liste des chefs
+  // getChefs() {
+  //   this.chefService.getAllChefs( this.token).subscribe(
+  //     (data: ChefDeProjet[]) => {
+  //       this.chefs = data;
+  //       console.log("Liste des chefs :", this.chefs);
+  //     },
+  //     (error) => {
+  //       console.error("Erreur lors du chargement des chefs :", error);
+  //     }
+  //   );
+  // }
   getChefs() {
+
     this.chefService.getAllChefs().subscribe(
       (data: ChefDeProjet[]) => {
         this.chefs = data;
@@ -43,7 +57,7 @@ export class ListChefsComponent implements OnInit {
       }
     );
   }
-
+  
   goToAddChefs() {
     this.router.navigate(['/admin/ajout-Chef']);
     }
@@ -58,7 +72,7 @@ export class ListChefsComponent implements OnInit {
   supprimerChef(id: number) {
     console.log(id);
     if (confirm('Êtes-vous sûr de vouloir supprimer ce chef de projet ?')) {
-      this.chefService.supprimerChef(id).subscribe(() => {
+      this.chefService.supprimerChef(id,this.token).subscribe(() => {
         alert('Chef supprimé avec succès !');
         this.getChefs(); // Recharger la liste après suppression
       }, error => {
@@ -84,20 +98,42 @@ export class ListChefsComponent implements OnInit {
   assignDeveloppeur(chefId: number): void {
     this.router.navigate([`/admin/assign-developpeur/${chefId}`]);
   }
-  
-    voirDeveloppeursAssignes(chefId: number) {
-      // Récupérer le chef sélectionné
-      this.chefSelectionne = this.chefs.find(chef => chef.id === chefId);
-      
-      // Appel à l'API pour obtenir les développeurs assignés
-      this.chefService.getDeveloppeursAssignes(chefId).subscribe(
-        (data) => {
-          this.developpeursAssignes = data;
-        },
-        (error) => {
-          console.error("Erreur lors de la récupération des développeurs assignés", error);
-        }
-      );
+  voirDeveloppeursAssignes(chefId: number) {
+    // Récupérer le chef sélectionné
+    this.chefSelectionne = this.chefs.find(chef => chef.id === chefId);
+    
+    // Récupérer le token
+    const token = localStorage.getItem('accessToken');
+    
+    if (!token) {
+      console.error("Le token est manquant !");
+      return;
     }
+  
+    // Appel à l'API pour obtenir les développeurs assignés avec le token
+    this.chefService.getDeveloppeursAssignes(chefId, token).subscribe(
+      (data) => {
+        this.developpeursAssignes = data;
+      },
+      (error) => {
+        console.error("Erreur lors de la récupération des développeurs assignés", error);
+      }
+    );
+  }
+  
+    // voirDeveloppeursAssignes(chefId: number) {
+    //   // Récupérer le chef sélectionné
+    //   this.chefSelectionne = this.chefs.find(chef => chef.id === chefId);
+      
+    //   // Appel à l'API pour obtenir les développeurs assignés
+    //   this.chefService.getDeveloppeursAssignes(chefId).subscribe(
+    //     (data) => {
+    //       this.developpeursAssignes = data;
+    //     },
+    //     (error) => {
+    //       console.error("Erreur lors de la récupération des développeurs assignés", error);
+    //     }
+    //   );
+    // }
   
 }

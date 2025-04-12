@@ -1,0 +1,70 @@
+<!-- Container principal -->
+<div class="container p-4" *ngIf="test">
+    <!-- En-tête du test -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h2 class="test-title">
+            <i class="bi bi-file-earmark-earphones me-3"></i> {{ test.titre }}
+        </h2>
+        <div class="text-muted">
+            <i class="bi bi-calendar-event me-2"></i> {{ test.dateExpiration | date: 'shortDate' }}
+        </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+        <p class="font-weight-semibold mb-2">Description</p>
+        <p class="text-muted">{{ test.description }}</p>
+    </div>
+
+    <!-- Détails du test -->
+    <div class="row mb-4">
+        <div class="col-12 col-md-6 mb-2">
+            <p><i class="bi bi-clock me-2"></i><strong>Durée :</strong> {{ test.duree }} h</p>
+        </div>
+        <div class="col-12 col-md-6 mb-2">
+            <p><i class="bi bi-question-circle me-2"></i><strong>Type :</strong> {{ test.type }}</p>
+        </div>
+        <div class="col-12 col-md-6 mb-2">
+            <p><i class="bi bi-arrow-repeat me-2"></i><strong>Limite de Tentatives :</strong> {{ test.limiteTentatives }}</p>
+        </div>
+        <div class="col-12 col-md-6 mb-2">
+            <p><i class="bi" [ngClass]="test.accesPublic ? 'bi-globe' : 'bi-lock'"></i><strong>Accès :</strong> {{ test.accesPublic ? 'Public' : 'Privé' }}</p>
+        </div>
+    </div>
+
+    <!-- Statut -->
+    <div class="mb-4">
+        <p><strong><i class="bi bi-flag me-2"></i>Statut :</strong>
+            <span class="badge rounded-pill" [ngClass]="{'bg-success': test.statut === 'PUBLIE', 'bg-warning': test.statut === 'Brouillon'}">
+                {{ test.statut }}
+            </span>
+        </p>
+    </div>
+
+    <h3 class="text-2xl font-weight-semibold mb-4">Questions associées</h3>
+
+    <div *ngIf="questions.length > 0; else noQuestions">
+        <div *ngFor="let question of questions" class="question-card">
+            <p class="font-weight-semibold mb-2"> {{ question.enonce }}</p>
+            <p class="text-muted mb-2">Niveau : <span class="badge bg-info">{{ question.niveau }}</span></p>
+
+            <ul class="list-unstyled">
+                <li *ngFor="let option of question.answerOptions"
+                    [ngClass]="{'text-success font-weight-bold': option.isCorrect, 'text-secondary': !option.isCorrect}">
+                    <span>{{ option.text }}</span>
+                    <span *ngIf="option.isCorrect" class="text-success"><i class="bi bi-check-circle-fill"></i></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <ng-template #noQuestions>
+        <p class="text-danger">Aucune question disponible pour ce test.</p>
+    </ng-template>
+
+    <div class="mt-4 text-center">
+        <button (click)="goBack()" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left-circle me-2"></i> Retour
+        </button>
+    </div>
+</div>

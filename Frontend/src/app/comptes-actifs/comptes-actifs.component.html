@@ -18,6 +18,8 @@
       <tr>
         <th>Nom d'utilisateur</th>
         <th>Email</th>
+        <th>Role</th>
+
         <th>Action</th>
       </tr>
     </thead>
@@ -25,6 +27,8 @@
       <tr *ngFor="let user of filteredUsers | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
+        <td>{{ user.roles[0]?.name }}</td>
+
         <td>
           <button (click)="deactivateUser(user.email)" class="btn btn-warning">
             <i class="fas fa-ban"></i> Désactiver

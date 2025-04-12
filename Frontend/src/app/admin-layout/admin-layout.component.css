@@ -1,13 +1,7 @@
 .admin-container {
   display: flex;
 }
-/*
-.admin-content {
-  flex-grow: 5;
-  padding: 20px;
-  margin-top: 60px;} /* Pour éviter que le contenu soit caché sous la navbar */
 
-*/
 .app-sidebar {
   width: 250px; /* Largeur du menu */
   background-color: #2c2c58;

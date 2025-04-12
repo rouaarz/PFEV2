@@ -1,0 +1,114 @@
+<!-- 
+   <div class="questions-section">
+    <h2 class="questions-title">Liste des Questions</h2>
+  
+    <div class="search-bar">
+      <input 
+        type="text" 
+        placeholder="🔍 Filtrer par type, énoncé, etc..."
+        [(ngModel)]="searchTerm" 
+        (input)="filterQuestions()" 
+      />
+    </div>
+    <div class="questions-container">
+      <div *ngFor="let question of filteredQuestions" class="question-card">
+        <p><strong>Énoncé :</strong> <span class="question-emoji">📚</span> {{ question.enonce }}</p>
+        <p><strong>Type :</strong> {{ question.type }}</p>
+        <p><strong>Niveau :</strong> {{ question.niveau }}</p>
+  
+        <div *ngIf="question.type === 'QCM'">
+          <p><strong>Options :</strong></p>
+          <ul>
+            <li *ngFor="let option of question.answerOptions">
+              {{ option.text }}
+              <span *ngIf="option.isCorrect" class="correct-answer">
+                <i class="bi bi-check-circle"></i> (Correct)
+              </span>
+            </li>
+          </ul>
+        </div>
+  
+        <div *ngIf="question.type === 'Code'">
+          <p><strong>Snippet de Code :</strong></p>
+          <pre>{{ question.codeSnippet }}</pre>
+        </div>
+  
+        <div class="question-details">
+          <div class="points">
+            <label for="points">Points :</label>
+            <input type="number" id="points" [(ngModel)]="question.selectedPoints">
+          </div>
+          <div class="order">
+            <label for="ordre">Ordre :</label>
+            <input type="number" id="ordre" [(ngModel)]="question.selectedOrdre">
+          </div>
+        </div>
+  
+        <button (click)="assignQuestionToTest(question)" [disabled]="question.isAssigned">
+          {{ question.isAssigned ? 'Assignée' : 'Assigner' }}
+        </button>
+      </div>
+    </div>
+  </div>
+   -->
+   <!-- Dans le fichier assign-questions.component.html -->
+<div class="questions-section">
+  <h2 class="questions-title">Liste des Questions</h2>
+
+  <!-- Barre de recherche -->
+  <div class="search-bar">
+    <input 
+      type="text" 
+      placeholder="🔍 Filtrer par type, énoncé, etc..."
+      [(ngModel)]="searchTerm" 
+      (input)="filterQuestions()" 
+    />
+  </div>
+
+  <div class="questions-container">
+    <div *ngFor="let question of filteredQuestions" class="question-card">
+      <p><strong>Énoncé :</strong> <span class="question-emoji">📚</span> {{ question.enonce }}</p>
+      <p><strong>Type :</strong> {{ question.type }}</p>
+      <p><strong>Niveau :</strong> {{ question.niveau }}</p>
+
+      <!-- Si la question est de type QCM -->
+      <div *ngIf="question.type === 'QCM'">
+        <p><strong>Options :</strong></p>
+        <ul>
+          <li *ngFor="let option of question.answerOptions">
+            {{ option.text }}
+            <span *ngIf="option.isCorrect" class="correct-answer">
+              <i class="bi bi-check-circle"></i> (Correct)
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Si la question est de type Code -->
+      <div *ngIf="question.type === 'Code'">
+        <p><strong>Snippet de Code :</strong></p>
+        <pre>{{ question.codeSnippet }}</pre>
+      </div>
+
+      <!-- Section pour Points et Ordre alignés sur la même ligne -->
+      <div class="question-details">
+        <div class="points">
+          <label for="points">Points :</label>
+          <input type="number" id="points" [(ngModel)]="question.selectedPoints">
+        </div>
+        <div class="order">
+          <label for="ordre">Ordre :</label>
+          <input type="number" id="ordre" [(ngModel)]="question.selectedOrdre">
+        </div>
+      </div>
+
+      <!-- Bouton Assigner, il est désactivé si la question a déjà été assignée ou si les points/ordre n'ont pas changé -->
+      <button 
+        (click)="assignQuestionToTest(question)" 
+        [disabled]="question.isAssigned && (question.selectedPoints === question.previousPoints && question.selectedOrdre === question.previousOrdre)"
+      >
+        {{ question.isAssigned ? 'Assignée' : 'Assigner' }}
+      </button>
+    </div>
+  </div>
+</div>

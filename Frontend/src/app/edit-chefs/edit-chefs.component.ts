@@ -36,6 +36,7 @@ throw new Error('Method not implemented.');
   usernameExists = false;
   emailExists = false;
   isEditing = false;
+  token = localStorage.getItem('accessToken') ?? '';
 
   constructor(
     private chefService: ChefDeProjetService,
@@ -80,7 +81,7 @@ throw new Error('Method not implemented.');
     }
 
     // Appel pour modifier le chef de projet
-    this.chefService.modifierChef(this.chefDeProjet.id, this.chefDeProjet).subscribe(() => {
+    this.chefService.modifierChef(this.chefDeProjet.id, this.chefDeProjet, this.token).subscribe(() => {
       alert('✅ Chef de projet modifié avec succès !');
       this.router.navigate(['/admin/list-Chefs']); // Redirection après modification
     }, error => {

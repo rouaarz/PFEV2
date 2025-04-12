@@ -1,6 +1,6 @@
 // admin.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,13 +12,17 @@ export class AdminService {
   constructor(private http: HttpClient) {}
 
 
-  getInactiveUsers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/inactive-users`);
+  getInactiveUsers(token: string): Observable<any[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<any[]>(`${this.apiUrl}/inactive-users`, { headers });
   }
 
  
-  activerCompte(email: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/activate?email=${email}`, null);
+  activerCompte(email: string,token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.post<any>(`${this.apiUrl}/activate?email=${email}`, null, { headers });
   }
   
   

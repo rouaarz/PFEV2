@@ -1,4 +1,4 @@
-.score-container {
+/* .score-container {
     text-align: center;
     padding: 20px;
     border: 1px solid #ddd;
@@ -19,4 +19,103 @@
     color: red;
     font-weight: bold;
   }
-  
+   */
+/* Container principal */
+.score-container {
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.score-container h2 {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.progress-bar-container {
+  background-color: #e0e0e0;
+  height: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #88c3f0;
+  border-radius: 5px;
+}
+
+.score-value {
+  margin-bottom: 20px;
+}
+
+.score-message {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.score-message.excellent {
+  color: #28a745;
+}
+
+.score-message.good {
+  color: #ffca28;
+}
+
+.score-message.try-again {
+  color: #f44336;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.actions button {
+  font-size: 1rem;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.actions i {
+  margin-right: 8px; /* Espacement entre l'icône et le texte */
+  font-size: 1.3rem; /* Taille de l'icône */
+}
+
+.retry-btn {
+  background-color: #88c3f0;
+  color: white;
+}
+
+.retry-btn:hover {
+  background-color: #88c3f0;
+}
+
+.share-btn {
+  background-color: #317AC1;
+  color: white;
+}
+
+.share-btn:hover {
+  background-color: #317AC1;
+}
+
+.error-message {
+  color: #f44336;
+  font-weight: bold;
+  margin-top: 20px;
+}
+

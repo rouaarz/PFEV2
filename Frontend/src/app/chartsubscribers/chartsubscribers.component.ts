@@ -7,8 +7,8 @@ import { BaseChartDirective } from 'ng2-charts';
   selector: 'app-chartsubscribers',
   standalone: true,
   imports: [ BaseChartDirective ,CommonModule],
-  templateUrl: './chartsubscribers.component.html',
-  styleUrl: './chartsubscribers.component.css'
+  templateUrl: './chartsubscribers/chartsubscribers.component.html',
+  styleUrl: './chartsubscribers/chartsubscribers.component.css'
 })
 export class ChartsubscribersComponent {
   data: ChartData<'bar'>= {

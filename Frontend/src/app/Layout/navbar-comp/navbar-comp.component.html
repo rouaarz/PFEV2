@@ -1,6 +1,9 @@
 <div class="header">
   <div class="title">
-    <p>Admin</p>
+    <p *ngIf="roles.includes('ROLE_ADMIN')">
+      Admin</p>
+      <p *ngIf="roles.includes('ROLE_CHEF')">
+        Chef</p>
   </div>
 
   <div class="right-side">

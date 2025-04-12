@@ -1,0 +1,110 @@
+/* Container principal */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.2rem;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    border-top: 4px solid #9b8367; /* Doré/beige plus doux */
+}
+
+/* Titre du test */
+.test-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2e2e2e;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+}
+
+/* Description */
+.text-muted {
+    color: #777;
+    font-size: 0.95rem;
+}
+
+.font-weight-semibold {
+    font-weight: 600;
+    color: #2c2c2c;
+}
+
+/* Détails du test */
+p {
+    font-size: 1rem;
+    color: #3a3a3a;
+    display: flex;
+    align-items: center;
+}
+
+p i {
+    font-size: 1.1rem;
+    color: #9b8367;
+    margin-right: 6px;
+}
+
+/* Badge statut */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 15px;
+    text-transform: capitalize;
+}
+
+/* Couleurs des statuts */
+.bg-success {
+    background-color: #2e7d32 !important;
+    color: #fff;
+}
+
+.bg-warning {
+    background-color: #c9993a !important;
+    color: #fff;
+}
+
+.bg-info {
+    background-color: #5c646b !important;
+    color: #fff;
+}
+
+/* Card question */
+.question-card {
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.question-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Bouton Retour */
+button {
+    background-color: transparent;
+    border: 1.5px solid #9b8367;
+    color: #9b8367;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #9b8367;
+    color: #fff;
+    transform: scale(1.03);
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Icones Bootstrap */
+.bi {
+    font-size: 1.2rem;
+    color: #2e7d32;
+}

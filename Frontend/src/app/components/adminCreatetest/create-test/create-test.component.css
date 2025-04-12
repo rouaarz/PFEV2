@@ -1,0 +1,106 @@
+/* Conteneur principal du Stepper */
+.stepper-container {
+  width: 100%;
+  max-width: 10000px; /* Limite la largeur du stepper */
+  margin: 0 auto; /* Centré */
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Personnalisation du Stepper */
+mat-stepper {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Chaque étape du Stepper */
+mat-step {
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+mat-step .mat-step-label {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #4a4a4a;
+}
+
+/* Étape active du Stepper */
+mat-step.mat-step-active {
+  background-color: #e8f4f8;
+  border-left: 5px solid #4f46e5; /* Bordure sur le côté gauche */
+}
+
+/* Étape complétée */
+mat-step.mat-step-completed {
+  background-color: #d1f7d5;
+}
+
+/* Conteneur du loader */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+}
+
+.loading-container mat-spinner {
+  margin-bottom: 10px;
+}
+
+.loading-container p {
+  font-size: 1.2rem;
+  color: #4a4a4a;
+  font-weight: bold;
+  text-align: center;
+}
+/* Style du bouton */
+/* Style du bouton */
+.btn-back {
+  font-size:1000px;
+  cursor: pointer;
+  color: #317AC1;
+  transition: transform 0.3s ease, color 0.3s ease;
+  margin-right: 10000px;
+}
+
+.btn-back:hover {
+  transform: translateX(-5px); /* Déplacement vers la gauche au survol */
+  color: #205f9e; /* Changement de couleur au survol */
+}
+
+.mt-4 {
+  margin-top: 2rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+
+.fa-arrow-left {
+  font-size: 20px;  /* Taille de la flèche */
+}
+
+
+
+/* Stepper utilisé dans un mobile (responsive) */
+@media (max-width: 768px) {
+  .stepper-container {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  mat-step {
+    padding: 10px;
+  }
+}

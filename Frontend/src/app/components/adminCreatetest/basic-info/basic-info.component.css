@@ -1,0 +1,151 @@
+/* Conteneur principal pour la page */
+.page-container {
+  width: 80%; /* Réduire la largeur */
+  margin: 20px auto; /* Ajouter de la marge pour centrer */
+  padding: 20px; /* Réduire le padding */
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+select {
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #fafafa;
+  color: #333;
+  transition: border 0.3s ease, background-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  appearance: none; /* Pour cacher la flèche par défaut sur certains navigateurs */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='12'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23333'%20d='M7%2010l5%205%205-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+
+select:focus {
+  border-color: #317AC1;
+  background-color: #fff;
+  outline: none;
+}
+select.niveau-facile {
+  background-color: #d4edda;
+}
+
+select.niveau-intermediaire {
+  background-color: #fff3cd;
+}
+
+select.niveau-difficile {
+  background-color: #f8d7da;
+}
+
+/* Titre de la page */
+.page-title {
+  font-size: 28px; /* Réduire la taille du titre */
+  font-weight: 700;
+  color: #E1A624;
+  text-align: center;
+  margin-bottom: 25px; /* Réduire l'espace sous le titre */
+  text-transform: uppercase;
+  letter-spacing: 1px; /* Réduire l'espacement des lettres */
+}
+
+/* Style du formulaire */
+.test-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Réduire l'écart entre les champs */
+  width: 100%;
+}
+
+/* Style des champs de formulaire */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Réduire l'écart entre les labels et les champs */
+}
+
+/* Labels */
+label {
+  font-size: 14px; /* Réduire la taille des labels */
+  font-weight: 600;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 0.5px; /* Réduire l'espacement des lettres */
+}
+
+/* Champs de saisie (inputs et textarea) */
+input, textarea {
+  padding: 10px; /* Réduire le padding */
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px; /* Réduire la taille de la police */
+  background-color: #fafafa;
+  color: #333;
+  transition: border 0.3s ease, background-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+  border-color: #317AC1;
+  background-color: #fff;
+  outline: none;
+}
+
+/* Textarea spécifique */
+textarea {
+  min-height: 100px; /* Réduire la hauteur minimale du textarea */
+}
+
+/* Bouton de soumission */
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  padding: 12px 25px; /* Réduire le padding du bouton */
+  background-color: #317AC1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px; /* Réduire la taille de la police du bouton */
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+button:hover {
+  background-color: #2264a5;
+  transform: translateY(-3px);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Styles de fond pour le formulaire */
+.test-form {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 20px; /* Réduire le padding à l'intérieur du formulaire */
+}

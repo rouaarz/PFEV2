@@ -23,14 +23,14 @@
         </a>
       </li>
       <li>
-        <a [routerLink]="['']" [ngClass]="{'active': current === ''}">
+        <a [routerLink]="['/admin/TestManagement']" [ngClass]="{'active': current === '/admin/TestManagement'}">
           <mat-icon class="icon">engineering</mat-icon>
           <p class="nav-item">
             Gerer les tests
           </p>
         </a>
       </li>
-      <li>
+      <li  *ngIf="roles.includes('ROLE_ADMIN')">
         <a [routerLink]="['/admin/list-Chefs']" [ngClass]="{'active': current === '/admin/list-Chefs'}">
           <mat-icon class="icon">engineering</mat-icon>
           <p class="nav-item">
@@ -38,7 +38,7 @@
           </p>
         </a>
       </li>
-      <li>
+      <li *ngIf="roles.includes('ROLE_ADMIN')">
         <a [routerLink]="['/admin/activation-Compte']" [ngClass]="{'active': current === '/admin/activation-Compte'}">
           <mat-icon class="icon">engineering</mat-icon>
           <p class="nav-item">

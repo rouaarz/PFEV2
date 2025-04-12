@@ -16,8 +16,11 @@ export class NavbarComponent implements OnInit {
  
 
   constructor(private router: Router) {
-    
+    router.events.subscribe(() => {
+      this.checkLoginStatus();
+    });
   }
+  
 
   // Méthode de déconnexion
   logout(): void {
@@ -36,6 +39,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.checkLoginStatus(); // Vérifie si l'utilisateur est connecté au chargement du composant
     AOS.init();
   }

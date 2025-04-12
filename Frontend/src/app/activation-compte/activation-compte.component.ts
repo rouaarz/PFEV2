@@ -21,6 +21,7 @@ export class ActivationCompteComponent implements OnInit {
   itemsPerPage: number = 5; // Number of items per page
   users: User[] = [];
   error: string = '';
+  token = localStorage.getItem('accessToken') ?? '';
 
   constructor(private adminService: AdminService) {}
 
@@ -29,7 +30,7 @@ export class ActivationCompteComponent implements OnInit {
   }
 
   loadUsers() {
-    this.adminService.getInactiveUsers().subscribe({
+    this.adminService.getInactiveUsers(this.token).subscribe({
       next: (data) => {
         this.users = data;
         this.filteredUsers = data; // Initialize filtered users with all users
@@ -41,7 +42,7 @@ export class ActivationCompteComponent implements OnInit {
   activateUser(email: string) {
     const confirmation = window.confirm("Êtes-vous sûr de vouloir activer ce compte ?");
     if (confirmation) {
-      this.adminService.activerCompte(email).subscribe({
+      this.adminService.activerCompte(email,this.token).subscribe({
         next: () => {
           // Remove the activated user from the filtered list
           this.filteredUsers = this.filteredUsers.filter(user => user.email !== email);

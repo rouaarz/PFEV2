@@ -1,0 +1,30 @@
+<div class="card">
+  <h2 class="title">Publier le Test</h2>
+
+  <!-- Choix Public/Privé -->
+  <label for="accesRestreint" class="label">Choisissez l'accès :</label>
+  <select id="accesRestreint" [(ngModel)]="accesRestreint" (change)="onAccesChange(accesRestreint)" class="select">
+    <option [ngValue]="true">Public (accessible à tous)</option>
+    <option [ngValue]="false">Privé (invitation spécifique)</option>
+  </select>
+
+  <!-- Liste développeurs si Privé -->
+  <div *ngIf="!accesRestreint" class="developer-list">
+    <label class="label">Sélectionnez les développeurs à inviter :</label>
+    <div class="scroll-box">
+      <div *ngFor="let dev of developers" class="developer-item">
+        <input type="checkbox" [checked]="selectedDevelopers.includes(dev.id)"
+          (change)="onDeveloperSelect($event, dev.id)" class="checkbox">
+        <span class="developer-text">{{ dev.username }} <span class="developer-email">({{ dev.email }})</span></span>
+      </div>
+    </div>
+  </div>
+  <!-- Loader circulaire (affiché pendant le délai) -->
+  <div *ngIf="isLoading" class="loader"></div>
+
+  <!-- Bouton Publier -->
+  <button (click)="publishTest()" class="my-button">
+    Publier le Test
+  </button>
+
+</div>

@@ -1,0 +1,113 @@
+<!-- <h3>Liste des Questions Disponibles</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Énoncé</th>
+      <th>Type</th>
+      <th>Niveau</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let question of questionsDisponibles">
+      <td>{{ question.enonce }}</td>
+      <td>{{ question.type }}</td>
+      <td>{{ question.niveau }}</td>
+      <td>
+        <button (click)="detailQuestion(question)">🧐 Détail</button>
+        <button (click)="assignQuestionToTest(question)">➕ Assign to test</button>
+    </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Créer un Test</h2>
+
+<form [formGroup]="testForm" (ngSubmit)="submitTest()">
+  <label>Titre :</label>
+  <input formControlName="titre" type="text" required />
+
+  <label>Description :</label>
+  <textarea formControlName="description" required></textarea>
+
+  <label>Type de test :</label>
+  <select formControlName="type">
+    <option value="QCM">QCM</option>
+    <option value="ALGORITHME">Algorithmique</option>
+    <option value="MIXTE">Mixte</option>
+  </select>
+
+  <label>Durée (minutes) :</label>
+  <input formControlName="duree" type="number" required />
+
+  <label>Nombre de tentatives :</label>
+  <input formControlName="limiteTentatives" type="number" required />
+
+  <button type="submit">✅ Créer le Test</button>
+</form>
+
+<h3>Questions Assignées au Test</h3>
+<ul>
+  <li *ngFor="let question of assignedQuestions">
+    {{ question.enonce }} ({{ question.niveau }}, {{ question.type }})
+  </li>
+</ul>
+
+ -->
+ <div class="container">
+  <h2>Créer un Test</h2>
+  <form [formGroup]="testForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="titre">Titre :</label>
+      <input id="titre" formControlName="titre" type="text" />
+    </div>
+
+    <div>
+      <label for="description">Description :</label>
+      <textarea id="description" formControlName="description"></textarea>
+    </div>
+
+    <div>
+      <label for="duree">Durée (en minutes) :</label>
+      <input id="duree" formControlName="duree" type="number" />
+    </div>
+
+    <div>
+      <label for="type">Type :</label>
+      <select id="type" formControlName="type">
+        <option value="QCM">QCM</option>
+        <option value="Algo">Algo</option>
+        <option value="Mixte">Mixte</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="accesPublic">Accès Public :</label>
+      <input id="accesPublic" formControlName="accesPublic" type="checkbox" />
+    </div>
+
+    <div>
+      <label for="limiteTentatives">Limite de Tentatives :</label>
+      <input id="limiteTentatives" formControlName="limiteTentatives" type="number" />
+    </div>
+
+    <div>
+      <label for="statut">Statut :</label>
+      <select id="statut" formControlName="statut">
+        <option value="BROUILLON">Brouillon</option>
+        <option value="PUBLIE">Publié</option>
+        <option value="ARCHIVE">Archivé</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="dateExpiration">Date d'expiration :</label>
+      <input id="dateExpiration" formControlName="dateExpiration" type="datetime-local" />
+    </div>
+
+    <button type="submit" [disabled]="testForm.invalid">Créer</button>
+  </form>
+
+  <p *ngIf="successMessage" class="success">{{ successMessage }}</p>
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+</div>

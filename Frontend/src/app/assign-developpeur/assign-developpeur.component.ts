@@ -23,6 +23,7 @@ export class AssignDeveloppeurComponent implements OnInit {
   currentPage: number = 1; // Page courante pour la pagination
   itemsPerPage: number = 5; // Nombre d'éléments par page
   filteredDeveloppeurs: any[] = []; // Liste filtrée des développeurs selon la recherche
+  token = localStorage.getItem('accessToken') ?? '';
 
   constructor(
     private chefService: ChefDeProjetService,
@@ -31,6 +32,7 @@ export class AssignDeveloppeurComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
    const id = Number(this.route.snapshot.paramMap.get('id')); // Récupérer l'ID du chef de projet
     if (!isNaN(id) && id > 0) {
       this.getChefDeProjet(id);
@@ -80,54 +82,7 @@ isAssigned(devId: number): boolean {
     console.log(`Développeur ID ${devId} est assigné : ${assigned}`);
     return assigned;
   }
-  
-  
-  
 
-  // Assigner un développeur à un chef de projet
-  /*assignDeveloppeur(devId: number): void {
-    if (devId && this.chefDeProjet?.id) {
-      this.chefService.assignerDeveloppeur(this.chefDeProjet.id, devId).subscribe({
-        next: () => {
-          alert('Développeur assigné avec succès !');
-          this.getDeveloppeurs(); // Rafraîchir la liste après l'assignation
-          this.getChefsAvecDeveloppeurs(); // Mettre à jour la liste des chefs et de leurs développeurs
-        },
-        error: (err) => {
-          console.error("Erreur lors de l'assignation du développeur", err);
-          alert("Erreur lors de l'assignation du développeur !");
-        }
-      });
-    } else {
-      alert('Veuillez sélectionner un développeur valide.');
-    }
-  }*/
-    /*assignDeveloppeur(devId: number): void {
-      console.log("Tentative d'assignation du développeur avec ID :", devId);
-      console.log("Chef de projet ID :", this.chefDeProjet?.id);
-    
-      if (devId && this.chefDeProjet?.id) {
-        this.chefService.assignerDeveloppeur(this.chefDeProjet.id, devId).subscribe({
-          next: (chef) => {
-            console.log("Développeur assigné avec succès :", chef);
-            this.chefDeProjet = chef;
-    
-            // Supprimer le développeur de la liste principale et des non assignés
-            this.developpeurs = this.developpeurs.filter(dev => dev.id !== devId);
-            this.developpeursNonAssignes = this.developpeursNonAssignes.filter(dev => dev.id !== devId);
-    
-            alert('Développeur assigné avec succès !');
-          },
-          error: (err) => {
-            console.error("Erreur lors de l'assignation du développeur", err);
-            alert("Erreur lors de l'assignation du développeur !");
-          }
-        });
-      } else {
-        console.error("Problème avec les IDs : devId =", devId, "chefDeProjetId =", this.chefDeProjet?.id);
-        alert('Veuillez sélectionner un développeur valide.');
-      }
-    }*/
     assignDeveloppeur(devId: number): void {
       this.chefService.isDeveloppeurAssigned(devId).subscribe({
         next: (isAssigned) => {
@@ -135,7 +90,7 @@ isAssigned(devId: number): boolean {
             alert("Ce développeur est déjà assigné !");
           } else {
             // Appeler la méthode d'assignation
-            this.chefService.assignerDeveloppeur(this.chefDeProjet.id, devId).subscribe({
+            this.chefService.assignerDeveloppeur(this.chefDeProjet.id, devId,this.token).subscribe({
               next: (chef) => {
                 console.log("Développeur assigné avec succès :", chef);
                 this.chefDeProjet = chef;

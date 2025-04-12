@@ -18,16 +18,22 @@
       <tr>
         <th>Nom d'utilisateur</th>
         <th>Email</th>
+        <th>Role</th>
+
         <th>Actions</th>
+
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of filteredUsers | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
         <td>{{ user.username }}</td>
+
         <td>{{ user.email }}</td>
+        <td>{{ user.roles[0]?.name }}</td>
+
         <td>
           <div class="btn-container">
-            <button (click)="activateUser(user.email)" class="btn btn-success btn-sm-custom"> <i class="fas fa-user-plus"></i></button>
+            <button (click)="activateUser(user.email)" class="btn btn-success "> <i class="fas fa-user-plus"></i> activer </button>
             <button (click)="deleteUser(user.email)"  class="btn btn-danger btn-sm-custom"> <i class="fas fa-trash-alt"></i></button>
           </div>
         </td>

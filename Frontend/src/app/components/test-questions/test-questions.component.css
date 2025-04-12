@@ -87,12 +87,36 @@ body {
 
 /* En-tête */
 .page-header {
+  position: relative;
   text-align: center;
   padding: 20px 0;
-  background-color: #ffffff; /* Gris acier */
+  background-color: #ffffff;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
 }
+
+.return-btn {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #f3f1f1;
+  color: #1B263B;
+  font-size: 1.1rem;   /* agrandit le texte */
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.return-btn:hover {
+  background-color: #f1efef;
+  transform: translateY(-50%) scale(1.05);
+}
+
+
 
 .title {
   font-size: 2.2rem;
@@ -175,9 +199,22 @@ body {
   border-radius: 8px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
+.option input[type="checkbox"] {
+  margin: 0; /* Reset toute marge bizarre */
+  flex-shrink: 0; /* Évite qu'il se déforme ou soit écrasé */
+  width: 20px;
+  height: 20px;
+  accent-color: #D4AF37; /* Pour la p'tite touche dorée si t'es sur Chrome 😉 */
+}
 
+.option label {
+  margin: 0;
+  flex: 1; /* Pour que le texte prenne l’espace restant */
+  font-size: 1rem;
+  color: #1B263B;
+}
 .option:hover {
-  background-color: #D4AF37; /* Doré */
+  background-color: #ffffff; /* Doré */
   transform: scale(1.03);
 }
 
@@ -186,9 +223,7 @@ body {
   color: white;
 }
 
-.option input[type="checkbox"] {
-  margin-right: 10px;
-}
+
 
 /* Questions ouvertes */
 .text-container textarea, 
@@ -342,4 +377,18 @@ body {
   padding: 10px;
   resize: vertical;
   color: #1B263B;
+}
+.output {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 6px;
+  color: #2a2a2a;
+  margin-top: 10px;
+  font-family: monospace;
+}
+.output.error {
+  color: red;
+}
+.output.success {
+  color: green;
 }
