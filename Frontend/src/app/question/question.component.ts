@@ -262,18 +262,21 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private fb: FormBuilder, private questionService: QuestionService, private codeService: CodeExecutionService,private router: Router ) {
+  constructor(private fb: FormBuilder, private questionService: QuestionService, private codeService: CodeExecutionService, private router: Router) {
     this.questionForm = this.fb.group({
       enonce: ['', Validators.required],
       type: ['QCM', Validators.required],
       niveau: ['FACILE', Validators.required],
-      language: ['javascript', Validators.required], 
+      technologie: ['', Validators.required],       // ✅ nouveau champ
+      tempsEstime: [0, [Validators.required, Validators.min(1)]],  // ✅ nouveau champ
+      language: ['javascript', Validators.required],
       answerOptions: this.fb.array([]),
       codeAnswers: this.fb.array([])
     });
+
   }
 
- 
+
   ngOnInit() {
     this.token = localStorage.getItem('accessToken') || '';
     console.log("🛠 token:", this.token);
@@ -327,8 +330,8 @@ export class QuestionComponent implements OnInit, OnDestroy {
       language: ['javascript', Validators.required]
     }));
   }
- 
-  
+
+
 
   removeCodeAnswer(index: number) {
     this.codeAnswers.removeAt(index);
@@ -348,9 +351,13 @@ export class QuestionComponent implements OnInit, OnDestroy {
         this.answerOptions.push(this.fb.group(option));
       });
     } else if (question.type === 'Code') {
-      question.codeAnswers?.forEach((answer: { codeSnippet: string }) => {
-        this.codeAnswers.push(this.fb.group({ codeSnippet: answer.codeSnippet }));
+      question.codeAnswers?.forEach((answer: { codeSnippet: string; language?: string }) => {
+        this.codeAnswers.push(this.fb.group({
+          codeSnippet: answer.codeSnippet,
+          language: answer.language || 'javascript'
+        }));
       });
+
     }
   }
 
@@ -362,7 +369,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
     );
   }
 
- 
+
   submitQuestion() {
     if (!this.validateQCM()) {
       alert('Vérifiez que tous les champs sont bien remplis et choisir une reponse correcte !');
@@ -370,6 +377,9 @@ export class QuestionComponent implements OnInit, OnDestroy {
     }
 
     const questionData: Question = this.questionForm.value;
+    if (questionData.type === 'Code' && this.codeAnswers.length > 0) {
+      questionData.language = this.codeAnswers.at(0).get('language')?.value;
+    }
 
     if (this.editingQuestion) {
       this.subscriptions.add(
@@ -381,7 +391,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
       );
     } else {
       this.subscriptions.add(
-        this.questionService.addQuestion(questionData,this.token).subscribe(() => {
+        this.questionService.addQuestion(questionData, this.token).subscribe(() => {
           this.resetForm();
           this.loadQuestions();
           this.router.navigate(['/admin/List-Question']);
@@ -389,13 +399,16 @@ export class QuestionComponent implements OnInit, OnDestroy {
       );
     }
   }
-  
+
 
   resetForm() {
     this.questionForm.reset({
       enonce: '',
       type: 'QCM',
       niveau: 'FACILE',
+      technologie: '',
+      tempsEstime: 1,
+      language: 'javascript',
       answerOptions: [],
       codeAnswers: []
     });
@@ -403,7 +416,10 @@ export class QuestionComponent implements OnInit, OnDestroy {
     this.answerOptions.clear();
     this.codeAnswers.clear();
     this.editingQuestion = null;
+    this.router.navigate(['/admin/List-Question']);
+
   }
+
 
   loadQuestions() {
     this.subscriptions.add(
@@ -417,67 +433,37 @@ export class QuestionComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  /*runCode(index: number) {
+  getLanguageId(language: string): number {
+    const languages: { [key: string]: number } = {
+      python: 71,
+      javascript: 63,
+      java: 62,
+      c: 50,
+      cpp: 54,
+      php: 68
+    };
+    return languages[language] || 63; // Par défaut : JavaScript
+  }
+
+  runCode(index: number) {
     const codeData = this.codeAnswers.at(index)?.value;
-    const code = codeData?.codeSnippet;
-    const language = codeData?.language;
+    const code = codeData.codeSnippet;
+    const language = codeData.language;
 
     if (!code) {
       this.executionResults[index] = "⚠️ Aucun code à exécuter.";
       return;
     }
 
-    try {
-      if (language === 'javascript') {
-        let output = "";
-        const originalConsoleLog = console.log;
-
-        console.log = (...args) => {
-          output += args.join(" ") + "\n";
-        };
-
-        new Function(code)();
-
-        console.log = originalConsoleLog;
-        this.executionResults[index] = output.trim() || "✅ Code exécuté sans erreur";
-      } else {
-        this.executionResults[index] = `🚫 Exécution du langage ${language} non supportée ici.`;
+    const languageId = this.getLanguageId(language);
+    this.codeService.executeCode(code, languageId).subscribe(
+      response => {
+        this.executionResults[index] = response.stdout || `❌ Erreur : ${response.stderr}`;
+      },
+      error => {
+        this.executionResults[index] = `🚫 Erreur API : ${error.message}`;
       }
-    } catch (error) {
-      this.executionResults[index] = `❌ Erreur : ${(error as Error).message}`;
-    }
-  }*/
-    getLanguageId(language: string): number {
-      const languages: { [key: string]: number } = {
-        python: 71,
-        javascript: 63,
-        java: 62,
-        c: 50,
-        cpp: 54,
-        php: 68
-      };
-      return languages[language] || 63; // Par défaut : JavaScript
-    }
-    
-    runCode(index: number) {
-      const codeData = this.codeAnswers.at(index)?.value;
-      const code = codeData.codeSnippet;
-      const language = codeData.language;
-    
-      if (!code) {
-        this.executionResults[index] = "⚠️ Aucun code à exécuter.";
-        return;
-      }
-    
-      const languageId = this.getLanguageId(language);
-      this.codeService.executeCode(code, languageId).subscribe(
-        response => {
-          this.executionResults[index] = response.stdout || `❌ Erreur : ${response.stderr}`;
-        },
-        error => {
-          this.executionResults[index] = `🚫 Erreur API : ${error.message}`;
-        }
-      );
-    }
-    
+    );
+  }
+
 }

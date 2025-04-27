@@ -1,18 +1,20 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';  // Ajout de Router
 import { TestService } from '../../services/test.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+  
 @Component({
-  selector: 'app-test-list',
-  templateUrl: './test-list.component.html',
-  styleUrls: ['./test-list.component.css'],
+  selector: 'app-test-byadmin',
   imports: [CommonModule,FormsModule],
 
   standalone: true, 
+    templateUrl: './test-byadmin.component.html',
+  styleUrl: './test-byadmin.component.css'
 })
-export class TestListComponent implements OnInit {
+export class TestBYAdminComponent {
   tests: any[] = [];
   loading: boolean = true;
   error: string | null = null;
@@ -81,10 +83,9 @@ toggleShowAllTypes() {
   }
   
   fetchTests(): void {
-    this.testService.getTestsDuChef(this.token).subscribe({
+    this.testService.getAvailableTests().subscribe({
       
       next: (data) => {
-        console.log(this.token)
 
         this.tests = data;
         this.facileCount = this.tests.filter(t => t.niveauDifficulte === 'Facile').length;

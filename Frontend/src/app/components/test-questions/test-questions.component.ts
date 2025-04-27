@@ -366,7 +366,9 @@ export class TestQuestionsComponent implements OnInit {
   codeAnswer: string = '';  // Réponse du développeur au code
   executionResult: string = '';  // Résultat de l'exécution du code
   editorOptions = { theme: 'monokai', mode: 'javascript' }
-
+  expectedOutput: string = '7'; // Résultat attendu, ici pour la somme de 3 et 4
+  isCorrect: boolean | null = null;  // Indicateur de validité du code (correct ou incorrect)
+  textAnswer: string = '';
   constructor(private scoreService: ScoreService, private fb: FormBuilder, private codeExecutionService: CodeExecutionService // <-- Ajouter ici
     , private testService: TestService, private router: Router, private route: ActivatedRoute, private http: HttpClient) {
 
@@ -448,39 +450,6 @@ export class TestQuestionsComponent implements OnInit {
 
     });
   }
-  // Fonction de mise à jour du timer
-  // updateTimer() {
-  //   this.remainingTime--;
-  //   this.remainingHours = Math.floor(this.remainingTime / 3600); // Calcul des heures restantes
-  //   this.remainingMinutes = Math.floor((this.remainingTime % 3600) / 60); // Calcul des minutes restantes
-  //   this.remainingSeconds = this.remainingTime % 60; // Calcul des secondes restantes
-
-  //   const timerElement = document.querySelector('.timer-text');
-  //   const progressCircle = document.querySelector('.timer-progress') as SVGCircleElement;
-
-  //   if (timerElement && progressCircle) {
-  //     timerElement.textContent = `${this.remainingHours}:${this.remainingMinutes}:${this.remainingSeconds}`;
-  
-  //     // Calcul du pourcentage restant
-  //     const offset = (440 * this.remainingTime) / this.totalTime;
-  //     progressCircle.style.strokeDashoffset = offset.toString();
-  
-  //     // Ajouter la classe 'almost-done' quand il reste moins de 10 secondes
-  //     if (this.remainingTime <= 10) {
-  //       progressCircle.classList.add('almost-done');
-  //     } else {
-  //       progressCircle.classList.remove('almost-done');
-  //     }
-  
-  //     // Arrêter le timer quand le temps est écoulé
-  //     if (this.remainingTime <= 0) {
-  //       clearInterval(this.timerInterval);
-  //       alert('⏰ Le temps est écoulé ! Le test va être soumis automatiquement.');
-  //       this.terminerTest();
-
-  //     }
-  //   }
-  // }
 
   updateTimer() {
     if (this.remainingTime > 0) {
@@ -523,7 +492,7 @@ export class TestQuestionsComponent implements OnInit {
       return;
     }
 
-    this.scoreService.calculateScore(this.testId, this.token).subscribe({
+   this.scoreService.calculateScore(this.testId, this.token).subscribe({
       next: (response) => {
         if (response.status === 'success') {
           this.score = response.score;
@@ -552,20 +521,7 @@ export class TestQuestionsComponent implements OnInit {
   isLastQuestion(): boolean {
     return this.currentQuestionIndex === this.questions.length - 1;
   }
-  // terminerTest() {
-  //   console.log("🔍 developpeurId dans terminerTest():", this.developpeurId);
-  //   if (!this.developpeurId) {
-  //     console.error("Erreur : developpeurId est undefined !");
-  //     alert("Votre identifiant de développeur est introuvable. Veuillez réessayer.");
-  //     return;
-  //   }
-  //   alert("Test terminé ! Vos réponses ont été envoyées.");
-  //   this.enregistrerReponse(this.questions[this.currentQuestionIndex].id, this.selectedOptionIds);
 
-  //   this.router.navigate(['/test', this.testId, 'score', this.developpeurId]);
-  //   localStorage.removeItem('responses');
-
-  // }
   terminerTest() {
     if (this.testTermine) return; // ✅ Évite double soumission
     this.testTermine = true; // ✅ Bloque une autre tentative
@@ -607,30 +563,45 @@ export class TestQuestionsComponent implements OnInit {
     }
   }
 
+  
+  
 
-
+  
   enregistrerReponse(questionId: number, selectedOptionIds: number[]) {
-    const token = localStorage.getItem('accessToken'); // Vérifier si le token existe
-
+    const token = localStorage.getItem('accessToken');
     if (!token) {
       alert('Vous devez être connecté pour soumettre vos réponses.');
-      this.router.navigate(['/signin']); // Rediriger vers la page de login si pas de token
+      this.router.navigate(['/signin']);
       return;
     }
-
-    this.responses[questionId] = [...selectedOptionIds]; // Sauvegarder les réponses pour chaque question
-    localStorage.setItem('responses', JSON.stringify(this.responses));
+  
+    const currentQuestion = this.questions.find(q => q.id === questionId);
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`, // Ajouter le token dans l'en-tête
-      'Content-Type': 'application/json' // Assurez-vous que le type est correct
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
-
-    this.http.post('http://localhost:8083/api/responses/submit', {
+  
+    let body: any = {
       testId: this.testId,
       questionId: questionId,
-      selectedOptionIds: selectedOptionIds,
       developpeurId: this.developpeurId
-    }, { headers }).subscribe(
+    };
+  
+    if (currentQuestion?.type === 'QCM') {
+      this.responses[questionId] = [...selectedOptionIds];
+      body.selectedOptionIds = selectedOptionIds;
+    } else if (currentQuestion?.type === 'Text') {
+      this.responses[questionId] = [+this.textAnswer];
+      body.reponseLibre = this.textAnswer;
+    } else if (currentQuestion?.type === 'Code') {
+      this.responses[questionId] = [+this.codeAnswer];
+      body.reponseLibre = this.codeAnswer;
+      body.language = this.selectedLanguage; // facultatif si backend accepte
+    }
+  
+    localStorage.setItem('responses', JSON.stringify(this.responses));
+  
+    this.http.post('http://localhost:8083/api/responses/enregistrer', body, { headers }).subscribe(
       (response: any) => {
         console.log('Réponse enregistrée', response);
       },
@@ -638,8 +609,10 @@ export class TestQuestionsComponent implements OnInit {
         console.error('Erreur lors de l\'enregistrement de la réponse :', error);
       }
     );
-
   }
+  
+
+
   isChecked(questionId: number, optionId: number): boolean {
     return this.responses[questionId]?.includes(optionId) ?? false;
   }
@@ -664,35 +637,18 @@ export class TestQuestionsComponent implements OnInit {
     this.isAnswered = this.codeAnswer.trim().length > 0;
   }
 
-  // Marquer la question comme répondue
-  // markAnswered() {
-  //   const currentQuestion = this.questions[this.currentQuestionIndex];
 
-  //   if (!currentQuestion) return;
-
-  //   if (currentQuestion.type === 'QCM') {
-  //     this.isAnswered = this.selectedOptionIds.length > 0; // ✅ Vérifie s'il y a des réponses sélectionnées
-  //   } else if (currentQuestion.type === 'Text') {
-  //     const textAreas = document.querySelectorAll('textarea');
-  //     this.isAnswered = Array.from(textAreas).some(textarea => textarea.value.trim().length > 0);
-  //   }  else if (this.questions[this.currentQuestionIndex]?.type === 'Code') {
-  //     // Si la question est de type "Code", vérifier si du code a été écrit
-  //     this.isAnswered = this.codeAnswer.trim().length > 0;}
-
-
-  //   console.log(`Question ${this.currentQuestionIndex + 1} - Réponse validée :`, this.isAnswered);
-  // }
   retourListeTests() {
     const confirmation = confirm("Vous êtes sûr de vouloir quitter ce test ?");
 
     if (confirmation) {
       clearInterval(this.timerInterval); // Stopper le timer
-  
+
       // Redirection vers la liste des tests
       this.router.navigate(['/tests']); // Remplace le chemin par le vrai si besoin
     }
   }
-  
+
   markAnswered(): void {
     if (this.questions[this.currentQuestionIndex]?.type === 'Code') {
       // Si la question est de type "Code", vérifier si du code a été écrit
@@ -705,10 +661,10 @@ export class TestQuestionsComponent implements OnInit {
       // Pour les autres types de questions (QCM, etc.), vérifier si une option est sélectionnée
       this.isAnswered = this.selectedOptionIds.length > 0;
     }
-  
+
     console.log("isAnswered:", this.isAnswered); // Pour débogage
   }
-  
+
   getLanguageId(language: string): number {
     const languages: { [key: string]: number } = {
       python: 71,
@@ -726,7 +682,7 @@ export class TestQuestionsComponent implements OnInit {
       return;
     }
     const languageId = this.getLanguageId(this.selectedLanguage); // Utilise le langage sélectionné
- 
+
     this.codeExecutionService.executeCode(this.codeAnswer, languageId).subscribe(
       response => {
         this.executionResult = response.stdout || `❌ Erreur : ${response.stderr}`;
@@ -737,7 +693,64 @@ export class TestQuestionsComponent implements OnInit {
     );
   }
 
+  // runCode() {
+  //   if (!this.codeAnswer) {
+  //     this.executionResult = "⚠️ Aucun code à exécuter.";
+  //     return;
+  //   }
 
+  //   const languageId = this.getLanguageId(this.selectedLanguage);
+
+  //   // Liste des cas de test pour cette question
+  //   const testCases = [
+  //     { input: "print(addition(3, 4))", expected: "7" },
+  //     { input: "print(addition(1, 2))", expected: "3" },
+  //     { input: "print(addition(-5, 10))", expected: "5" }
+  //   ];
+
+  //   let passedAll = true;
+  //   let results: string[] = [];
+
+  //   const userFunctionCode = this.codeAnswer; // Le code écrit par le dev
+
+  //   const executeNext = (i: number) => {
+  //     if (i >= testCases.length) {
+  //       // Tous les tests terminés
+  //       this.executionResult = results.join('\n');
+  //       return;
+  //     }
+
+  //     const fullCode = `${userFunctionCode}\n${testCases[i].input}`;
+
+  //     this.codeExecutionService.executeCode(fullCode, languageId).subscribe(
+  //       response => {
+  //         const output = response.stdout?.trim() || '';
+  //         const expected = testCases[i].expected;
+
+  //         if (output === expected) {
+  //           results.push(`✅ Test ${i + 1} : OK (résultat = ${output})`);
+  //         } else {
+  //           passedAll = false;
+  //           results.push(`❌ Test ${i + 1} : Échec (attendu = ${expected}, obtenu = ${output})`);
+  //         }
+
+  //         executeNext(i + 1); // Exécuter le test suivant
+  //       },
+  //       error => {
+  //         results.push(`🚫 Erreur d’exécution pour le test ${i + 1}: ${error.message}`);
+  //         passedAll = false;
+  //         executeNext(i + 1);
+  //       }
+  //     );
+  //   };
+
+  //   executeNext(0);
+  // }
+
+  // checkIfCorrect(output: string): boolean {
+  //   // Vérifier si la sortie correspond à la réponse attendue (par exemple, '7' pour la somme de 3 + 4)
+  //   return output.trim() === this.expectedOutput;
+  // }
 
 
 

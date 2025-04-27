@@ -1,0 +1,143 @@
+/* Conteneur de la question */
+.question-display {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  border-left: 4px solid #2c3e50; /* Bordure bleu-gris */
+  color: #34495e; /* Texte sombre pour une lecture agréable */
+}
+
+/* Numéro de la question */
+.question-number {
+  background-color: #2c3e50; /* Bleu-gris sérieux */
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 5%;
+  font-weight: bold;
+  font-size: 1.2em;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+/* Titre de la question */
+.question-display h3 {
+  font-size: 1.4em;
+  color: #2c3e50;
+  font-weight: 600;
+  margin-left: 10px;
+  margin-top: 0;
+  line-height: 1.4;
+}
+
+/* Affichage des options QCM sans colorier la ligne entière */
+.question-display ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.question-display li {
+  margin: 10px 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #34495e;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between; /* Ajoute un espace pour l'icône */
+  align-items: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border: 1px solid #929292;
+
+}
+
+/* Effet au survol d'une option */
+.question-display li:hover {
+  background-color: #ecf0f1;
+  transform: scale(1.02);
+}
+
+/* Icônes de réponse à la fin de chaque option */
+.question-display li .answer-icon {
+  font-size: 1.2em;
+  color: #7f8c8d; /* Couleur neutre pour l'icône */
+}
+
+.question-display li.correct .answer-icon {
+  color: #27ae60; /* Vert pour correct */
+}
+
+.question-display li.incorrect .answer-icon {
+  color: #e74c3c; /* Rouge pour incorrect */
+}
+
+/* Réponse libre */
+.question-display p {
+  font-size: 16px;
+  color: #34495e;
+  margin: 15px 0;
+}
+
+/* Réponse libre correcte/incorrecte */
+.correct-answer {
+  color: #27ae60; /* Vert pour la réponse correcte */
+}
+
+.incorrect-answer {
+  color: #e74c3c; /* Rouge pour la réponse incorrecte */
+}
+
+/* Explication et Feedback */
+.question-display .explication, 
+.question-display .feedback {
+  background-color: #f7f9fa;
+  border-left: 4px solid #3498db; /* Un bleu clair subtil pour les bordures */
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #34495e;
+}
+
+.question-display .explication p, 
+.question-display .feedback p {
+  margin: 10px 0;
+}
+
+/* Statut de la réponse correcte/incorrecte */
+span.correct-answer {
+  color: #27ae60;
+}
+
+span.incorrect-answer {
+  color: #e74c3c;
+}
+
+/* Bordures et marges pour une disposition plus aérée */
+strong {
+  font-weight: bold;
+}
+
+/* Boîte de niveau de la question */
+.question-level {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin-top: 10px;
+}
+/* Icônes de réponse pour la réponse sélectionnée */
+.question-display li .answer-icon {
+  font-size: 1.2em;
+  margin-left: 10px; /* Un petit espace entre le texte et l'icône */
+}
+
+/* Icône correcte */
+.question-display li .correct {
+  color: #27ae60; /* Vert pour correct */
+}
+
+/* Icône incorrecte */
+.question-display li .incorrect {
+  color: #e74c3c; /* Rouge pour incorrect */
+}

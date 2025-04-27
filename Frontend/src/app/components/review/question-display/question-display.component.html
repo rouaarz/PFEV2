@@ -1,0 +1,69 @@
+<!-- <div class="question-display" *ngIf="reponse">
+    <h3>{{ reponse.question.enonce }}</h3>
+  
+    <div *ngIf="reponse.question.type === 'QCM'">
+      <ul>
+        <li *ngFor="let option of reponse.question.answerOptions" 
+            [ngClass]="getOptionClass(option)">
+          {{ option.text }}
+        </li>
+      </ul>
+    </div>
+  
+    <div *ngIf="reponse.reponseLibre">
+      <p><strong>Réponse libre :</strong> {{ reponse.reponseLibre }}</p>
+    </div>
+  
+    <div *ngIf="reponse.explication || reponse.feedback">
+      <p><strong>Explication :</strong> {{ reponse.explication }}</p>
+      <p><strong>Feedback :</strong> {{ reponse.feedback }}</p>
+    </div>
+  </div>
+   -->
+<div class="question-display" *ngIf="reponse">
+  <div class="question-number">
+    Question {{ currentQuestionIndex + 1 }}
+  </div>
+
+  <div class="question-level">
+    Niveau : {{ reponse.question.niveau || 'Non défini' }}
+  </div>
+
+  <!-- <li *ngFor="let option of reponse.question.answerOptions" [ngClass]="getOptionClass(option)">
+    {{ option.text }}
+  </li> -->
+ <ul>
+    <li *ngFor="let option of reponse.question.answerOptions">
+      {{ option.text }}
+      <!-- Affichage de l'icône pour l'option sélectionnée -->
+      <i *ngIf="isOptionSelected(option)" class="answer-icon" [ngClass]="{'correct': option.isCorrect, 'incorrect': !option.isCorrect}">
+        <ng-container *ngIf="option.isCorrect">✔️</ng-container>
+        <ng-container *ngIf="!option.isCorrect">❌</ng-container>
+      </i>
+
+      <!-- Affichage de l'icône de la réponse correcte si la réponse est incorrecte -->
+      <i *ngIf="option.isCorrect &&  !reponse.isCorrect " class="answer-icon correct-answer">
+        ✔️ 
+      </i>
+    </li>
+  </ul>
+  
+<div *ngIf="reponse.reponseLibre">
+  <p><strong>Votre Réponse :</strong> 
+    <span [ngClass]="{'correct-answer': reponse.isCorrect, 'incorrect-answer': !reponse.isCorrect}">
+      {{ reponse.reponseLibre }}
+    </span>
+    <span *ngIf="reponse.isCorrect; else incorrectAnswer"> ✔️</span>
+    <ng-template #incorrectAnswer>
+       ❌
+    </ng-template>
+  </p>
+</div>
+
+<div *ngIf="reponse.explication || reponse.feedback">
+  <p><strong>Explication :</strong> {{ reponse.explication }}</p>
+  <p><strong>Feedback :</strong> {{ reponse.feedback }}</p>
+    <div *ngIf="!reponse.isCorrect">
+    <p><strong>Réponse correcte :</strong> {{ reponse.reponseCorrecte }}</p>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<!-- <div style="width: 100%; height: 400px;">
+    <canvas baseChart
+      [data]="scatterChartData"
+      [options]="scatterChartOptions"
+      chartType="scatter">
+    </canvas>
+  </div>
+   -->
+<!-- <div class="chart-container">
+    <canvas baseChart [data]="chartData" [options]="chartOptions" chartType="scatter">
+    </canvas>
+</div> -->
+<div class="chart-container" *ngIf="results.length">
+    <canvas baseChart
+      [data]="chartData"
+      [type]="chartType"
+      [options]="chartOptions">
+    </canvas>
+  </div>
+  

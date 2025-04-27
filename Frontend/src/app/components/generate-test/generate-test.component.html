@@ -1,0 +1,143 @@
+<form (ngSubmit)="generateQuestionsPreview()" class="generate-test-form">
+
+  <!-- SECTION 1: Informations générales -->
+  <div class="form-section">
+    <h4>Informations Générales</h4>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="titre">Titre</label>
+        <input type="text" id="titre" [(ngModel)]="request.titre" name="titre" required class="form-control" placeholder="Entrez le titre du test" />
+      </div>
+
+      <div class="form-group">
+        <label for="duree">Durée (en minutes)</label>
+        <input type="number" id="duree" [(ngModel)]="request.duree" name="duree" class="form-control" placeholder="Durée en minutes" />
+      </div>
+
+      <div class="form-group">
+        <label for="nbQuestions">Nombre total de questions</label>
+        <input type="number" id="nbQuestions" [(ngModel)]="request.nbQuestions" name="nbQuestions" class="form-control" placeholder="Total questions" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="niveau">Niveau de difficulté</label>
+        <select id="niveau" [(ngModel)]="request.niveauDifficulte" name="niveau" class="form-control">
+          <option value="FACILE">Facile</option>
+          <option value="MOYEN">Moyen</option>
+          <option value="DIFFICILE">Difficile</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="type">Type de test</label>
+        <select id="type" [(ngModel)]="request.type" name="type" class="form-control">
+          <option value="Mixte">Mixte</option>
+          <option value="QCM">QCM</option>
+          <option value="Code">Code</option>
+          <option value="text">Texte libre</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" [(ngModel)]="request.description" name="description" class="form-control" placeholder="Entrez une description du test"></textarea>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Technologies -->
+  <!-- <div class="form-section">
+    <h4>Technologies</h4>
+    <div class="form-group">
+      <div class="tech-options">
+        <label *ngFor="let tech of techOptions">
+          <input type="checkbox" [value]="tech" (change)="toggleTech(tech, $event)" />
+          {{ tech }}
+        </label>
+      </div>
+    </div>
+  </div> -->
+<!-- SECTION 2: Technologies -->
+<div class="form-section">
+  <h4>Technologies</h4>
+  <div class="form-group">
+    <label for="technologies">Choisissez les technologies :</label>
+    <select id="technologies" [(ngModel)]="selectedTech" name="technologies" class="form-control" multiple>
+      <option *ngFor="let tech of techOptions" [value]="tech">{{ tech }}</option>
+    </select>
+  </div>
+</div>
+
+  <!-- SECTION 3: Répartition des questions par type -->
+  <div class="form-section" *ngIf="request.type === 'QCM' || request.type === 'Mixte'">
+    <h4>Questions QCM</h4>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="qcmFacile">QCM Facile</label>
+        <input type="number" id="qcmFacile" [(ngModel)]="request.nbQcmFacile" name="qcmFacile" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="qcmMoyen">QCM Moyen</label>
+        <input type="number" id="qcmMoyen" [(ngModel)]="request.nbQcmMoyen" name="qcmMoyen" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="qcmDifficile">QCM Difficile</label>
+        <input type="number" id="qcmDifficile" [(ngModel)]="request.nbQcmDifficile" name="qcmDifficile" class="form-control" />
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section" *ngIf="request.type === 'Code' || request.type === 'Mixte'">
+    <h4>Questions de Code</h4>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="codeFacile">Code Facile</label>
+        <input type="number" id="codeFacile" [(ngModel)]="request.nbCodeFacile" name="codeFacile" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="codeMoyen">Code Moyen</label>
+        <input type="number" id="codeMoyen" [(ngModel)]="request.nbCodeMoyen" name="codeMoyen" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="codeDifficile">Code Difficile</label>
+        <input type="number" id="codeDifficile" [(ngModel)]="request.nbCodeDifficile" name="codeDifficile" class="form-control" />
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section" *ngIf="request.type === 'text' || request.type === 'Mixte'">
+    <h4>Questions Texte</h4>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="textFacile">Texte Facile</label>
+        <input type="number" id="textFacile" [(ngModel)]="request.nbTexteFacile" name="textFacile" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="textMoyen">Texte Moyen</label>
+        <input type="number" id="textMoyen" [(ngModel)]="request.nbTexteMoyen" name="textMoyen" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="textDifficile">Texte Difficile</label>
+        <input type="number" id="textDifficile" [(ngModel)]="request.nbTexteDifficile" name="textDifficile" class="form-control" />
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Bouton Submit -->
+  <div class="form-section">
+    <button type="submit" class="form-control" style="background-color: #007bff; color: white; font-weight: bold; cursor: pointer;">Générer un aperçu</button>
+  </div>
+
+</form>
+<div *ngIf="questionsPreview && questionsPreview.length" class="preview-section">
+  <h3>Aperçu des questions générées</h3>
+  <ul>
+    <li *ngFor="let question of questionsPreview">
+      {{ question.enonce }} ({{ question.type }}) ({{ question.niveau }}) 
+    </li>
+  </ul>
+  <button type="button" (click)="generateTest()">Valider le test</button>
+  <button type="button" (click)="generateQuestionsPreview()">Regénérer</button>
+</div>

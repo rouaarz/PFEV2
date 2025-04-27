@@ -12,7 +12,10 @@ import { AuthInterceptor } from './interceptors/auth.interceptor'; // Importer l
 import { ChartdemandeComponent } from './chartdemande/chartdemande/chartdemande.component';
 import { ChartsubscribersComponent } from './chartsubscribers/chartsubscribers.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import {ReviewTestComponent} from './components/review/review-test-component/review-test-component.component';
+import{QuestionDisplayComponent}from './components/review/question-display/question-display.component'
+import { BaseChartDirective } from 'ng2-charts';
+import{ResultGraphComponent} from './components/review/result-graph/result-graph.component'
 @NgModule({
   
   imports: [
@@ -25,6 +28,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     MatButtonModule,
     FormsModule,
     ChartdemandeComponent,
+    ReviewTestComponent,
+    QuestionDisplayComponent,
+    BaseChartDirective,
+    ResultGraphComponent
   ],
   providers: [
     {

@@ -1,36 +1,60 @@
 <div class="container">
-  <h2>Ajouter une  Question</h2>
+  <h2>Ajouter une Question</h2>
 
   <form [formGroup]="questionForm" (ngSubmit)="submitQuestion()">
     <label>Énoncé :</label>
     <input type="text" formControlName="enonce" required />
+    <div class="horizontal-group">
+      <div class="form-group">
 
-    <label>Type de question :</label>
-    <select formControlName="type">
-      <option value="QCM">QCM</option>
-      <option value="Code">Code</option>
-      <option value="Text">Texte libre</option>
-    </select>
-
-    <label>Niveau :</label>
-    <select formControlName="niveau">
-      <option value="FACILE">Facile</option>
-      <option value="MOYEN">Moyen</option>
-      <option value="DIFFICILE">Difficile</option>
-    </select>
-
-    <!-- Gestion des réponses pour QCM -->
-    <div *ngIf="isQCM">
-      <h3>Options de réponse :</h3>
-      <div formArrayName="answerOptions">
-        <div *ngFor="let option of answerOptions.controls; let i = index" [formGroupName]="i">
-          <input type="text" formControlName="text" placeholder="Réponse" required />
-          <input type="checkbox" formControlName="isCorrect" class="checkbox"/> Correcte ?
-          <button type="button" (click)="removeAnswerOption(i)" *ngIf="answerOptions.length > 1">🗑</button>
-        </div>
+        <label>Type de question :</label>
+        <select formControlName="type">
+          <option value="QCM">QCM</option>
+          <option value="Code">Code</option>
+          <option value="Text">Texte libre</option>
+        </select>
       </div>
-      <button type="button" (click)="addAnswerOption()">➕ Ajouter une option</button>
+      <div class="form-group">
+
+        <label>Niveau :</label>
+        <select formControlName="niveau">
+          <option value="FACILE">Facile</option>
+          <option value="MOYEN">Moyen</option>
+          <option value="DIFFICILE">Difficile</option>
+        </select>
+      </div>
+
     </div>
+
+    <!-- 🆕 Technologie -->
+    <div class="horizontal-group">
+      <div class="form-group">
+        <label>Technologie :</label>
+        <input type="text" formControlName="technologie" placeholder="Ex: Java, Python..." required />
+      </div>
+
+      <div class="form-group">
+        <label>Temps estimé (en minutes) :</label>
+        <input type="number" formControlName="tempsEstime" min="1" required />
+      </div>
+    </div>
+
+<div *ngIf="isQCM">
+  <h3>Options de réponse :</h3>
+  <div formArrayName="answerOptions">
+    <div *ngFor="let option of answerOptions.controls; let i = index" [formGroupName]="i">
+      <input type="text" formControlName="text" placeholder="Réponse" required />
+      <input type="checkbox" formControlName="isCorrect" class="checkbox" /> Correcte ?
+      <button type="button" (click)="removeAnswerOption(i)" *ngIf="answerOptions.length > 1">🗑</button>
+    </div>
+  </div>
+  <button type="button" (click)="addAnswerOption()">➕ Ajouter une option</button>
+</div>
+
+<!-- Gestion des réponses en Code -->
+
+
+
 
     <!-- Gestion des réponses en Code -->
     <div *ngIf="isCode">
@@ -39,14 +63,9 @@
 
       <div formArrayName="codeAnswers">
         <div *ngFor="let codeAnswer of codeAnswers.controls; let i = index" [formGroupName]="i">
-          <label>Code :</label>
-          <ace-editor #editor formControlName="codeSnippet" 
-          [options]="editorOptions" 
-          style="height: 300px; width: 100%;">
-        </ace-editor>
-
           <label>Langage :</label>
-          <select formControlName="language">
+          <select formControlName="language" [(ngModel)]="codeAnswers.controls[i].value.language">
+            <label>Code :</label>
             <option value="javascript">JavaScript</option>
             <option value="python">Python</option>
             <option value="java">Java</option>
@@ -54,6 +73,12 @@
             <option value="cpp">C++</option>
             <option value="php">PHP</option>
           </select>
+          <ace-editor #editor formControlName="codeSnippet" [options]="editorOptions"
+            style="height: 300px; width: 100%;">
+          </ace-editor>
+
+
+
 
           <button type="button" (click)="runCode(i)">▶ Exécuter</button>
           <button type="button" (click)="removeCodeAnswer(i)" *ngIf="codeAnswers.length > 1">🗑 Supprimer</button>
@@ -63,7 +88,9 @@
       </div>
     </div>
 
+    <!-- Boutons -->
     <button type="submit">✅ Enregistrer</button>
     <button type="button" (click)="resetForm()">❌ Annuler</button>
   </form>
   <hr />
+</div>

@@ -183,24 +183,30 @@ body {
   color: #4A6FA5;
 }
 
+
 /* QCM */
 .options-container {
   margin-top: 15px;
-}
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centre horizontalement */
+} 
 
 .option {
   display: flex;
+  width: 50%;
+
   align-items: center;
   padding: 6px 12px;
   background-color: #ffffff;
-  border: 1px solid #D4AF37; /* Bleu acier */
+  border: 1px solid #D4AF37; 
   box-shadow: 0px 4px 6px rgba(122, 121, 121, 0.2);
   margin: 4px 0;
   border-radius: 8px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 .option input[type="checkbox"] {
-  margin: 0; /* Reset toute marge bizarre */
+  margin: 0; /* Reset toute marge bizarre
   flex-shrink: 0; /* Évite qu'il se déforme ou soit écrasé */
   width: 20px;
   height: 20px;

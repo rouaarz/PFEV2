@@ -1,0 +1,44 @@
+<!-- <div class="test-review">
+    <h1>Analyse des réponses du test</h1>
+  
+  
+    <app-question-display [reponse]="reponses[currentQuestionIndex]" [isCurrent]="isCurrentQuestion(currentQuestionIndex)"></app-question-display>
+  
+    <div class="navigation-buttons">
+      <button (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">Précédent</button>
+      <button (click)="nextQuestion()" [disabled]="currentQuestionIndex === reponses.length - 1">Suivant</button>
+    </div>
+  </div>
+   -->
+<div class="test-review">
+  <h1>Analyse des réponses du test</h1>
+  <app-result-graph [results]="reponses"></app-result-graph>
+
+
+  <!-- Affichage du nombre de réponses correctes sur le total des questions -->
+  <div class="score"
+    [ngClass]="{'perfect-score': getCorrectAnswersCount() === getTotalQuestionsCount(), 'low-score': getCorrectAnswersCount() < 5}">
+    <p>Réponses Correctes : {{ getCorrectAnswersCount() }} / {{ getTotalQuestionsCount() }}</p>
+  </div>
+
+  <!-- Bouton Retour au Score -->
+  <button class="back-to-score" (click)="scrollToScore()">Retour au Score</button>
+
+  <!-- Affichage de la question actuelle -->
+  <app-question-display 
+  [reponse]="reponses[currentQuestionIndex]"
+  [isCurrent]="isCurrentQuestion(currentQuestionIndex)"
+  [currentQuestionIndex]="currentQuestionIndex">
+</app-question-display>
+
+
+  <!-- Navigation avec les boutons flèches -->
+  <div class="navigation-buttons">
+    <button class="prev-btn" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
+      ←
+    </button>
+    <button class="next-btn" (click)="nextQuestion()" [disabled]="currentQuestionIndex === reponses.length - 1">
+      →
+    </button>
+  </div>
+</div>
