@@ -242,6 +242,9 @@ import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 
 import { AdminGuard } from './guards/admin.guard';
 import { ChefGuard } from './guards/chef.guard';
+import { EditProfileDeveloppeurComponent } from './edit-profile-developpeur/edit-profile-developpeur.component';
+import { EditProfileAdminComponent } from './edit-profile-admin/edit-profile-admin.component';
+import { EditProfileChefComponent } from './edit-profile-chef/edit-profile-chef.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -258,11 +261,16 @@ export const routes: Routes = [
   { path: 'test/:testId/questions', component: TestQuestionsComponent },
   { path: 'test/:testId/score/:developpeurId', component: ScoreComponent },
   { path: 'invitations/:invitationId', component: InvitationComponent },
+  {
+    path: 'editDev/:id', 
+    component: EditProfileDeveloppeurComponent 
+  },
+ 
 
   {
     path: 'admin',
     component: AdminLayoutComponent,
-    canActivate: [AdminGuard], // 🔒 Protection admin
+    canActivate: [AdminGuard], 
     children: [
       { path: 'List-Question', component: ListQuestionsComponent },
       { path: 'Question', component: QuestionComponent },
@@ -270,8 +278,24 @@ export const routes: Routes = [
       { path: 'edit-test/:id', component: CreateTestComponent },
       { path: 'tests-create', component: CreateTestComponent },
       { path: 'test-details/:id', component: TestDetailsComponent },
+      { path: 'developpeur', component: EditProfileDeveloppeurComponent },
+      {
+        path: 'edit/:id', 
+        component: EditProfileAdminComponent
+      },
 
-      // Routes réservées uniquement aux Admins (avec protection ChefGuard)
+      {
+        path: 'editchef/:id', 
+        component: EditProfileChefComponent 
+      },
+      /*{
+        path: 'editDev/:id', 
+        component: EditProfileDeveloppeurComponent 
+      },
+    */
+    
+    
+      
       { path: 'ajout-Chef', component: AjoutChefsComponent, canActivate: [ChefGuard] },
       { path: 'edit-Chef/:id', component: EditChefsComponent, canActivate: [ChefGuard] },
       { path: 'list-Chefs', component: ListChefsComponent, canActivate: [ChefGuard] },

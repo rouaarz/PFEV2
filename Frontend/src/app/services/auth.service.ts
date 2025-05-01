@@ -53,13 +53,17 @@
 // }
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, Observable, throwError, BehaviorSubject } from 'rxjs';
+import { catchError, Observable, throwError, BehaviorSubject, tap } from 'rxjs';
 import { SignupData } from '../models/SignupData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  isChefDeProjet(): boolean {
+    return this.hasRole('ROLE_CHEF');
+  }
+  
   
   private apiUrl = 'http://localhost:8083/api/auth';
   private authStatus = new BehaviorSubject<boolean>(this.hasToken()); // Vérifie si un token existe au démarrage
@@ -71,11 +75,32 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/signup`, signupData);
   }
 
-  login(loginData: any): Observable<any> {
+  /*login(loginData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/signin`, loginData).pipe(
       catchError(this.handleError)
     );
-  }
+  }*/
+ // Lors de la connexion, stockez les rôles dans le localStorage
+/*login(loginData: any): Observable<any> {
+  return this.http.post(`${this.apiUrl}/signin`, loginData).pipe(
+    catchError(this.handleError),
+    tap((response: any) => {
+      localStorage.setItem('accessToken', response.token); // Token d'accès
+      localStorage.setItem('roles', JSON.stringify(response.roles)); // Rôles
+    })
+  );
+}
+*/
+login(loginData: any): Observable<any> {
+  return this.http.post(`${this.apiUrl}/signin`, loginData).pipe(
+    catchError(this.handleError),
+    tap((response: any) => {
+      localStorage.setItem('accessToken', response.accessToken); // ✅
+      localStorage.setItem('roles', JSON.stringify(response.roles)); // ✅
+    })
+  );
+}
+
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Une erreur inconnue s\'est produite !';
@@ -110,4 +135,31 @@ export class AuthService {
     localStorage.removeItem('accessToken');
     this.authStatus.next(false); // Met à jour l'état de connexion
   }
+
+
+
+
+
+
+  getRoles(): string[] {
+    return JSON.parse(localStorage.getItem('roles') || '[]');
+  }
+
+  hasRole(role: string): boolean {
+    const roles = this.getRoles();
+    return roles.includes(role);
+  }
+
+
+  getPrimaryRole(): string {
+    const roles = this.getRoles();
+    if (roles.includes('ROLE_ADMIN')) return 'ADMIN';
+    if (roles.includes('ROLE_CHEF')) return 'ROLE_CHEF';
+    if (roles.includes('ROLE_DEVELOPPEUR')) return 'DEVELOPPEUR';
+    return 'UNKNOWN';
+  }
+  isAdmin(): boolean {
+    return this.hasRole('ROLE_ADMIN');
+  }
 }
+

@@ -87,7 +87,30 @@ export class ChefDeProjetService {
     return this.http.get<boolean>(`http://localhost:8083/api/developpeurs/${devId}/is-assigned`);
   }
   
- 
+  getChefById2(id: number, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(`${this.baseUrl}/chef/get/${id}`, { headers });
+  }
+  updateChefPassword(id: number, oldPassword: string, newPassword: string, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const params = new URLSearchParams();
+    params.set('oldPassword', oldPassword);
+    params.set('newPassword', newPassword);
+  
+    return this.http.put(`${this.baseUrl}/chef/update-password/${id}?${params.toString()}`, {}, { headers });
+  }
+  updateChefWithImage(id: number, formData: FormData, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.baseUrl}/chef/update/${id}`, formData, { headers });
+  }
+  updateChefPhoto(id: number, image: File, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const formData = new FormData();
+    formData.append('image', image);
+  
+    return this.http.put(`${this.baseUrl}/chef/update-photo/${id}`, formData, { headers });
+  }
+        
  
   
 }

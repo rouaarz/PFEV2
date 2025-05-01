@@ -46,16 +46,29 @@
           </p>
         </a>
       </li>
-      <li>
-        <a [routerLink]="['/edit-profile']" [ngClass]="{'active': current === '/edit-profile'}">
+      <li *ngIf="roles.includes('ROLE_ADMIN')">
+        <a [routerLink]="['/admin/edit', admin.id]" class="nav-link">
           <mat-icon class="icon">person</mat-icon>
-          <p class="nav-item">
-            Edit Profile
-          </p>
+          <p class="nav-item">Edit Profile</p>
+        </a>
+      </li>
+      <li *ngIf="roles.includes('ROLE_CHEF')">
+        <a [routerLink]="['/admin/editchef', chef.id]" class="nav-link">
+          <mat-icon class="icon">person</mat-icon>
+          <p class="nav-item">Edit Profile</p>
+        </a>
+      </li>
+      <li *ngIf="roles.includes('ROLE_DEVELOPPEUR')">
+        <a [routerLink]="['/admin/editDev', chef.id]" class="nav-link">
+          <mat-icon class="icon">person</mat-icon>
+          <p class="nav-item">Edit Profile</p>
         </a>
       </li>
       
       
+
+      
+
       <li>
         <a class="close_sidebar" (click)="OpenedSideBar=!OpenedSideBar">
           <mat-icon class="icon">

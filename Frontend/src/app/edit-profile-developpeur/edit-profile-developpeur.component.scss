@@ -1,0 +1,46 @@
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    
+    &-header {
+      border-radius: 10px 10px 0 0 !important;
+      padding: 1.5rem;
+    }
+    
+    &-body {
+      padding: 2rem;
+    }
+  }
+  
+  .ng-select {
+    padding-top: 0;
+    padding-bottom: 0;
+    
+    &.ng-select-multiple {
+      .ng-select-container .ng-value-container .ng-value {
+        background-color: #e9ecef;
+        border-radius: 4px;
+        color: #495057;
+      }
+    }
+  }
+  
+  .form-label {
+    font-weight: 500;
+    color: #495057;
+  }
+  
+  .btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    
+    &:hover {
+      background-color: #0b5ed7;
+      border-color: #0a58ca;
+    }
+  }
+  
+  .spinner-border {
+    width: 3rem;
+    height: 3rem;
+  }

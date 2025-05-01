@@ -1,5 +1,6 @@
+import { User } from "./User";
 
-export interface Developpeur {
+export interface Developpeur extends User {
     isAssigned: boolean;
     id: number;
     username: string;

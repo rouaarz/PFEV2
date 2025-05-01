@@ -5,17 +5,23 @@
             <div class="row">
 
                 <!-- Earnings (Monthly) Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
+                <div  *ngIf="isAdmin" class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-primary shadow h-100 py-2" style="padding: 40px 20px;">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        nombre de utilisateur</div>
+                                        Nombre de tests publiés</div>
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-auto">
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" *ngIf="number">
+                                                </div>
+                                            </div>
+                                        </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800" *ngIf="number"></div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="bi bi-people-fill fa-2x text-gray-300"></i>
+                                    <i class="bi bi-people-fill fa-2x text-gray-300">{{ nombreTestsPublies }}</i>
                                 </div>
                             </div>
                         </div>
@@ -23,7 +29,7 @@
                 </div>
 
                 <!-- Earnings (Monthly) Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
+                <div *ngIf="isAdmin" class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-success shadow h-100 py-2" style="padding: 40px 20px;">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -33,7 +39,7 @@
                                     <div class="h5 mb-0 font-weight-bold text-gray-800" *ngIf="number"></div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="bi bi-people-fill fa-2x text-gray-300"></i>
+                                    <i class="bi bi-people-fill fa-2x text-gray-300">{{ devCount }}</i>
                                 </div>
                             </div>
                         </div>
@@ -41,13 +47,12 @@
                 </div>
 
                 <!-- Earnings (Monthly) Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
+                <div  *ngIf="isAdmin" class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-info shadow h-100 py-2" style="padding: 40px 20px;">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">nombre de chef
-                                        de projet
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">nombre de chef de projet
                                     </div>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col-auto">
@@ -63,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="bi bi-people-fill fa-2x text-gray-300"></i>
+                                    <i class="bi bi-people-fill fa-2x text-gray-300">{{ chefProjetCount }}</i>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +76,7 @@
                 </div>
 
                 <!-- Pending Requests Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
+                <div  *ngIf="isAdmin" class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-warning shadow h-100 py-2" style="padding: 40px 20px;">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -81,13 +86,65 @@
                                     <div class="h5 mb-0 font-weight-bold text-gray-800" *ngIf="number"></div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="bi bi-people-fill fa-2x text-gray-300"></i>
+                                    <i class="bi bi-people-fill fa-2x text-gray-300">{{demandesActivation}}</i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+            
+  <!-- 👇 Bloc visible uniquement pour les chefs de projet : Nombre de développeurs -->
+   
+
+  <div  *ngIf="isChefDeProjet" class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2" style="padding: 40px 20px;">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Développeurs dans votre équipe</div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" *ngIf="number">
+                                </div>
+                            </div>
+                        </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" *ngIf="number"></div>
+                </div>
+                <div class="col-auto">
+                    <i class="bi bi-people-fill fa-2x text-gray-300">{{ nombreDevEquipe }}</i>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
+  
+  <!-- 👇 Bloc visible uniquement pour les chefs de projet : Nombre de tests -->
+
+  
+  <div *ngIf="isChefDeProjet" class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2" style="padding: 40px 20px;">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Tests publiés par vous</div>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" *ngIf="number">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" *ngIf="number"></div>
+                </div>
+                <div class="col-auto">
+                    <i class="bi bi-award-fill fa-2x text-purple">{{ testsPublies }}</i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
             <!-- Content Row -->
             <div class="container">
@@ -101,5 +158,5 @@
 
 
         </div>
-    </div>
+    </div></div>
 </app-side-bar-comp>

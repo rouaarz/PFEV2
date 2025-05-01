@@ -1,0 +1,173 @@
+.chart-container {
+  margin-top: 30px;
+  height: 400px;
+  width: 90%;
+}
+  
+  /* État de chargement */
+  .loading-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+  }
+  
+  .spinner-container {
+    text-align: center;
+  }
+  
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+  }
+  
+  .loading-text {
+    color: #555;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  /* État d'erreur */
+  .error-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+  }
+  
+  .error-content {
+    text-align: center;
+    max-width: 80%;
+  }
+  
+  .error-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 15px;
+    color: #e74c3c;
+  }
+  
+  .error-title {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .error-message {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  
+  .retry-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: background 0.3s ease;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  
+  .retry-btn:hover {
+    background: #2980b9;
+  }
+  
+  .retry-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+  }
+  
+  /* Graphique */
+  .chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .chart-header {
+    margin-bottom: 15px;
+  }
+  
+  .chart-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .chart-canvas-container {
+    flex: 1;
+    min-height: 200px;
+    position: relative;
+  }
+  
+  .chart-legend {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    background: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  
+  .legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+  
+  .legend-label {
+    color: #555;
+    margin-right: 5px;
+  }
+  
+  .legend-value {
+    color: #333;
+    font-weight: 500;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Améliorations pour la responsivité */
+  @media (max-width: 600px) {
+    .chart-container {
+      padding: 15px;
+    }
+    
+    .chart-legend {
+      gap: 10px;
+    }
+    
+    .legend-item {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+  }
