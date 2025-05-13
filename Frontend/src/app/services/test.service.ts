@@ -85,5 +85,11 @@ export class TestService {
 
     return this.http.get<any[]>(`${this.apiAnalyse}/${testId}`, { headers });
   }
+  deleteTest(id: number, token: string) {
+  return this.http.delete(`${this.apiUrl}/${id}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
 }
 

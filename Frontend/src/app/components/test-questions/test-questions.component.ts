@@ -617,11 +617,7 @@ export class TestQuestionsComponent implements OnInit {
     return this.responses[questionId]?.includes(optionId) ?? false;
   }
   // Soumettre le test
-  submitTest() {
-    console.log("Test soumis avec les réponses :", this.questions);
-    alert("Votre test a été soumis avec succès !");
-    clearInterval(this.timerInterval); // Stopper le timer
-  }
+
 
   // Passer à la question précédente
   previousQuestion() {
@@ -693,64 +689,6 @@ export class TestQuestionsComponent implements OnInit {
     );
   }
 
-  // runCode() {
-  //   if (!this.codeAnswer) {
-  //     this.executionResult = "⚠️ Aucun code à exécuter.";
-  //     return;
-  //   }
-
-  //   const languageId = this.getLanguageId(this.selectedLanguage);
-
-  //   // Liste des cas de test pour cette question
-  //   const testCases = [
-  //     { input: "print(addition(3, 4))", expected: "7" },
-  //     { input: "print(addition(1, 2))", expected: "3" },
-  //     { input: "print(addition(-5, 10))", expected: "5" }
-  //   ];
-
-  //   let passedAll = true;
-  //   let results: string[] = [];
-
-  //   const userFunctionCode = this.codeAnswer; // Le code écrit par le dev
-
-  //   const executeNext = (i: number) => {
-  //     if (i >= testCases.length) {
-  //       // Tous les tests terminés
-  //       this.executionResult = results.join('\n');
-  //       return;
-  //     }
-
-  //     const fullCode = `${userFunctionCode}\n${testCases[i].input}`;
-
-  //     this.codeExecutionService.executeCode(fullCode, languageId).subscribe(
-  //       response => {
-  //         const output = response.stdout?.trim() || '';
-  //         const expected = testCases[i].expected;
-
-  //         if (output === expected) {
-  //           results.push(`✅ Test ${i + 1} : OK (résultat = ${output})`);
-  //         } else {
-  //           passedAll = false;
-  //           results.push(`❌ Test ${i + 1} : Échec (attendu = ${expected}, obtenu = ${output})`);
-  //         }
-
-  //         executeNext(i + 1); // Exécuter le test suivant
-  //       },
-  //       error => {
-  //         results.push(`🚫 Erreur d’exécution pour le test ${i + 1}: ${error.message}`);
-  //         passedAll = false;
-  //         executeNext(i + 1);
-  //       }
-  //     );
-  //   };
-
-  //   executeNext(0);
-  // }
-
-  // checkIfCorrect(output: string): boolean {
-  //   // Vérifier si la sortie correspond à la réponse attendue (par exemple, '7' pour la somme de 3 + 4)
-  //   return output.trim() === this.expectedOutput;
-  // }
 
 
 
