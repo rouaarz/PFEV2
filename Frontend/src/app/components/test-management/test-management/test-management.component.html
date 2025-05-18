@@ -43,6 +43,8 @@
         <th class="py-2 px-4 text-center">Durée</th>
         <th class="py-2 px-4 text-center">Type</th>
         <th class="py-2 px-4 text-center">Statut</th>
+        <th class="py-2 px-4 text-center">Résultat</th>
+
         <th class="py-2 px-4 text-center">Actions</th>
       </tr>
     </thead>
@@ -54,6 +56,9 @@
         <td class="py-2 px-4 text-center">{{ test.duree }}</td>
         <td class="py-2 px-4 text-center">{{ test.type }}</td>
         <td class="py-2 px-4 text-center">{{ test.statut }}</td>
+        <td class="py-2 px-4 text-center"><button (click)="  result(test.id)" class="btn btn-primary "> Résultat
+            </button></td>
+
         <td class="py-2 px-4 text-center">
           <div class="btn-container">
             <button (click)="editTest(test.id)" class="btn btn-warning btn-sm-custom">
@@ -63,19 +68,18 @@
             <button (click)="deleteTest(test.id)" class="btn btn-danger btn-sm-custom">
               <i class="fas fa-trash"></i>
             </button>
-            <button (click)="viewTestDetails(test.id)" class="btn btn-primary btn-sm-custom">
-              <i class="fas fa-tasks"></i>
+            <button (click)="viewTestDetails(test.id)" class="btn btn-primary">
+              <i class="fas fa-tasks"></i> Details
             </button>
 
-            <button *ngIf="test.statut === 'BROUILLON'" (click)="publishTest(test.id, true)"
-              class="btn btn-primary btn-sm-custom">
-              <i class="fas fa-globe"></i>
+            <button *ngIf="test.statut === 'BROUILLON'" (click)="  openPublishTestModal(test.id)"
+              class="btn btn-primary "> publier
             </button>
-
-            <button *ngIf="test.statut === 'BROUILLON'" (click)="publishTest(test.id, false)"
+            
+            <!-- <button *ngIf="test.statut === 'BROUILLON'" (click)="publishTest(test.id, false)"
               class="btn btn-info btn-sm-custom">
               <i class="fas fa-lock"></i>
-            </button>
+            </button> -->
 
           </div>
         </td>

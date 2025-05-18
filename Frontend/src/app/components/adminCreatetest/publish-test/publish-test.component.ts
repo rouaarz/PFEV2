@@ -27,6 +27,7 @@ export class PublishTestComponent implements OnInit {
   constructor(private testService: TestService, private adminService: AdminService,private router: Router) { }
 
   ngOnInit(): void {
+    this.loadDevelopers()
   }
 // ✅ Quand on change le type d'accès
 onAccesChange(value: boolean) {

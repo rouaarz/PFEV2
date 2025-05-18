@@ -128,7 +128,7 @@
 //   { path: 'forgot-password', component: ForgotPasswordComponent },
 //   { path: 'Confirmationemail', component: ConfirmationEmailComponent },
 //   { path: 'reset-password', component: ResetPasswordComponent },
- 
+
 // =======
 //   { path: 'signin', component: SigninComponent },
 //   { path: 'dash', component: DashboardComponent },
@@ -164,8 +164,8 @@
 //     ]
 //   },
 
-  
-  
+
+
 // =======
 //       { path: 'List-Question', component: ListQuestionsComponent },
 //       { path: 'Question', component: QuestionComponent },
@@ -240,11 +240,13 @@ import { CreateTestComponent } from './components/adminCreatetest/create-test/cr
 import { GenerateTestComponent } from './components/generate-test/generate-test.component';
 
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
-import { TestBYAdminComponent} from './components/test-byadmin/test-byadmin.component';
+import { TestBYAdminComponent } from './components/test-byadmin/test-byadmin.component';
 import { AdminGuard } from './guards/admin.guard';
 import { ChefGuard } from './guards/chef.guard';
-import { AnalyseReponsesComponent}from './components/analyse-reponses/analyse-reponses.component'
-import {ReviewTestComponent} from './components/review/review-test-component/review-test-component.component'
+import { AnalyseReponsesComponent } from './components/analyse-reponses/analyse-reponses.component'
+import { ReviewTestComponent } from './components/review/review-test-component/review-test-component.component'
+import { TestStatistiquesComponent } from './test-statistiques/test-statistiques.component'
+
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'signup', component: SignupComponent },
@@ -257,11 +259,11 @@ export const routes: Routes = [
   { path: 'edit-question/:id', component: EditQuestionComponent },
   { path: 'test/:testId', component: TestDetailComponent },
   { path: 'tests', component: TestListComponent },
-  { path: 'testsbyadmin', component:TestBYAdminComponent},
+  { path: 'testsbyadmin', component: TestBYAdminComponent },
   { path: 'test/:testId/questions', component: TestQuestionsComponent },
   { path: 'test/:testId/score/:developpeurId', component: ScoreComponent },
   { path: 'invitations/:invitationId', component: InvitationComponent },
-  { path: 'analyse-test/:testId', component: AnalyseReponsesComponent},
+  { path: 'analyse-test/:testId', component: AnalyseReponsesComponent },
   {
     path: 'review-test/:testId',
     component: ReviewTestComponent,
@@ -277,6 +279,7 @@ export const routes: Routes = [
       { path: 'edit-test/:id', component: CreateTestComponent },
       { path: 'tests-create', component: CreateTestComponent },
       { path: 'test-details/:id', component: TestDetailsComponent },
+      { path: 'tests/:id/stats', component: TestStatistiquesComponent },
 
       // Routes réservées uniquement aux Admins (avec protection ChefGuard)
       { path: 'ajout-Chef', component: AjoutChefsComponent, canActivate: [ChefGuard] },

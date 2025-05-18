@@ -53,13 +53,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {DeveloppeurResultResponse} from '../models/DeveloppeurResultResponse '
+import {TestStatsResponse} from '../models/TestStatsResponse '
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScoreService {
   private apiUrl = 'http://localhost:8083/api/score'; // Remplace par ton URL backend
-
+  private apiAnalyse = 'http://localhost:8083/api/responses/dev-reponses';
   constructor(private http: HttpClient) {}
 
   getScore(testId: number, developpeurId: number, token: string): Observable<any> {
@@ -70,5 +72,17 @@ export class ScoreService {
   calculateScore(testId: number, token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<any>(`${this.apiUrl}/calculer/${testId}`, { headers });
+  }
+   getResultats(testId: number) {
+  return this.http.get<DeveloppeurResultResponse[]>(`${this.apiUrl}/test/${testId}`);
+}
+
+getStats(testId: number) {
+  return this.http.get<TestStatsResponse>(`${this.apiUrl}/stats/${testId}`);
+}
+getDevReponses(testId: number,devId:number, token: string): Observable<any[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<any[]>(`${this.apiAnalyse}/${testId}/${devId}`, { headers });
   }
 }

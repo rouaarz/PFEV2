@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { DeveloppeurResponse } from '../../../models/DeveloppeurResponse ';
 import { TestService } from '../../../services/test.service';
-import{QuestionDisplayComponent}from '../question-display/question-display.component';
+import { QuestionDisplayComponent } from '../question-display/question-display.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute,Router } from '@angular/router';
-import{ResultGraphComponent} from '../result-graph/result-graph.component'
+import { ActivatedRoute, Router } from '@angular/router';
+import { ResultGraphComponent } from '../result-graph/result-graph.component'
+import { Input } from '@angular/core';
+
 @Component({
   selector: 'app-review-test',
   templateUrl: './review-test-Component.component.html',
   styleUrls: ['./review-test-Component.component.css'],
   imports: [
-    QuestionDisplayComponent,ResultGraphComponent,
+    QuestionDisplayComponent, ResultGraphComponent,
     CommonModule, FormsModule],
   standalone: true,
 })
@@ -58,20 +60,26 @@ import{ResultGraphComponent} from '../result-graph/result-graph.component'
 export class ReviewTestComponent implements OnInit {
   reponses: DeveloppeurResponse[] = [];  // Données des réponses
   currentQuestionIndex: number = 0;      // Index de la question en cours
-  testId: number = 0;                    // ID du test
-  developpeurId: string = '';            // ID du développeur
-
+  // testId: number = 0;                    // ID du test
+  // developpeurId: string = '';            // ID du développeur
+  testDetails: any;
+  @Input() testId: number = 0;
+  @Input() developpeurId: string = '';
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private testService: TestService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.testId = Number(this.route.snapshot.paramMap.get('testId'));
     this.developpeurId = localStorage.getItem('developpeurId') ?? '';  // Récupérer l'ID du développeur depuis localStorage
     const token = localStorage.getItem('accessToken') ?? '';  // Récupère le token depuis localStorage
-
+    this.testService.getTestDetails(this.testId).subscribe({
+      next: (data) => {
+        this.testDetails = data;
+      }
+    });
     // Récupérer les réponses depuis le backend
     this.testService.getMesReponses(this.testId, token).subscribe({
       next: (data) => {
@@ -108,7 +116,7 @@ export class ReviewTestComponent implements OnInit {
 
   // Nombre total de questions
   getTotalQuestionsCount(): number {
-    return this.reponses.length;
+    return this.testDetails.nbQuestions;
   }
 
   // Méthode pour revenir au score

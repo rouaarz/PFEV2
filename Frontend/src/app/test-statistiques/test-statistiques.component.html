@@ -1,0 +1,146 @@
+<div *ngIf="stats" class="stats-container">
+  <h2 style="font-size: 1.75rem;">📊 Statistiques du test : {{testDetails.titre}}</h2>
+  <header style="margin-bottom: 2rem;">
+    <h1 style="font-size: 1.75rem;"> </h1>
+    <p>{{testDetails.nbQuestions}} participants | Publié le {{testDetails.dateCreation}}</p>
+  </header>
+  <div class="filter-row" style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+    <select class="form-select" [(ngModel)]="selectedTentative" (change)="applyFilters()">
+      <option value="">Toutes les tentatives</option>
+      <option *ngFor="let t of tentativesDisponibles" [value]="t">{{ t }}</option>
+    </select>
+
+
+    <input type="text" [(ngModel)]="searchTerm" (input)="applyFilters()" placeholder="Rechercher un développeur...">
+  </div>
+
+  <div class="data-grid">
+
+    <!-- KPI cards -->
+    <div class="kpi-row">
+      <div class="card kpi">
+        <div>Score moyen</div>
+        <div class="kpi-value">{{ stats.moyenne | number:'1.1-1' }}%</div>
+      </div>
+      <div class="card kpi">
+        <div>Durée moyen</div>
+        <div class="kpi-value">{{ stats.dureeMoyen }} m</div>
+        <div>Max {{ testDetails.duree }} min autorisés</div>
+      </div>
+      <div class="card kpi">
+        <div>Pire score</div>
+        <div class="kpi-value" style="color: #e67e22;">{{ stats.pirreScore?.score | number:'1.1-1' }}%</div>
+        <div>{{ stats.pirreScore?.nom }}</div>
+      </div>
+      <div class="card kpi">
+        <div>Meilleur score</div>
+        <div class="kpi-value" style="color: #27ae60;">{{ stats.meilleurScore?.score }}%</div>
+        <div>{{ stats.meilleurScore?.nom }}</div>
+      </div>
+    </div>
+
+    <!-- Graphs -->
+    <!-- Graphs -->
+    <div class="graphs-row">
+      <div class="graph">
+        <canvas baseChart [data]="barChartData" [type]="barChartType"></canvas>
+      </div>
+
+      <div class="graph">
+        <h3>📊 Taux de réussite / échec</h3>
+        <canvas baseChart [data]="doughnutChartData" [type]="doughnutChartType"></canvas>
+      </div>
+    </div>
+
+
+  </div>
+
+
+<div class="tab-container">
+
+  <table>
+    <thead>
+      <tr>
+        <th>Développeur</th>
+        <th>Score</th>
+        <th>Tentative</th>
+        <th>Temps passé</th>
+        <th>Détails</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let res of resultatsFiltres | paginate: { itemsPerPage: itemsPerPage, currentPage: p }" class="carte"
+        [ngClass]="res.apparence" class="score-high">
+        <td>
+          <div class="user-info">
+            <img src="https://i.pravatar.cc/40?img=1" alt="Avatar" class="avatar">
+            <div>
+              <div>{{ res.nom }}</div>
+              <div style="font-size: 12px; color: #666;">{{ res.email }}</div>
+            </div>
+            <span class="badge gold">{{ res.badge }}</span>
+            <span *ngIf="res.etat == 'succès'" class="badge alert">{{ res.etat }}</span>
+            <span *ngIf="res.etat === 'échec'" class="badge echec">{{ res.etat }}</span>
+
+          </div>
+        </td>
+        <td>{{ res.score | number:'1.1-1'}} %</td>
+        <td>{{ res.tentative }}</td>
+        <td>{{ res.temps }}</td>
+        <td><button (click)="openModal(testId, res)" style="background-color: #54a9da;">📊 Voir détails</button></td>
+        <td>
+          <button style="background-color: #27ae60;">Certificat</button>
+          <button style="background-color: #e74c3c;">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+
+
+
+
+<pagination-controls style="text-align: center; margin-top: 20px;" (pageChange)="p = $event" previousLabel="Précédent"
+  nextLabel="Suivant" class="my-3">
+</pagination-controls>
+<!-- Modal de détails -->
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Détails des résultats - {{ selectedDevNom }}</h2>
+    <h3>{{ testDetails.titre }} - {{ scoreTotal }}% ({{ tentativeNumber }}ᵉ tentative)</h3>
+    <p>
+      <strong>Temps total :</strong> {{ tempsTotal }}<br>
+      <strong>Date :</strong> {{ datePassage | date:'dd/MM/yyyy HH:mm' }}
+    </p>
+
+
+    <h4>Questions :</h4>
+    <div *ngFor="let rep of reponses" class="question-block" [ngClass]="rep.isCorrect ? 'correct' : 'incorrect'">
+      <strong>{{ rep.question.enonce }}</strong><br>
+      <em *ngIf="rep.isCorrect" class="badge alert">correcte</em>
+      <em *ngIf="!rep.isCorrect" class="badge echec">incorrecte</em>
+      <div class="response-details">
+        <strong>Réponse :</strong>
+        <div *ngIf="rep.reponseLibre">{{ rep.reponseLibre }}</div>
+        <div *ngIf="rep.selectedAnswerOptions?.length">
+          <ul>
+            <li *ngFor="let opt of rep.selectedAnswerOptions">{{ opt.text }}</li>
+          </ul>
+        </div>
+        <div *ngIf="rep.feedback">
+          <strong>Feedback AI:</strong> {{ rep.feedback }}
+        </div>
+        <div *ngIf="rep.reponseCorrecte">
+          <strong>Bonne réponse attendue :</strong>
+          <pre>{{ rep.reponseCorrecte }}</pre>
+        </div>
+      </div>
+    </div>
+
+    <button (click)="print()">🖨️ Imprimer ce rapport</button>
+  </div>
+</div>

@@ -53,7 +53,7 @@ export class GenerateTestComponent {
   }
   token = localStorage.getItem('accessToken') ?? '';
   testId: number | null = null;
-  constructor(private testService: TestService, private questionService: QuestionService, private modalService: NgbModal, private router: Router  // <-- injecte le router
+  constructor(private testService: TestService, private questionService: QuestionService, private modalService: NgbModal, private router: Router 
   ) { }
   // openPublishTestModal() {
   //   const modalRef = this.modalService.open(PublishTestComponent); // Ouvre la modal

@@ -14,9 +14,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class AnalyseReponsesComponent implements OnInit {
   reponses: DeveloppeurResponse[] = [];
+
   token!: string | null;
 
-  constructor(private TestService: TestService) {}
+  constructor(private TestService: TestService) { }
 
   ngOnInit(): void {
     console.log('🔍 Composant AnalyseReponsesComponent initialisé');
@@ -28,6 +29,7 @@ export class AnalyseReponsesComponent implements OnInit {
     console.log('🔐 Token récupéré depuis localStorage :', this.token);
 
     console.log('📡 Envoi de la requête pour récupérer les réponses du développeur...');
+    
     this.TestService.getMesReponses(testId, this.token).subscribe({
       next: (data) => {
         console.log('✅ Réponses récupérées avec succès :', data);
