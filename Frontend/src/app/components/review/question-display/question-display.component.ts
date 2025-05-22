@@ -15,7 +15,9 @@ export class QuestionDisplayComponent {
   @Input() reponse: DeveloppeurResponse | null = null;
   @Input() isCurrent: boolean = false;
   @Input() currentQuestionIndex: number = 0; // Ajoutez cette ligne pour recevoir l'index de la question
-
+  ngOnInit(): void {
+    
+  }
   // Vérifie si l'option est sélectionnée par le développeur
   isOptionSelected(option: any): boolean {
     return this.reponse?.selectedAnswerOptions.some(selectedOption => selectedOption.id === option.id) ?? false;

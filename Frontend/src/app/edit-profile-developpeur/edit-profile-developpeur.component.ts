@@ -492,6 +492,12 @@ updateField(field: string): void {
     });
   }
 }
+logout() {
+    // Supprimer les infos du localStorage ou sessionStorage
+    localStorage.clear(); // ou localStorage.removeItem('token');
+    // Rediriger vers la page de login
+    this.router.navigate(['/signin']);
+  }
 
 
 }

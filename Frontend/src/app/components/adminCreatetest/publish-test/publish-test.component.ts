@@ -4,6 +4,7 @@ import { AdminService } from '../../../services/admin.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-publish-test',
@@ -14,6 +15,8 @@ import { Router } from '@angular/router';
 })
 export class PublishTestComponent implements OnInit {
   @Input() testId: number | null = null; // accepte aussi null
+  @Output() testPublished = new EventEmitter<void>();
+
   accesRestreint: boolean = false;
   developers: any[] = [];
   selectedDevelopers: number[] = [];
@@ -24,6 +27,7 @@ export class PublishTestComponent implements OnInit {
   constructor(private testService: TestService, private adminService: AdminService,private router: Router) { }
 
   ngOnInit(): void {
+    this.loadDevelopers()
   }
 // ✅ Quand on change le type d'accès
 onAccesChange(value: boolean) {
@@ -91,6 +95,7 @@ publishTest() {
     // Logique de publication du test (à adapter selon ton backend)
     console.log('Test publié');
     alert('Test publié avec succès!');
+  this.testPublished.emit(); // ✅ EMIT l'événement ici
 
     // Redirection vers la route 'admin/TestManagement'
     this.router.navigate(['/admin/TestManagement']);

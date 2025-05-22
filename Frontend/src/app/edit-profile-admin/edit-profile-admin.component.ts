@@ -188,8 +188,8 @@ export class EditProfileAdminComponent implements OnInit {
   showOldPassword = false;
   showNewPassword = false;
   showCurrentPassword = false;
-  personalInfoOpen = true;
-securityOpen = true;
+  personalInfoOpen = false;
+securityOpen = false;
 
   constructor(
     private fb: FormBuilder,
@@ -294,6 +294,7 @@ securityOpen = true;
           this.isLoading = false;
           alert(`${field} mis à jour avec succès !`);
           this.adminForm.get('currentPassword')?.reset();
+          this.loadAdminData(token);
         },
         error: (err) => {
           console.error(`Erreur lors de la mise à jour de ${field}:`, err);
@@ -324,6 +325,7 @@ securityOpen = true;
           alert('Mot de passe mis à jour avec succès !');
           this.adminForm.get('oldPassword')?.reset();
           this.adminForm.get('newPassword')?.reset();
+          this.loadAdminData(token);
         },
         error: (err) => {
           this.isLoading = false;
@@ -367,6 +369,7 @@ securityOpen = true;
         this.adminPhoto = updatedAdmin.image ? updatedAdmin.image : 'assets/images/default-admin.png';
         this.selectedPhoto = null;
         alert('Profil mis à jour avec succès !');
+        this.loadAdminData(token);
       },
       error: (err) => {
         console.error('Erreur lors de la mise à jour:', err);
@@ -430,6 +433,7 @@ securityOpen = true;
         this.selectedFile = null;
         this.isLoading = false;
         alert('Photo mise à jour avec succès !');
+        this.loadAdminData(token);
       },
       error: (err) => {
         console.error('Erreur lors de la mise à jour de la photo:', err);

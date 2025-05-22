@@ -267,10 +267,12 @@ export class NavbarCompComponent implements OnInit {
       // Logique pour ouvrir la page des paramètres
     }
   
-    viewProfile() {
-      this.isUserMenuOpen = false;
+   
       // Logique pour aller au profil utilisateur
-    }
+   viewProfile() {
+    
+  }
+
   
     manageAccounts() {
       this.isUserMenuOpen = false;

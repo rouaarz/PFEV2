@@ -1,189 +1,97 @@
-<!-- 
-   <div class="container p-4">
-    <h2 class="text-2xl font-bold mb-4">Gestion des Tests</h2>
-  
-    <div class="flex flex-wrap gap-4 mb-4">
-      <input
-        type="text"
-        [(ngModel)]="searchQuery"
-        placeholder="Rechercher un test..."
-        class="border border-gray-300 rounded-lg px-3 py-2 w-full md:w-1/3"
-      />
-  
-      <select
-        [(ngModel)]="selectedStatus"
-        class="border border-gray-300 rounded-lg px-3 py-2 w-full md:w-1/4"
-      >
-        <option value="">-- Tous les Statuts --</option>
-        <option value="BROUILLON">Brouillon</option>
-        <option value="PUBLIE">Publié</option>
-        <option value="EXPIRÉ">Expiré</option>
-      </select>
-  
-      <select
-        [(ngModel)]="selectedType"
-        class="border border-gray-300 rounded-lg px-3 py-2 w-full md:w-1/4"
-      >
-        <option value="">-- Tous les Types --</option>
-        <option value="QCM">QCM</option>
-        <option value="Algorithmique">Algorithmique</option>
-        <option value="Mixte">Mixte</option>
-      </select>
-    </div>
-  
-    <div class="flex justify-end mb-4">
-      <button (click)="addTest()" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
-        ➕ Ajouter un Test
-      </button>
-    </div>
-  
-    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="py-2 px-4 text-left">Titre</th>
-          <th class="py-2 px-4 text-left">Description</th>
-          <th class="py-2 px-4 text-center">Durée</th>
-          <th class="py-2 px-4 text-center">Type</th>
-          <th class="py-2 px-4 text-center">Statut</th>
-          <th class="py-2 px-4 text-center">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="let test of filteredTests() | paginate: { itemsPerPage: itemsPerPage, currentPage: page }"
-          class="border-b"
-        >
-          <td class="py-2 px-4">{{ test.titre }}</td>
-          <td class="py-2 px-4">{{ test.description }}</td>
-          <td class="py-2 px-4 text-center">{{ test.duree }}</td>
-          <td class="py-2 px-4 text-center">{{ test.type }}</td>
-          <td class="py-2 px-4 text-center">{{ test.statut }}</td>
-          <td class="py-2 px-4 text-center">
-            <button (click)="viewTestDetails(test.id)" class="text-indigo-500 hover:underline mr-2">👁️ Détails</button>
-            <button (click)="editTest(test.id)" class="text-blue-500 hover:underline mr-2">✏️ Modifier</button>
-            <button *ngIf="test.statut === 'BROUILLON'" (click)="publishTest(test.id, true)"
-              class="bg-green-500 hover:bg-green-600 text-white py-1 px-2 rounded mr-1">🌍 Public</button>
-            <button *ngIf="test.statut === 'BROUILLON'" (click)="publishTest(test.id, false)"
-              class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-2 rounded mr-1">🔒 Privé</button>
-            <button (click)="deleteTest(test.id)" class="text-red-500 hover:underline">🗑️ Supprimer</button>
-          </td>
-        </tr>
-        <tr *ngIf="filteredTests().length === 0">
-            <td colspan="6" class="text-center py-4">❌ Aucun test trouvé pour les critères sélectionnés.</td>
-          </tr>
-          
-      </tbody>
-    </table>
-  
-    <div class="flex justify-center mt-4">
-      <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
-    </div>
+<div class="container p-4">
+  <h2 class="text-2xl font-bold mb-4">Gestion des Tests</h2>
+
+  <!-- 🔍 Barre de recherche et filtres -->
+  <div class="flex flex-wrap gap-4 mb-4">
+    <!-- Barre de recherche -->
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Rechercher un test..."
+      class="border border-gray-300 rounded-lg px-3 py-2 w-full md:w-1/3" />
+
+    <!-- Filtre par statut -->
+    <select [(ngModel)]="selectedStatus" class="border border-gray-300 rounded-lg px-3 py-2 w-full md:w-1/4">
+      <option value="">-- Tous les Statuts --</option>
+      <option value="BROUILLON">Brouillon</option>
+      <option value="PUBLIE">Publié</option>
+      <option value="EXPIRÉ">Expiré</option>
+    </select>
+
+    <!-- Filtre par type -->
+    <select [(ngModel)]="selectedType" class="border border-gray-300 rounded-lg px-3 py-2 w-full md:w-1/4">
+      <option value="">-- Tous les Types --</option>
+      <option value="QCM">QCM</option>
+      <option value="Algorithmique">Algorithmique</option>
+      <option value="Mixte">Mixte</option>
+    </select>
   </div>
-   -->
-   <div class="container p-4">
-    <h2 class="text-2xl font-bold mb-4">Gestion des Tests</h2>
-  
-    <!-- 🔍 Barre de recherche et filtres -->
-    <div class="flex flex-wrap gap-4 mb-4">
-      <!-- Barre de recherche -->
-      <input
-        type="text"
-        [(ngModel)]="searchQuery"
-        placeholder="Rechercher un test..."
-        class="border border-gray-300 rounded-lg px-3 py-2 w-full md:w-1/3"
-      />
-  
-      <!-- Filtre par statut -->
-      <select
-        [(ngModel)]="selectedStatus"
-        class="border border-gray-300 rounded-lg px-3 py-2 w-full md:w-1/4"
-      >
-        <option value="">-- Tous les Statuts --</option>
-        <option value="BROUILLON">Brouillon</option>
-        <option value="PUBLIE">Publié</option>
-        <option value="EXPIRÉ">Expiré</option>
-      </select>
-  
-      <!-- Filtre par type -->
-      <select
-        [(ngModel)]="selectedType"
-        class="border border-gray-300 rounded-lg px-3 py-2 w-full md:w-1/4"
-      >
-        <option value="">-- Tous les Types --</option>
-        <option value="QCM">QCM</option>
-        <option value="Algorithmique">Algorithmique</option>
-        <option value="Mixte">Mixte</option>
-      </select>
-    </div>
-  
-    <!-- Bouton Ajouter -->
-    <div class="flex justify-end mb-4">
-      <button (click)="addTest()" class="btn-assign-test text-white d-flex align-items-center">
-        <i class="fas fa-plus"></i> Ajouter un Test
-      </button>
-    </div>
-    <div class="flex justify-end mb-4">
-      <button (click)="addTestAlea()" class="btn-assign-test text-white d-flex align-items-center">
-        <i class="fas fa-plus"></i> Ajouter un Test aleatoire 
-      </button>
-    </div>
-    <!-- Tableau -->
-    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="py-2 px-4 text-left">Titre</th>
-          <th class="py-2 px-4 text-left">Description</th>
-          <th class="py-2 px-4 text-center">Durée</th>
-          <th class="py-2 px-4 text-center">Type</th>
-          <th class="py-2 px-4 text-center">Statut</th>
-          <th class="py-2 px-4 text-center">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="let test of filteredTests() | paginate: { itemsPerPage: itemsPerPage, currentPage: page }"
-          class="border-b"
-        >
-          <td class="py-2 px-4">{{ test.titre }}</td>
-          <td class="py-2 px-4">{{ test.description }}</td>
-          <td class="py-2 px-4 text-center">{{ test.duree }}</td>
-          <td class="py-2 px-4 text-center">{{ test.type }}</td>
-          <td class="py-2 px-4 text-center">{{ test.statut }}</td>
-          <td class="py-2 px-4 text-center">
-            <div class="btn-container">
-              <button (click)="editTest(test.id)" class="btn btn-warning btn-sm-custom">
-                <i class="fas fa-edit"></i> 
-              </button>
-              
-              <button (click)="deleteTest(test.id)" class="btn btn-danger btn-sm-custom">
-                <i class="fas fa-trash"></i> 
-              </button>
-              <button (click)="viewTestDetails(test.id)" class="btn btn-primary btn-sm-custom">
-                <i  class="fas fa-tasks"></i> 
-              </button>
-             
-              <button *ngIf="test.statut === 'BROUILLON'" (click)="publishTest(test.id, true)"
-                class="btn btn-primary btn-sm-custom">
-                <i class="fas fa-globe"></i> 
-              </button>
-              
-              <button *ngIf="test.statut === 'BROUILLON'" (click)="publishTest(test.id, false)"
-                class="btn btn-info btn-sm-custom">
-                <i class="fas fa-lock"></i> 
-              </button>
-              
-            </div>
-          </td>
-        </tr>
-        <tr *ngIf="filteredTests().length === 0">
-          <td colspan="6" class="text-center py-4">❌ Aucun test trouvé pour les critères sélectionnés.</td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <!-- Pagination -->
-    <div class="flex justify-center mt-4">
-      <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
-    </div>
+
+  <div class="flex justify-end gap-4 mb-4">
+    <button (click)="addTest()" class="btn-assign-test text-white d-flex align-items-center">
+      <i class="fas fa-plus mr-2"></i> Ajouter un Test
+    </button>
+    <button (click)="addTestAlea()" class="btn-assign-test text-white d-flex align-items-center">
+      <i class="fas fa-random mr-2"></i> Générer un Test aléatoire
+    </button>
   </div>
-  
+
+
+  <!-- Tableau -->
+  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="py-2 px-4 text-left">Titre</th>
+        <th class="py-2 px-4 text-left">Description</th>
+        <th class="py-2 px-4 text-center">Durée</th>
+        <th class="py-2 px-4 text-center">Type</th>
+        <th class="py-2 px-4 text-center">Statut</th>
+        <th class="py-2 px-4 text-center">Résultat</th>
+
+        <th class="py-2 px-4 text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let test of filteredTests() | paginate: { itemsPerPage: itemsPerPage, currentPage: page }"
+        class="border-b">
+        <td class="py-2 px-4">{{ test.titre }}</td>
+        <td class="py-2 px-4">{{ test.description }}</td>
+        <td class="py-2 px-4 text-center">{{ test.duree }}</td>
+        <td class="py-2 px-4 text-center">{{ test.type }}</td>
+        <td class="py-2 px-4 text-center">{{ test.statut }}</td>
+        <td class="py-2 px-4 text-center"><button (click)="  result(test.id)" class="btn btn-primary "> Résultat
+            </button></td>
+
+        <td class="py-2 px-4 text-center">
+          <div class="btn-container">
+            <button (click)="editTest(test.id)" class="btn btn-warning btn-sm-custom">
+              <i class="fas fa-edit"></i>
+            </button>
+
+            <button (click)="deleteTest(test.id)" class="btn btn-danger btn-sm-custom">
+              <i class="fas fa-trash"></i>
+            </button>
+            <button (click)="viewTestDetails(test.id)" class="btn btn-primary">
+              <i class="fas fa-tasks"></i> Details
+            </button>
+
+            <button *ngIf="test.statut === 'BROUILLON'" (click)="  openPublishTestModal(test.id)"
+              class="btn btn-primary "> publier
+            </button>
+            
+            <!-- <button *ngIf="test.statut === 'BROUILLON'" (click)="publishTest(test.id, false)"
+              class="btn btn-info btn-sm-custom">
+              <i class="fas fa-lock"></i>
+            </button> -->
+
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="filteredTests().length === 0">
+        <td colspan="6" class="text-center py-4">❌ Aucun test trouvé pour les critères sélectionnés.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="flex justify-center mt-4">
+    <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+  </div>
+</div>

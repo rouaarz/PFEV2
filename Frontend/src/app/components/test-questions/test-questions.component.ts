@@ -382,7 +382,7 @@ export class TestQuestionsComponent implements OnInit {
       this.router.navigate(['/signin']);
       return; // Arrêter l'exécution
     }
-
+            
 
     this.loadSavedResponses();
     this.testId = Number(this.route.snapshot.paramMap.get('testId'));
@@ -413,7 +413,7 @@ export class TestQuestionsComponent implements OnInit {
       }
     });
 
-
+     this.scoreService.getScore(this.testId, this.developpeurId, this.token)
   }
 
 
@@ -492,7 +492,7 @@ export class TestQuestionsComponent implements OnInit {
       return;
     }
 
-   this.scoreService.calculateScore(this.testId, this.token).subscribe({
+    this.scoreService.calculateScore(this.testId, this.token).subscribe({
       next: (response) => {
         if (response.status === 'success') {
           this.score = response.score;
@@ -532,16 +532,18 @@ export class TestQuestionsComponent implements OnInit {
       alert("Erreur : Identifiants manquants. Veuillez réessayer.");
       return;
     }
+    if (this.isLastQuestion()) {
 
-    alert("Test terminé ! Vos réponses ont été envoyées.");
-    this.enregistrerReponse(this.questions[this.currentQuestionIndex].id, this.selectedOptionIds);
+      alert("Test terminé ! Vos réponses ont été envoyées.");
+      this.enregistrerReponse(this.questions[this.currentQuestionIndex].id, this.selectedOptionIds);
+      this.ngOnInit();
+    }
+    else {
+      this.onFinishTest();
+    }
+    this.router.navigate(['/test', this.testId, 'score', this.developpeurId]);
+    localStorage.removeItem('responses');
 
-    // ✅ Petite pause pour laisser finir le POST si besoin
-    setTimeout(() => {
-
-      this.router.navigate(['/test', this.testId, 'score', this.developpeurId]);
-      localStorage.removeItem('responses');
-    }, 500);
   }
 
   nextQuestion() {
@@ -553,20 +555,18 @@ export class TestQuestionsComponent implements OnInit {
 
     this.enregistrerReponse(this.questions[this.currentQuestionIndex].id, this.selectedOptionIds);
 
-    if (this.isLastQuestion()) {
-      // Si c'est la dernière question, soumettre le test
-      this.terminerTest();
-    } else if (this.currentQuestionIndex < this.questions.length - 1) {
+    
+     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
       this.selectedOptionIds = this.responses[this.questions[this.currentQuestionIndex].id] || []; // ✅ Charger les réponses enregistrées
       this.markAnswered();
     }
   }
 
-  
-  
 
-  
+
+
+
   enregistrerReponse(questionId: number, selectedOptionIds: number[]) {
     const token = localStorage.getItem('accessToken');
     if (!token) {
@@ -574,19 +574,19 @@ export class TestQuestionsComponent implements OnInit {
       this.router.navigate(['/signin']);
       return;
     }
-  
+
     const currentQuestion = this.questions.find(q => q.id === questionId);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-  
+
     let body: any = {
       testId: this.testId,
       questionId: questionId,
       developpeurId: this.developpeurId
     };
-  
+
     if (currentQuestion?.type === 'QCM') {
       this.responses[questionId] = [...selectedOptionIds];
       body.selectedOptionIds = selectedOptionIds;
@@ -598,9 +598,9 @@ export class TestQuestionsComponent implements OnInit {
       body.reponseLibre = this.codeAnswer;
       body.language = this.selectedLanguage; // facultatif si backend accepte
     }
-  
+
     localStorage.setItem('responses', JSON.stringify(this.responses));
-  
+
     this.http.post('http://localhost:8083/api/responses/enregistrer', body, { headers }).subscribe(
       (response: any) => {
         console.log('Réponse enregistrée', response);
@@ -610,18 +610,14 @@ export class TestQuestionsComponent implements OnInit {
       }
     );
   }
-  
+
 
 
   isChecked(questionId: number, optionId: number): boolean {
     return this.responses[questionId]?.includes(optionId) ?? false;
   }
   // Soumettre le test
-  submitTest() {
-    console.log("Test soumis avec les réponses :", this.questions);
-    alert("Votre test a été soumis avec succès !");
-    clearInterval(this.timerInterval); // Stopper le timer
-  }
+
 
   // Passer à la question précédente
   previousQuestion() {
@@ -693,64 +689,6 @@ export class TestQuestionsComponent implements OnInit {
     );
   }
 
-  // runCode() {
-  //   if (!this.codeAnswer) {
-  //     this.executionResult = "⚠️ Aucun code à exécuter.";
-  //     return;
-  //   }
-
-  //   const languageId = this.getLanguageId(this.selectedLanguage);
-
-  //   // Liste des cas de test pour cette question
-  //   const testCases = [
-  //     { input: "print(addition(3, 4))", expected: "7" },
-  //     { input: "print(addition(1, 2))", expected: "3" },
-  //     { input: "print(addition(-5, 10))", expected: "5" }
-  //   ];
-
-  //   let passedAll = true;
-  //   let results: string[] = [];
-
-  //   const userFunctionCode = this.codeAnswer; // Le code écrit par le dev
-
-  //   const executeNext = (i: number) => {
-  //     if (i >= testCases.length) {
-  //       // Tous les tests terminés
-  //       this.executionResult = results.join('\n');
-  //       return;
-  //     }
-
-  //     const fullCode = `${userFunctionCode}\n${testCases[i].input}`;
-
-  //     this.codeExecutionService.executeCode(fullCode, languageId).subscribe(
-  //       response => {
-  //         const output = response.stdout?.trim() || '';
-  //         const expected = testCases[i].expected;
-
-  //         if (output === expected) {
-  //           results.push(`✅ Test ${i + 1} : OK (résultat = ${output})`);
-  //         } else {
-  //           passedAll = false;
-  //           results.push(`❌ Test ${i + 1} : Échec (attendu = ${expected}, obtenu = ${output})`);
-  //         }
-
-  //         executeNext(i + 1); // Exécuter le test suivant
-  //       },
-  //       error => {
-  //         results.push(`🚫 Erreur d’exécution pour le test ${i + 1}: ${error.message}`);
-  //         passedAll = false;
-  //         executeNext(i + 1);
-  //       }
-  //     );
-  //   };
-
-  //   executeNext(0);
-  // }
-
-  // checkIfCorrect(output: string): boolean {
-  //   // Vérifier si la sortie correspond à la réponse attendue (par exemple, '7' pour la somme de 3 + 4)
-  //   return output.trim() === this.expectedOutput;
-  // }
 
 
 

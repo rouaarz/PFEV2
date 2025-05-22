@@ -23,8 +23,8 @@ export class EditProfileChefComponent implements OnInit {
   isLoading = false;
   showOldPassword = false;
   showNewPassword = false;
-  personalInfoOpen = true;
-  securityOpen = true;
+  personalInfoOpen = false;
+  securityOpen = false;
 
   constructor(
     private fb: FormBuilder,
@@ -116,6 +116,7 @@ export class EditProfileChefComponent implements OnInit {
       this.chef = updated;
       this.isLoading = false;
       alert(`Le champ ${field} a été mis à jour avec succès !`);
+        this.loadChefData(token);
     },
     error: (err) => {
       console.error(`Erreur lors de la mise à jour du champ ${field}:`, err);
@@ -140,6 +141,7 @@ updatePassword(): void {
     next: () => {
       this.isLoading = false;
       alert('Mot de passe mis à jour avec succès !');
+        this.loadChefData(token);
     },
     error: (err) => {
       console.error('Erreur lors de la mise à jour du mot de passe :', err);
@@ -164,6 +166,7 @@ updateAll(): void {
       this.chef = updatedChef;
       this.isLoading = false;
       alert('Profil mis à jour avec succès !');
+        this.loadChefData(token);
     },
     error: (err) => {
       console.error('Erreur lors de la mise à jour du profil :', err);
@@ -194,6 +197,7 @@ updateAll(): void {
         this.selectedFile = null;
         this.isLoading = false;
         alert('Photo mise à jour avec succès !');
+          this.loadChefData(token);
       },
       error: (err) => {
         console.error('Erreur lors de la mise à jour de la photo:', err);

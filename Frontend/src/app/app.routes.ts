@@ -32,16 +32,20 @@ import { CreateTestComponent } from './components/adminCreatetest/create-test/cr
 import { GenerateTestComponent } from './components/generate-test/generate-test.component';
 
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
-import { TestBYAdminComponent} from './components/test-byadmin/test-byadmin.component';
+import { TestBYAdminComponent } from './components/test-byadmin/test-byadmin.component';
 import { AdminGuard } from './guards/admin.guard';
 import { ChefGuard } from './guards/chef.guard';
+
 
 import { EditProfileDeveloppeurComponent } from './edit-profile-developpeur/edit-profile-developpeur.component';
 import { EditProfileAdminComponent } from './edit-profile-admin/edit-profile-admin.component';
 import { EditProfileChefComponent } from './edit-profile-chef/edit-profile-chef.component';
-import { AnalyseReponsesComponent } from './components/analyse-reponses/analyse-reponses.component';
-import { ReviewTestComponent } from './components/review/review-test-component/review-test-component.component';
 import { DashboardDeveloppeurComponent } from './dashboard-developpeur/dashboard-developpeur.component';
+
+
+import { AnalyseReponsesComponent } from './components/analyse-reponses/analyse-reponses.component'
+import { ReviewTestComponent } from './components/review/review-test-component/review-test-component.component'
+import { TestStatistiquesComponent } from './test-statistiques/test-statistiques.component'
 
 
 export const routes: Routes = [
@@ -56,10 +60,11 @@ export const routes: Routes = [
   { path: 'edit-question/:id', component: EditQuestionComponent },
   { path: 'test/:testId', component: TestDetailComponent },
   { path: 'tests', component: TestListComponent },
-  { path: 'testsbyadmin', component:TestBYAdminComponent},
+  { path: 'testsbyadmin', component: TestBYAdminComponent },
   { path: 'test/:testId/questions', component: TestQuestionsComponent },
   { path: 'test/:testId/score/:developpeurId', component: ScoreComponent },
   { path: 'invitations/:invitationId', component: InvitationComponent },
+
   { path: 'dashboard-developpeur', component: DashboardDeveloppeurComponent },
   {
     path: 'editDev/:id', 
@@ -67,6 +72,9 @@ export const routes: Routes = [
   },
  
   { path: 'analyse-test/:testId', component: AnalyseReponsesComponent},
+
+ 
+
   {
     path: 'review-test/:testId',
     component: ReviewTestComponent,
@@ -83,11 +91,15 @@ export const routes: Routes = [
       { path: 'edit-test/:id', component: CreateTestComponent },
       { path: 'tests-create', component: CreateTestComponent },
       { path: 'test-details/:id', component: TestDetailsComponent },
+
       
       {
         path: 'edit/:id', 
         component: EditProfileAdminComponent
       },
+
+     { path: 'tests/:id/stats', component: TestStatistiquesComponent },
+
 
       {
         path: 'editchef/:id', 

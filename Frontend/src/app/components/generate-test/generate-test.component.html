@@ -47,26 +47,14 @@
     </div>
   </div>
 
-  <!-- SECTION 2: Technologies -->
-  <!-- <div class="form-section">
-    <h4>Technologies</h4>
-    <div class="form-group">
-      <div class="tech-options">
-        <label *ngFor="let tech of techOptions">
-          <input type="checkbox" [value]="tech" (change)="toggleTech(tech, $event)" />
-          {{ tech }}
-        </label>
-      </div>
-    </div>
-  </div> -->
-<!-- SECTION 2: Technologies -->
 <div class="form-section">
   <h4>Technologies</h4>
   <div class="form-group">
     <label for="technologies">Choisissez les technologies :</label>
     <select id="technologies" [(ngModel)]="selectedTech" name="technologies" class="form-control" multiple>
-      <option *ngFor="let tech of techOptions" [value]="tech">{{ tech }}</option>
-    </select>
+  <option *ngFor="let tech of techOptions" [ngValue]="tech">{{ tech }}</option>
+</select>
+
   </div>
 </div>
 
@@ -131,13 +119,38 @@
   </div>
 
 </form>
+
 <div *ngIf="questionsPreview && questionsPreview.length" class="preview-section">
   <h3>Aperçu des questions générées</h3>
   <ul>
-    <li *ngFor="let question of questionsPreview">
-      {{ question.enonce }} ({{ question.type }}) ({{ question.niveau }}) 
+    <li *ngFor="let question of questionsPreview; let i = index" class="question-item">
+      <div class="question-info">
+        <strong>{{ question.enonce }}</strong>
+        <div class="badges">
+          <span class="badge badge-type">{{ question.type }}</span>
+          <span class="badge badge-niveau">{{ question.niveau }}</span>
+        </div>
+      </div>
+      <div class="question-actions">
+        <button type="button" (click)="remplacerQuestion(i)" class="btn replace" title="Remplacer">
+          <i class="fas fa-rotate"></i>
+        </button>
+        <button type="button" (click)="supprimerQuestion(i)" class="btn delete" title="Supprimer">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
     </li>
   </ul>
-  <button type="button" (click)="generateTest()">Valider le test</button>
-  <button type="button" (click)="generateQuestionsPreview()">Regénérer</button>
+
+  <div class="action-buttons">
+    <button class="btn btn-danger" (click)="annuler()">Annuler</button>
+
+    <button type="button" (click)="validerTest()" class="btn primary">
+      <i class="fas fa-check-circle"></i> Valider le test
+    </button>
+
+    <button type="button" (click)="regenerateQuestions()" class="btn warning">
+      <i class="fas fa-redo"></i> Régénérer les questions
+    </button>
+  </div>
 </div>

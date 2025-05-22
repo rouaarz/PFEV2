@@ -182,7 +182,9 @@ import { DeveloppeurResponse } from '../../../models/DeveloppeurResponse ';
 })
 export class ResultGraphComponent implements OnChanges {
   @Input() results: DeveloppeurResponse[] = [];
-
+  ngOnInit(): void {
+    this.ngOnChanges();
+  }
   correctCount = 0;
   incorrectCount = 0;
 

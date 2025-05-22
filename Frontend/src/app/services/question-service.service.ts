@@ -41,7 +41,10 @@ export class QuestionService {
     return this.http.get<Question[]>(`${this.apiUrl}/search?query=${term}`);
   }
   
-  
+  remplacerQuestion(request: any): Observable<Question> {
+  return this.http.post<Question>(`${this.apiUrl}/remplacer`, request);
+}
+
   
 }
 
