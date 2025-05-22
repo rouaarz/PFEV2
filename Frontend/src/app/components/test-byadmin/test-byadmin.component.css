@@ -1,0 +1,223 @@
+.test-page-container {
+    padding: 24px;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f0f2f5;
+    min-height: 100vh;
+  }
+  .search-bar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 24px;
+  }
+  
+  .search-bar {
+    display: flex;
+    margin-bottom: 24px;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px 0 0 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .search-bar input:focus {
+    border-color: #673ab7;
+  }
+  
+  .search-bar button {
+    padding: 12px 20px;
+    background-color: #673ab7;
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .search-bar button:hover {
+    background-color: #5a2ea6;
+  }
+  .content-container {
+    display: flex;
+    gap: 24px;
+  }
+  
+  .filters-sidebar {
+    width: 260px;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 24px;
+    height: calc(100vh - 48px);
+    overflow-y: auto;
+  }
+  
+  .filter-section {
+    margin-bottom: 24px;
+  }
+  
+  .filter-section h4 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #333;
+  }
+  
+  .filter-section h5 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #000000;
+    text-align: center;
+  }
+  .filter-section label {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    font-size: 14px;
+    color: #444;
+    margin: 6px 0;
+  
+  }
+  
+  
+  .filter-section input[type="checkbox"] {
+    margin-right: 8px;  /* Space between the checkbox and text */
+  }
+  
+  
+  
+  .badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: inline-block;
+    margin-right: 6px;
+    margin-bottom: 8px;
+  }
+  
+  .easy {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .medium {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .hard {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .tous {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  .test-list-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    align-items: start;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+  }
+  
+  .test-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  
+  .test-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .card-header h3 {
+    margin: 0;
+    font-size: 17px;
+    color: #333;
+  }
+  
+  .badgetype {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #E1A624;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  
+  .badges {
+    margin: 12px 0;
+  }
+  
+  .limiteTentatives {
+    background-color: #e0f7fa;
+    color: #006064;
+  }
+  
+  .level {
+    background-color: #f3e5f5;
+    color: #6a1b9a;
+  }
+  
+  .meta {
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .start-button {
+    margin-top: 16px;
+    text-align: right;
+  }
+  
+  .start-button .btn {
+    background-color: #fff3cd;
+    color: #856404;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .start-button .btn:hover {
+    background-color: #f7d87d;
+  }
+  
+  .footer {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+  }
+  

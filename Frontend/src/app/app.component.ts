@@ -28,8 +28,9 @@ export class AppComponent {
   title = 'FrontendFinal';
   
   shouldShowNavbar(): boolean {
-    const hiddenRoutes = ['/signin', '/signup','/forgot-password','/Confirmationemail','/reset-password'];
+    const hiddenRoutes = ['/signin', '/signup','/forgot-password','/Confirmationemail','/reset-password','/editDev'];
     return !hiddenRoutes.some(route => this.router.url.includes(route));
   }
 }
  
+  

@@ -1,0 +1,40 @@
+<div *ngIf="reponses.length === 0">
+  <p>Aucune réponse trouvée pour ce test.</p>
+</div>
+
+<div *ngFor="let reponse of reponses">
+  <div class="reponse-card">
+    <h3>{{ reponse.question.enonce }}</h3>
+
+    <!-- Affichage des options de QCM -->
+    <div *ngIf="reponse.question.type === 'QCM'">
+      <p><strong>Choisissez une réponse :</strong></p>
+      <ul>
+        <li *ngFor="let option of reponse.question.answerOptions">
+          <span [ngClass]="{
+            'correct': option.isCorrect && isOptionSelected(option, reponse.selectedAnswerOptions),
+            'incorrect': !option.isCorrect && isOptionSelected(option, reponse.selectedAnswerOptions)
+          }">
+            {{ option.text }}
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Affichage de la réponse libre -->
+    <div *ngIf="reponse.reponseLibre">
+      <p><strong>Réponse libre :</strong> {{ reponse.reponseLibre }}</p>
+    </div>
+
+    <!-- Affichage de l'explication et du feedback -->
+    <div *ngIf="reponse.explication || reponse.feedback">
+      <p><strong>Explication :</strong> {{ reponse.explication }}</p>
+      <p><strong>Feedback :</strong> {{ reponse.feedback }}</p>
+    </div>
+
+    <!-- Indication de si la réponse est correcte -->
+    <p [ngClass]="{'correct': reponse.isCorrect, 'incorrect': !reponse.isCorrect}">
+      <strong>Réponse correcte :</strong> {{ reponse.isCorrect ? 'Oui' : 'Non' }}
+    </p>
+  </div>
+</div>

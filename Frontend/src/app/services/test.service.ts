@@ -10,15 +10,21 @@ export class TestService {
   private apiUrl = 'http://localhost:8083/tests'; // Mets l'URL de ton backend ici
   private TSUrl = 'http://localhost:8083/api/test-questions'; // Mets l'URL de ton backend ici
   private RSUrl = 'http://localhost:8083/api/responses/submit'; 
+  private apiAnalyse = `http://localhost:8083/api/responses/mes-reponses`;  // Adapte l'URL de ton API
+
   constructor(private http: HttpClient) {}
 
   getTestDetails(testId: number): Observable<Test> {
     return this.http.get<Test>(`${this.apiUrl}/${testId}/details`);
   }
   getAvailableTests(): Observable<Test[]> {
-    return this.http.get<Test[]>(`${this.apiUrl}/public`);
+    return this.http.get<Test[]>(`${this.apiUrl}/publies/admin`);
   }
+  getTestsDuChef( token: string) :Observable<Test[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
+    return this.http.get<Test[]>(`${this.apiUrl}/publies/du-chef`, { headers });
+  }
   getAllTests(): Observable<Test[]> {
     return this.http.get<Test[]>(`${this.apiUrl}`);
   }
@@ -65,6 +71,19 @@ export class TestService {
     return this.http.get<boolean>(
       `${this.apiUrl}/isCompleted?testId=${testId}&developpeurId=${developpeurId}`
     );
+  }
+  generateTest(testGenerationRequest: any, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<any>(`${this.apiUrl}/generate`, testGenerationRequest, { headers });
+  }
+  generateQuestions(testGenerationRequest: any, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<any>(`${this.apiUrl}/questions`, testGenerationRequest, { headers });
+  }
+  getMesReponses(testId: number, token: string): Observable<any[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<any[]>(`${this.apiAnalyse}/${testId}`, { headers });
   }
 }
 

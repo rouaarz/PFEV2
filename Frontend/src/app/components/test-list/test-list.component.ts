@@ -21,6 +21,8 @@ export class TestListComponent implements OnInit {
   intermediaireCount: number = 0;
   difficileCount: number = 0;
   selectedDifficulte: string | null = null;
+  token!: string;
+
   types = [
     'algo', 'mixte', 'react', 'php', 'java', 'rh', 'technique','html'
   ];
@@ -54,7 +56,10 @@ toggleShowAllTypes() {
   constructor(private testService: TestService, private router: Router) {}
 
   ngOnInit(): void {
+    this.token = localStorage.getItem('accessToken') || '';
+    console.log(this.token)
     this.fetchTests();
+
   }
   getIcon(type: string): string {
     switch ((type || '').toLowerCase()) {
@@ -76,8 +81,11 @@ toggleShowAllTypes() {
   }
   
   fetchTests(): void {
-    this.testService.getAvailableTests().subscribe({
+    this.testService.getTestsDuChef(this.token).subscribe({
+      
       next: (data) => {
+        console.log(this.token)
+
         this.tests = data;
         this.facileCount = this.tests.filter(t => t.niveauDifficulte === 'Facile').length;
         this.intermediaireCount = this.tests.filter(t => t.niveauDifficulte === 'Intermédiaire').length;

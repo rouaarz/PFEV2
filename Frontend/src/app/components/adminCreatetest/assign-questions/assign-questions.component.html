@@ -1,113 +1,184 @@
-<!-- 
-   <div class="questions-section">
-    <h2 class="questions-title">Liste des Questions</h2>
-  
-    <div class="search-bar">
-      <input 
-        type="text" 
-        placeholder="🔍 Filtrer par type, énoncé, etc..."
-        [(ngModel)]="searchTerm" 
-        (input)="filterQuestions()" 
-      />
+<div class="test-questions-container">
+  <!-- Contenu scrollable -->
+  <div class="scrollable-content">
+    <div class="test-header">
+      <h2>Questions</h2>
+      <div class="test-info">
+        <p *ngIf="filteredQuestions.length === 0 && !showQuestions">
+          Sélectionnez les types de questions et cliquez sur "Afficher les questions" pour voir les questions disponibles
+        </p>
+        <p *ngIf="filteredQuestions.length > 0">
+          Ce Bibliothéque contient <span class="highlight">{{ filteredQuestions.length }}</span> questions 
+          pour un total de <span class="highlight">{{ totalPoints }} pts</span>.
+        </p>
+        <p *ngIf="filteredQuestions.length > 0">
+          Configurez votre test en sélectionnant des questions ci-dessous. Lorsque vous êtes prêt, passez à la publication.
+        </p>
+      </div>
     </div>
-    <div class="questions-container">
-      <div *ngFor="let question of filteredQuestions" class="question-card">
-        <p><strong>Énoncé :</strong> <span class="question-emoji">📚</span> {{ question.enonce }}</p>
-        <p><strong>Type :</strong> {{ question.type }}</p>
-        <p><strong>Niveau :</strong> {{ question.niveau }}</p>
-  
-        <div *ngIf="question.type === 'QCM'">
-          <p><strong>Options :</strong></p>
-          <ul>
-            <li *ngFor="let option of question.answerOptions">
-              {{ option.text }}
-              <span *ngIf="option.isCorrect" class="correct-answer">
-                <i class="bi bi-check-circle"></i> (Correct)
-              </span>
-            </li>
-          </ul>
+
+    <!-- Section des résultats (questions) -->
+    <div class="results-section" *ngIf="showQuestions">
+      <!-- Barre de recherche -->
+      <div class="search-container" *ngIf="filteredQuestions.length > 0">
+        <div class="search-bar">
+          <i class="search-icon">🔍</i>
+          <input type="text" 
+                placeholder="Rechercher dans les résultats..."
+                [(ngModel)]="searchTerm" 
+                (input)="filterQuestions()">
         </div>
-  
-        <div *ngIf="question.type === 'Code'">
-          <p><strong>Snippet de Code :</strong></p>
-          <pre>{{ question.codeSnippet }}</pre>
+        <div class="results-count">
+          {{ filteredQuestions.length }} résultats
         </div>
-  
-        <div class="question-details">
-          <div class="points">
-            <label for="points">Points :</label>
-            <input type="number" id="points" [(ngModel)]="question.selectedPoints">
+      </div>
+
+      <!-- Liste des questions -->
+      <div class="questions-list" *ngIf="filteredQuestions.length > 0">
+        <div *ngFor="let question of getPaginatedQuestions(); let i = index" class="question-card">
+          <div class="question-header">
+            <div class="question-number">{{ getQuestionNumber(i) }}.</div>
+            <h3 class="question-title">{{ question.enonce }}</h3>
+
+            <div class="question-controls">
+              <div class="control-group">
+                <label>Points</label>
+                <input type="number" 
+                      [(ngModel)]="question.selectedPoints" 
+                      min="1"
+                      class="points-input">
+              </div>
+              <div class="control-group">
+                <label>Ordre</label>
+                <input type="number" 
+                      [(ngModel)]="question.selectedOrdre"
+                      class="order-input">
+              </div>
+              <button (click)="assignQuestionToTest(question)" 
+                      [class.assigned]="question.isAssigned"
+                      class="assign-btn">
+                {{ question.isAssigned ? '✓ Attribuée' : '+ Attribuer' }}
+              </button>
+            </div>
           </div>
-          <div class="order">
-            <label for="ordre">Ordre :</label>
-            <input type="number" id="ordre" [(ngModel)]="question.selectedOrdre">
+
+          <div class="question-body">
+            <div *ngIf="question.type === 'QCM'" class="question-choices">
+              <div *ngFor="let option of question.answerOptions" class="choice-item">
+                <span class="choice-indicator" [class.correct]="option.isCorrect">
+                  {{ option.isCorrect ? '✓' : '○' }}
+                </span>
+                <span class="choice-text">{{ option.text }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-footer">
+            <span class="question-type">
+              <i>{{ getTypeIcon(question.type) }}</i> {{ question.type }}
+            </span>
+            <span class="question-level" 
+                  [class.level-easy]="question.niveau === 'FACILE'"
+                  [class.level-medium]="question.niveau === 'MOYEN'"
+                  [class.level-hard]="question.niveau === 'DIFFICILE'">
+              {{ question.niveau }}
+            </span>
           </div>
         </div>
-  
-        <button (click)="assignQuestionToTest(question)" [disabled]="question.isAssigned">
-          {{ question.isAssigned ? 'Assignée' : 'Assigner' }}
+      </div>
+
+      <!-- Message si pas de résultats -->
+      <div class="no-results" *ngIf="filteredQuestions.length === 0 && showQuestions">
+        <div class="no-results-content">
+          <div class="no-results-icon">🔍</div>
+          <h3>Aucune question trouvée</h3>
+          <p>Essayez d'ajuster vos filtres ou votre terme de recherche</p>
+          <button (click)="resetFilters()" class="reset-btn">
+            <i class="reset-icon">🔄</i> Réinitialiser tous les filtres
+          </button>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination-container" *ngIf="filteredQuestions.length > itemsPerPage">
+        <button (click)="previousPage()" 
+                [disabled]="currentPage === 1" 
+                class="pagination-nav">
+          <i class="nav-icon">←</i> Précédent
+        </button>
+        
+        <div class="page-numbers">
+          <button *ngFor="let page of getPageNumbers()" 
+                  (click)="goToPage(page)"
+                  [class.active]="page === currentPage">
+            {{ page }}
+          </button>
+        </div>
+        
+        <button (click)="nextPage()" 
+                [disabled]="currentPage === totalPages" 
+                class="pagination-nav">
+          Suivant <i class="nav-icon">→</i>
         </button>
       </div>
     </div>
   </div>
-   -->
-   <!-- Dans le fichier assign-questions.component.html -->
-<div class="questions-section">
-  <h2 class="questions-title">Liste des Questions</h2>
 
-  <!-- Barre de recherche -->
-  <div class="search-bar">
-    <input 
-      type="text" 
-      placeholder="🔍 Filtrer par type, énoncé, etc..."
-      [(ngModel)]="searchTerm" 
-      (input)="filterQuestions()" 
-    />
-  </div>
-
-  <div class="questions-container">
-    <div *ngFor="let question of filteredQuestions" class="question-card">
-      <p><strong>Énoncé :</strong> <span class="question-emoji">📚</span> {{ question.enonce }}</p>
-      <p><strong>Type :</strong> {{ question.type }}</p>
-      <p><strong>Niveau :</strong> {{ question.niveau }}</p>
-
-      <!-- Si la question est de type QCM -->
-      <div *ngIf="question.type === 'QCM'">
-        <p><strong>Options :</strong></p>
-        <ul>
-          <li *ngFor="let option of question.answerOptions">
-            {{ option.text }}
-            <span *ngIf="option.isCorrect" class="correct-answer">
-              <i class="bi bi-check-circle"></i> (Correct)
-            </span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Si la question est de type Code -->
-      <div *ngIf="question.type === 'Code'">
-        <p><strong>Snippet de Code :</strong></p>
-        <pre>{{ question.codeSnippet }}</pre>
-      </div>
-
-      <!-- Section pour Points et Ordre alignés sur la même ligne -->
-      <div class="question-details">
-        <div class="points">
-          <label for="points">Points :</label>
-          <input type="number" id="points" [(ngModel)]="question.selectedPoints">
+  <!-- Barre de filtres fixe en bas -->
+  <div class="fixed-filters-container">
+    <div class="filters-container">
+      <div class="filter-row">
+        <!-- Barre de type -->
+        <div class="filter-bar type-filter">
+          <div class="filter-label">
+            <i class="filter-icon">📝</i>
+            <span>Type de question :</span>
+          </div>
+          <div class="filter-options">
+            <button *ngFor="let type of questionTypes" 
+                    (click)="filterByType(type.value)"
+                    [class.active]="activeTypeFilter === type.value">
+              <span class="type-icon">{{ getTypeIcon(type.value) }}</span>
+              {{ type.label }}
+            </button>
+            <button (click)="clearTypeFilter()" [class.active]="!activeTypeFilter">
+              <i class="filter-icon">🗂</i> Tous types
+            </button>
+          </div>
         </div>
-        <div class="order">
-          <label for="ordre">Ordre :</label>
-          <input type="number" id="ordre" [(ngModel)]="question.selectedOrdre">
+
+        <!-- Barre de niveau -->
+        <div class="filter-bar level-filter">
+          <div class="filter-label">
+            <i class="filter-icon">📊</i>
+            <span>Difficulté :</span>
+          </div>
+          <div class="filter-options">
+            <button *ngFor="let level of questionLevels" 
+                    (click)="filterByLevel(level.value)"
+                    [class.active]="activeLevelFilter === level.value"
+                    [class.level-easy]="level.value === 'FACILE'"
+                    [class.level-medium]="level.value === 'MOYEN'"
+                    [class.level-hard]="level.value === 'DIFFICILE'">
+              {{ level.label }}
+            </button>
+            <button (click)="clearLevelFilter()" [class.active]="!activeLevelFilter">
+              <i class="filter-icon">🧩</i> Tous niveaux
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Bouton Assigner, il est désactivé si la question a déjà été assignée ou si les points/ordre n'ont pas changé -->
+      <!-- Bouton pour appliquer les filtres -->
+      <button (click)="applyFilters()" class="show-questions-btn">
+        Afficher les questions
+      </button>&nbsp; &nbsp; &nbsp;
       <button 
-        (click)="assignQuestionToTest(question)" 
-        [disabled]="question.isAssigned && (question.selectedPoints === question.previousPoints && question.selectedOrdre === question.previousOrdre)"
+        *ngIf="showQuestions"
+        (click)="closeQuestions()" 
+        class="show-questions-btn close-btn"
       >
-        {{ question.isAssigned ? 'Assignée' : 'Assigner' }}
+        Fermer
       </button>
     </div>
   </div>

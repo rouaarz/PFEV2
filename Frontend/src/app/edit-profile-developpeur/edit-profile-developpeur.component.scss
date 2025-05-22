@@ -1,46 +1,656 @@
-.card {
-    border-radius: 10px;
-    overflow: hidden;
-    
-    &-header {
-      border-radius: 10px 10px 0 0 !important;
-      padding: 1.5rem;
-    }
-    
-    &-body {
-      padding: 2rem;
-    }
+/* Base Reset & Font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* App Container Layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+/* ===== Modern Sidebar Styles avec nouvelle palette ===== */
+.sidebar-modern {
+  width: 280px;
+  background: linear-gradient(135deg, #1a2a3a, #6b1ee7);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  padding: 20px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  background-color: #3a86ff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 18px;
+}
+
+.brand-name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-user {
+  padding: 25px 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  margin-right: 15px;
+}
+.password-input {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.user-meta {
+  flex: 1;
+}
+.tech-stat.has-tooltip {
+  position: relative;
+  cursor: pointer;
+}
+
+.tech-stat.has-tooltip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 100;
+  margin-bottom: 5px;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: white;
+}
+
+.user-title {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 20px 0;
+  overflow-y: auto;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+}
+
+.sidebar-nav li {
+  margin-bottom: 5px;
+}
+
+.sidebar-nav li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.2s;
+  font-size: 15px;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-nav li a:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.sidebar-nav li a i {
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.sidebar-nav li.active a {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-left-color: #3a86ff;
+}
+
+.sidebar-footer {
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.btn-logout:hover {
+  background-color: #e2e8f0;
+}
+
+.btn-logout i {
+  margin-right: 8px;
+}
+
+/* ===== Main Content Styles avec nouvelle palette ===== */
+.main-content-modern {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.content-header {
+  padding: 20px 30px;
+  background-color: #f8fafc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.content-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.content-header h1 i {
+  margin-right: 10px;
+  color: #3a86ff;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.breadcrumb span {
+  color: #3a86ff;
+}
+
+.content-body {
+  flex: 1;
+  padding: 25px 30px;
+  overflow-y: auto;
+}
+
+/* ===== Profile Card Styles avec nouvelle palette ===== */
+.profile-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.card-tabs {
+  display: flex;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.tab-btn {
+  padding: 15px 25px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: #64748b;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  color: #3a86ff;
+}
+
+.tab-btn.active {
+  color: #3a86ff;
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #3a86ff;
+}
+
+.card-content {
+  padding: 25px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 30px;
+}
+
+/* ===== Profile Form Styles avec nouvelle palette ===== */
+.profile-form {
+  flex: 1;
+}
+
+.form-section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: #1e293b;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.section-title i {
+  margin-right: 10px;
+  color: #3a86ff;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 14px;
+  color: #1e293b;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.input-with-action {
+  display: flex;
+  align-items: center;
+}
+
+.input-with-action input,
+.input-with-action select,
+.tech-select {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s;
+  background-color: white;
+}
+
+.input-with-action input:focus,
+.input-with-action select:focus {
+  outline: none;
+  border-color: #3a86ff;
+  box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
+}
+
+.tech-select {
+  height: auto;
+  min-height: 100px;
+}
+
+.tech-select option {
+  padding: 8px 12px;
+}
+
+.btn-save {
+  margin-left: 10px;
+  padding: 12px 15px;
+  background-color: #3a86ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-save:hover {
+  background-color: #2a75e6;
+}
+
+.btn-save:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.error-message {
+  font-size: 12px;
+  color: #e74c3c;
+  margin-top: 5px;
+}
+
+/* ===== Password Field Styles ===== */
+.password-field {
+  position: relative;
+}
+
+.password-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input input {
+  padding-right: 40px;
+  width: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-update-password {
+  width: 100%;
+  padding: 12px;
+  background-color: #3a86ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+}
+
+.btn-update-password:hover {
+  background-color: #2a75e6;
+}
+
+.btn-update-password:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.btn-update-password i {
+  margin-right: 8px;
+}
+
+/* ===== Form Actions avec nouvelle palette ===== */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.btn-cancel {
+  padding: 12px 20px;
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  background-color: #e2e8f0;
+}
+
+.btn-cancel i {
+  margin-right: 8px;
+}
+
+.btn-save-all {
+  padding: 12px 20px;
+  background-color: #3a86ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-save-all:hover {
+  background-color: #2a75e6;
+}
+
+.btn-save-all:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.btn-save-all i {
+  margin-right: 8px;
+}
+
+/* ===== Profile Photo Section avec nouvelle palette ===== */
+.profile-photo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.photo-upload {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+}
+
+.photo-preview {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.photo-overlay:hover {
+  opacity: 1;
+}
+
+.photo-overlay i {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.photo-overlay span {
+  font-size: 14px;
+}
+
+.file-input {
+  display: none;
+}
+
+.photo-instructions {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 15px;
+}
+
+.btn-save-photo {
+  width: 100%;
+  padding: 10px;
+  background-color: #3a86ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-save-photo:hover {
+  background-color: #2a75e6;
+}
+
+.btn-save-photo:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.btn-save-photo i {
+  margin-right: 8px;
+}
+
+/* ===== Profile Stats avec nouvelle palette ===== */
+.profile-stats {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
   }
   
-  .ng-select {
-    padding-top: 0;
-    padding-bottom: 0;
-    
-    &.ng-select-multiple {
-      .ng-select-container .ng-value-container .ng-value {
-        background-color: #e9ecef;
-        border-radius: 4px;
-        color: #495057;
-      }
-    }
+  .profile-photo-section {
+    flex-direction: row;
+    align-items: flex-start;
   }
   
-  .form-label {
-    font-weight: 500;
-    color: #495057;
+  .photo-upload {
+    flex: 1;
   }
   
-  .btn-primary {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-    
-    &:hover {
-      background-color: #0b5ed7;
-      border-color: #0a58ca;
-    }
+  .profile-stats {
+    flex: 1;
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
   }
   
-  .spinner-border {
-    width: 3rem;
-    height: 3rem;
+  .sidebar-modern {
+    width: 100%;
+    height: auto;
   }
+  
+  .profile-photo-section {
+    flex-direction: column;
+  }
+  
+  .profile-stats {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn-cancel, .btn-save-all {
+    width: 100%;
+  }
+}

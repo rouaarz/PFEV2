@@ -1,0 +1,246 @@
+<div class="dashboard" *ngIf="dashboardData">
+  <!-- Section Certifications en premier -->
+  <div class="certifications-section">
+    <h2 class="section-title">Mes Certifications</h2>
+    <div class="certifications-grid">
+      <!-- Certification - Niveau Facile -->
+      <div class="certification-card easy-level">
+        <div class="certification-badge">
+          <div class="certification-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9,16L12,13L15,16H21V18H15L12,15L9,18H3V16H9M12,8L9,11H3V13H9L12,10L15,13H21V11H15L12,8Z"/>
+            </svg>
+          </div>
+          <span class="badge-level">Facile</span>
+        </div>
+        <div class="certification-content">
+          <h3>Expert Débutant</h3>
+          <p class="certification-count">{{ getTestCountByScore(70, 100) }} certifications obtenues</p>
+          <div class="certification-progress">
+            <div class="progress-info">
+              <span class="progress-label">Progression</span>
+              <span class="progress-value">
+                {{ (getTestCountByScore(70, 100) / (dashboardData?.tests?.length || 1) * 100 || 0) | number:'1.0-0' }}%
+              </span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" 
+                   [style.width]="(getTestCountByScore(70, 100) / (dashboardData?.tests?.length || 1)) * 100 + '%'">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certification - Niveau Intermédiaire -->
+      <div class="certification-card intermediate-level">
+        <div class="certification-badge">
+          <div class="certification-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12,2L4,5V11.09C4,16.14 8.41,20.25 13.5,21V19.2C9.44,18.62 6.5,15.5 6.5,11.09V6.72L12,4.47L17.5,6.72V11.09C17.5,15.5 14.56,18.62 10.5,19.2V21C15.59,20.25 20,16.14 20,11.09V5L12,2Z"/>
+            </svg>
+          </div>
+          <span class="badge-level">Intermédiaire</span>
+        </div>
+        <div class="certification-content">
+          <h3>Développeur Confirmé</h3>
+          <p class="certification-count">{{ getTestCountByScore(40, 69) }} certifications obtenues</p>
+          <div class="certification-progress">
+            <div class="progress-info">
+              <span class="progress-label">Progression</span>
+              <span class="progress-value">
+                {{ (getTestCountByScore(40, 69) / (dashboardData?.tests?.length || 1) * 100 || 0) | number:'1.0-0' }}%
+              </span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" 
+                   [style.width]="(getTestCountByScore(40, 69) / (dashboardData?.tests?.length || 1)) * 100 + '%'">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certification - Niveau Difficile -->
+      <div class="certification-card hard-level">
+        <div class="certification-badge">
+          <div class="certification-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12,1L21,5V11C21,16.55 17.16,21.74 12,23C6.84,21.74 3,16.55 3,11V5L12,1M12,7C10.9,7 10,7.9 10,9C10,10.1 10.9,11 12,11C13.1,11 14,10.1 14,9C14,7.9 13.1,7 12,7M12,13C10.9,13 10,13.9 10,15C10,16.1 10.9,17 12,17C13.1,17 14,16.1 14,15C14,13.9 13.1,13 12,13M12,19C10.9,19 10,19.9 10,21C10,22.1 10.9,23 12,23C13.1,23 14,22.1 14,21C14,19.9 13.1,19 12,19Z"/>
+            </svg>
+          </div>
+          <span class="badge-level">Difficile</span>
+        </div>
+        <div class="certification-content">
+          <h3>Expert Senior</h3>
+          <p class="certification-count">{{ getTestCountByScore(0, 39) }} certifications obtenues</p>
+          <div class="certification-progress">
+            <div class="progress-info">
+              <span class="progress-label">Progression</span>
+              <span class="progress-value">
+                {{ (getTestCountByScore(0, 39) / (dashboardData?.tests?.length || 1) * 100 || 0) | number:'1.0-0' }}%
+              </span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" 
+                   [style.width]="(getTestCountByScore(0, 39) / (dashboardData?.tests?.length || 1) )* 100 + '%'">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Informations développeur -->
+  <div class="developer-section">
+    <div class="dashboard-header">
+      
+      
+      <div class="developer-info-container">
+        <!-- Carte Chef d'équipe -->
+        <div class="info-card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z"/>
+            </svg>
+          </div>
+          <h3>Chef d'équipe</h3>
+          <p>{{ dashboardData?.chefEquipe }}</p>
+        </div>
+        
+        <!-- Carte Tests complétés -->
+        <div class="info-card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm3 10.5a.75.75 0 000-1.5H9a.75.75 0 000 1.5h6z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <h3>Tests complétés</h3>
+          <p>{{ dashboardData?.tests?.length || 0 }}</p>
+          <div class="ring-chart">
+            <svg viewBox="0 0 36 36" class="circular-chart">
+              <path class="circle-bg"
+                d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path class="circle-fill"
+                [attr.stroke-dasharray]="(dashboardData?.tests?.length || 0) * 10 + ', 100'"
+                d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Carte Moyenne -->
+        <div class="info-card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <h3>Moyenne des scores</h3>
+          <p>{{ dashboardData?.scoreGlobal | number:'1.0-2' }}%</p>
+          <div class="radial-progress">
+            <div class="radial-progress-fill" 
+                 [style.background]="'conic-gradient(' + getProgressColor(dashboardData.scoreGlobal) + ' ' + dashboardData?.scoreGlobal + '%, #e0e0e0 0)'">
+            </div>
+            <span class="radial-progress-text">{{ dashboardData?.scoreGlobal | number:'1.0-0' }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Détail des tests -->
+  <div class="tests-section">
+    <div class="tests-table-container">
+      <div class="table-header">
+        <h3 class="section-title">Détail des tests</h3>
+        <div class="table-stats">
+          <span class="stat-item">
+            <span class="stat-dot high-score"></span>
+            Excellents: {{ getTestCountByScore(70, 100) }}
+          </span>
+          <span class="stat-item">
+            <span class="stat-dot medium-score"></span>
+            Moyens: {{ getTestCountByScore(40, 69) }}
+          </span>
+          <span class="stat-item">
+            <span class="stat-dot low-score"></span>
+            Faibles: {{ getTestCountByScore(0, 39) }}
+          </span>
+        </div>
+      </div>
+      
+      <table class="tests-table">
+        <thead>
+          <tr>
+            <th>Titre du Test</th>
+            <th>Réussite</th>
+            <th>Détails</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let test of dashboardData.tests">
+            <td class="test-title">
+              <span class="test-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/>
+                </svg>
+              </span>
+              {{ test.titreTest }}
+            </td>
+            <td class="success-rate">
+              <div class="rate-bar">
+                <div class="correct-bar" [style.width]="(test.correctAnswers / test.totalQuestions) * 100 + '%'"></div>
+                <div class="incorrect-bar" [style.width]="(test.incorrectAnswers / test.totalQuestions) * 100 + '%'"></div>
+              </div>
+              <span class="rate-text">{{ test.correctAnswers }}/{{ test.totalQuestions }}</span>
+            </td>
+            <td class="test-details">
+              <div class="detail-item">
+                <span class="detail-label">Questions:</span>
+                <span class="detail-value">{{ test.totalQuestions }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Correctes:</span>
+                <span class="detail-value correct-value">{{ test.correctAnswers }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Fautes:</span>
+                <span class="detail-value incorrect-value">{{ test.incorrectAnswers }}</span>
+              </div>
+            </td>
+            <td class="score-cell" [class.high-score]="test.score >= 70" 
+                 [class.medium-score]="test.score >= 40 && test.score < 70" 
+                 [class.low-score]="test.score < 40">
+              <div class="score-visual">
+                <div class="score-donut">
+                  <svg viewBox="0 0 36 36" class="donut-chart">
+                    <path class="donut-bg"
+                      d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path class="donut-fill"
+                      [attr.stroke-dasharray]="getStrokeDasharray(test.score)"
+                      d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                  </svg>
+                  <span class="donut-text">{{ test.score | number:'1.0-0' }}%</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

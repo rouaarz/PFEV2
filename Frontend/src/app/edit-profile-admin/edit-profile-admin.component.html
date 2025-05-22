@@ -1,7 +1,7 @@
 <div class="container">
   <div class="card">
     <div class="card-header">
-      <h2><i class="fas fa-user-cog me-2"></i>Profil Administrateur</h2>
+      <h3><i class="fas fa-user-cog me-2"></i>Profil Administrateur</h3>
     </div>
     
     <div class="card-body">
@@ -19,13 +19,13 @@
               <div class="card-body" *ngIf="personalInfoOpen">
                 <div class="form-group">
                   <label class="form-label">Nom d'utilisateur</label>
-                  <div class="input-group">
+                  <div class="input-group field-with-save">
                     <input formControlName="username" class="form-control" type="text">
                     <button class="btn btn-primary btn-save-field" 
                             type="button"
                             (click)="updateField('username')"
                             [disabled]="!adminForm.get('username')?.valid">
-                      <i class="fas fa-check"></i>
+                            <i class="fas fa-save"></i>
                     </button>
                   </div>
                   <div *ngIf="adminForm.get('username')?.invalid && adminForm.get('username')?.touched" 
@@ -36,13 +36,13 @@
                 
                 <div class="form-group">
                   <label class="form-label">Email</label>
-                  <div class="input-group">
+                  <div class="input-group field-with-save">
                     <input formControlName="email" class="form-control" type="email">
                     <button class="btn btn-primary btn-save-field" 
                             type="button"
                             (click)="updateField('email')"
                             [disabled]="!adminForm.get('email')?.valid">
-                      <i class="fas fa-check"></i>
+                            <i class="fas fa-save"></i>
                     </button>
                   </div>
                   <div *ngIf="adminForm.get('email')?.invalid && adminForm.get('email')?.touched" 
@@ -53,13 +53,14 @@
                 
                 <div class="form-group">
                   <label class="form-label">Grade</label>
-                  <div class="input-group">
+                  <div class="input-group field-with-save">
+                    
                     <input formControlName="grade" class="form-control" type="text">
                     <button class="btn btn-primary btn-save-field" 
                             type="button"
                             (click)="updateField('grade')"
                             [disabled]="!adminForm.get('grade')?.valid">
-                      <i class="fas fa-check"></i>
+                            <i class="fas fa-save"></i>
                     </button>
                   </div>
                 </div>

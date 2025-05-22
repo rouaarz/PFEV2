@@ -282,20 +282,6 @@ export class SideBarCompComponent implements OnInit {
           console.error('❌ Erreur récupération chef:', err);
         }
       });
-
-      // 👨‍💻 DÉVELOPPEUR
-      if (roles.includes('ROLE_DEVELOPPEUR')) {
-        this.isDeveloppeur = true;
-        this.developpeurService.getDeveloppeurById(userId).subscribe({
-          next: (devData) => {
-            this.developpeur = devData;
-            console.log('✅ Développeur récupéré:', this.developpeur);
-          },
-          error: (err) => {
-            console.error('❌ Erreur récupération développeur:', err);
-          }
-        });
-      }
     });
   }
 

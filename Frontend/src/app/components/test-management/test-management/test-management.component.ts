@@ -41,7 +41,9 @@ export class TestManagementComponent implements OnInit {
   addTest() {
     this.router.navigate(['/admin/tests-create']);
   }
-
+  addTestAlea() {
+    this.router.navigate(['admin/generate-test']);
+  }
   editTest(testId: number) {
     this.router.navigate(['/admin/edit-test', testId]);
   }

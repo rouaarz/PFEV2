@@ -121,7 +121,7 @@ export class SigninComponent implements AfterViewInit {
               this.router.navigate(['/dash']);
             } else if (roles.includes('ROLE_DEVELOPPEUR')) {
               alert("✅ Connexion réussie en tant que DEVELOPPEUR !");
-              this.router.navigate(['/tests']);
+              this.router.navigate(['/testsbyadmin']);
             } else {
               alert("⚠️ Rôle non reconnu, redirection par défaut.");
               this.router.navigate(['/']); // Par défaut

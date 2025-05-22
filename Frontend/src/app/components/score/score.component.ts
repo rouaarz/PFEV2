@@ -168,5 +168,9 @@ export class ScoreComponent implements OnInit {
       alert('Partager ce score : ' + message);
     }
   }
-  
+  // Dans score.component.ts
+analyserResultat() {
+  this.router.navigate([`/review-test`, this.testId]);
+}
+
 }

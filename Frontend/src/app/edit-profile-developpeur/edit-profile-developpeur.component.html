@@ -1,155 +1,260 @@
-<div class="container">
-  <div class="card">
-    <div class="card-header">
-      <h2><i class="fas fa-user-cog me-2"></i>Profil Développeur</h2>
+<div class="app-container">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <div class="sidebar-modern">
+    <div class="sidebar-brand">
+      <div class="brand-logo">
+        <i class="fas fa-code"></i>
+      </div>
+      <span class="brand-name">DevProfile</span>
     </div>
+    
+    <div class="sidebar-user">
+      <img [src]="devPhoto" alt="Photo" class="user-avatar">
+      <div class="user-meta">
+        <h4 class="user-name">{{ profileForm.get('username')?.value || 'Utilisateur' }}</h4>
+        <p class="user-title">{{ profileForm.get('specialite')?.value || 'Développeur' }}</p>
+      </div>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <ul>
+        <li class="active">
+          <a href="#">
+            <i class="fas fa-user"></i>
+            <span>Informations</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fas fa-shield-alt"></i>
+            <span>Sécurité</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fas fa-cog"></i>
+            <span>Paramètres</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fas fa-bell"></i>
+            <span>Notifications</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="btn-logout">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Déconnexion</span>
+      </button>
+    </div>
+  </div>
 
-    <div class="card-body">
-      <div class="row">
-        <!-- Colonne de formulaire -->
-        <div class="col-md-8">
-          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" novalidate>
-            <!-- Section Informations personnelles -->
-            <div class="personal-section">
-              <div class="section-header">
-                <h5><i class="fas fa-user me-2"></i>Informations Personnelles</h5>
-              </div>
-
-              <div class="card-body">
-                <div class="form-group">
-                  <label class="form-label">Nom d'utilisateur</label>
-                  <input formControlName="username" class="form-control" type="text">
-                  <div *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched" 
-                       class="invalid-feedback">
-                    Le nom d'utilisateur est requis (minimum 3 caractères)
+  <!-- Main Content -->
+  <div class="main-content-modern">
+    <div class="content-header">
+      <h1><i class="fas fa-user-cog me-2"></i>Profil Développeur</h1>
+      <div class="breadcrumb">
+        <span>Tableau de bord</span> / <span>Profil</span>
+      </div>
+    </div>
+    
+    <div class="content-body">
+      <div class="profile-card">
+        <div class="card-tabs">
+          <button class="tab-btn active">Profil</button>
+          <button class="tab-btn">Sécurité</button>
+          <button class="tab-btn">Préférences</button>
+        </div>
+        
+        <div class="card-content">
+          <div class="profile-grid">
+            <!-- Colonne formulaire -->
+            <div class="profile-form">
+              <form [formGroup]="profileForm" novalidate>
+                <!-- Section Informations -->
+                <section class="form-section">
+                  <h3 class="section-title">
+                    <i class="fas fa-user"></i>
+                    Informations Personnelles
+                  </h3>
+                  
+                  <!-- Username -->
+                  <div class="form-field">
+                    <label>Nom d'utilisateur</label>
+                    <div class="input-with-action">
+                      <input formControlName="username" type="text" placeholder="Votre nom d'utilisateur">
+                      <button class="btn-save" 
+                              (click)="updateField('username')"
+                              [disabled]="!profileForm.get('username')?.valid">
+                        <i class="fas fa-check"></i>
+                      </button>
+                    </div>
+                    <div class="error-message" *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched">
+                      Minimum 3 caractères requis
+                    </div>
                   </div>
-                </div>
-
-
-                <div class="form-group">
-                  <label class="form-label">Email</label>
-                  <input formControlName="email" class="form-control" type="email">
-                  <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" 
-                       class="invalid-feedback">
-                    Adresse email invalide
+                  
+                  <!-- Email -->
+                  <div class="form-field">
+                    <label>Email</label>
+                    <div class="input-with-action">
+                      <input formControlName="email" type="email" placeholder="Votre email">
+                      <button class="btn-save" 
+                              (click)="updateField('email')"
+                              [disabled]="!profileForm.get('email')?.valid">
+                        <i class="fas fa-check"></i>
+                      </button>
+                    </div>
+                    <div class="error-message" *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+                      Email invalide
+                    </div>
                   </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label">Spécialité</label>
-                  <input formControlName="specialite" class="form-control" type="text">
-                  <div *ngIf="profileForm.get('specialite')?.invalid && profileForm.get('specialite')?.touched" 
-                       class="invalid-feedback">
-                    La spécialité est requise
+                  
+                  <!-- Spécialité -->
+                  <div class="form-field">
+                    <label>Spécialité</label>
+                    <div class="input-with-action">
+                      <input formControlName="specialite" type="text" placeholder="Votre spécialité">
+                      <button class="btn-save" 
+                              (click)="updateField('specialite')"
+                              [disabled]="!profileForm.get('specialite')?.valid">
+                        <i class="fas fa-check"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                <!-- Champ Technologies -->
-                <div class="form-group">
-                  <label class="form-label">Technologies</label>
-                  <select class="form-select" multiple formControlName="technologies">
-                    <option *ngFor="let tech of technologiesOptions" [value]="tech">{{ tech }}</option>
-                  </select>
-                  <div *ngIf="profileForm.get('technologies')?.invalid && profileForm.get('technologies')?.touched" 
-                       class="invalid-feedback">
-                    Veuillez sélectionner au moins une technologie
+                  
+                  <!-- Technologies -->
+                  <div class="form-field">
+                    <label>Technologies</label>
+                    <div class="input-with-action">
+                      <select class="tech-select" multiple formControlName="technologies">
+                        <option *ngFor="let tech of technologiesOptions" [value]="tech">{{ tech }}</option>
+                      </select>
+                      <button class="btn-save" 
+                              (click)="updateField('technologies')"
+                              [disabled]="!profileForm.get('technologies')?.valid">
+                        <i class="fas fa-check"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                <!-- Champ Expérience -->
-                <div class="form-group">
-                  <label class="form-label">Années d'expérience</label>
-                  <input formControlName="experience" class="form-control" type="number" min="0">
-                  <div *ngIf="profileForm.get('experience')?.invalid && profileForm.get('experience')?.touched" 
-                       class="invalid-feedback">
-                    Doit être un nombre positif
+                  
+                  <!-- Expérience -->
+                  <div class="form-field">
+                    <label>Expérience (années)</label>
+                    <div class="input-with-action">
+                      <input formControlName="experience" type="number" min="0" placeholder="Années d'expérience">
+                      <button class="btn-save" 
+                              (click)="updateField('experience')"
+                              [disabled]="!profileForm.get('experience')?.valid">
+                        <i class="fas fa-check"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </section>
+                
+                <!-- Section Sécurité -->
+                <section class="form-section">
+                  <h3 class="section-title">
+                    <i class="fas fa-shield-alt"></i>
+                    Sécurité
+                  </h3>
+                  
+                  <!-- Password -->
+                 <div class="form-field password-field">
+  <label>Ancien mot de passe</label>
+  <div class="password-input">
+    <input formControlName="oldPassword"
+           [type]="showOldPassword ? 'text' : 'password'"
+           placeholder="••••••••">
+    <i class="fas toggle-password"
+       [ngClass]="showOldPassword ? 'fa-eye-slash' : 'fa-eye'"
+       (click)="showOldPassword = !showOldPassword"></i>
+  </div>
+</div>
 
-                <!-- Champ Score (readonly) -->
-                <div class="form-group">
-                  <label class="form-label">Score</label>
-                  <input formControlName="score" class="form-control" type="number" readonly>
+                  
+                  <div class="form-field password-field">
+                    <label>Nouveau mot de passe</label>
+                    <div class="password-input">
+                      <input formControlName="newPassword" 
+                             [type]="showNewPassword ? 'text' : 'password'" 
+                             placeholder="••••••••">
+                      <i class="fas {{showNewPassword ? 'fa-eye-slash' : 'fa-eye'}} toggle-password"
+                         (click)="showNewPassword = !showNewPassword"></i>
+                    </div>
+                    <div class="error-message" *ngIf="profileForm.get('newPassword')?.invalid && profileForm.get('newPassword')?.touched">
+                      Minimum 6 caractères
+                    </div>
+                  </div>
+                  
+                  <button class="btn-update-password"
+                          (click)="updatePassword()"
+                          [disabled]="!profileForm.get('oldPassword')?.valid || !profileForm.get('newPassword')?.valid">
+                    <i class="fas fa-lock"></i> Mettre à jour le mot de passe
+                  </button>
+                </section>
+                
+                <!-- Actions -->
+                <div class="form-actions">
+                  <button class="btn-cancel" (click)="cancel()">
+                    <i class="fas fa-times"></i> Annuler
+                  </button>
+                  <button class="btn-save-all"
+                          (click)="updateAll()"
+                          [disabled]="profileForm.invalid">
+                    <i class="fas fa-save"></i> Enregistrer tout
+                  </button>
                 </div>
-              </div>
+              </form>
             </div>
-
-            <!-- Section Sécurité -->
-            <div class="security-section">
-              <div class="section-header">
-                <h5><i class="fas fa-shield-alt me-2"></i>Sécurité</h5>
-              </div>
-
-              <div class="card-body">
-                <div class="form-group password-field">
-                  <label class="form-label">Ancien mot de passe</label>
-                  <input formControlName="oldPassword" 
-                         class="form-control" 
-                         [type]="showOldPassword ? 'text' : 'password'">
-                  <i class="fas {{showOldPassword ? 'fa-eye-slash' : 'fa-eye'}} toggle-password" 
-                     (click)="showOldPassword = !showOldPassword"></i>
-                </div>
-
-                <div class="form-group password-field">
-                  <label class="form-label">Nouveau mot de passe</label>
-                  <input formControlName="newPassword" 
-                         class="form-control" 
-                         [type]="showNewPassword ? 'text' : 'password'">
-                  <i class="fas {{showNewPassword ? 'fa-eye-slash' : 'fa-eye'}} toggle-password" 
-                     (click)="showNewPassword = !showNewPassword"></i>
-                  <div *ngIf="profileForm.get('newPassword')?.invalid && profileForm.get('newPassword')?.touched" 
-                       class="invalid-feedback">
-                    Minimum 6 caractères requis
+            
+            <!-- Colonne photo -->
+            <div class="profile-photo-section">
+              <div class="photo-upload">
+                <div class="photo-preview">
+                  <img [src]="selectedPhoto || devPhoto" alt="Photo de profil">
+                  <div class="photo-overlay" (click)="fileInput.click()">
+                    <i class="fas fa-camera"></i>
+                    <span>Changer la photo</span>
                   </div>
+                  <input #fileInput type="file" class="file-input"
+                         (change)="onFileSelected($event)"
+                         accept="image/*">
                 </div>
-
-                <button class="btn btn-primary" 
-                        type="button"
-                        (click)="updatePassword()"
-                        [disabled]="!profileForm.get('oldPassword')?.value || !profileForm.get('newPassword')?.valid">
-                  <i class="fas fa-save me-1"></i> Mettre à jour le mot de passe
+                
+                <div class="photo-instructions">
+                  <p>Formats supportés: JPG, PNG</p>
+                  <p>Taille maximale: 2MB</p>
+                </div>
+                
+                <button *ngIf="selectedPhoto"
+                        class="btn-save-photo"
+                        (click)="updatePhoto()"
+                        [disabled]="isLoading">
+                  <i class="fas fa-save"></i> Enregistrer la photo
                 </button>
               </div>
+              
+              <div class="profile-stats">
+                <div class="stat-item">
+                  <div class="stat-value">{{ profileForm.get('experience')?.value || '0' }}</div>
+                  <div class="stat-label">Années d'expérience</div>
+                </div>
+                <div class="stat-item">
+  <div class="stat-value tech-stat" 
+       [attr.data-tooltip]="getTechNames()"
+       [class.has-tooltip]="hasTechnologies()">
+    {{ (profileForm.get('technologies')?.value?.length || '0') }}
+  </div>
+  <div class="stat-label">Technologies</div>
+</div>
+              </div>
             </div>
-
-            <!-- Boutons d'action -->
-            <div class="action-buttons">
-              <button class="btn btn-outline-secondary" type="button" (click)="cancel()">
-                <i class="fas fa-times me-2"></i> Annuler
-              </button>
-              <button class="btn btn-primary" 
-                      type="submit" 
-                      [disabled]="profileForm.invalid || isLoading">
-                <i class="fas fa-save me-2"></i> 
-                <span *ngIf="!isLoading">Enregistrer</span>
-                <span *ngIf="isLoading">Enregistrement...</span>
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <!-- Colonne photo -->
-        <div class="col-md-4 text-center">
-          <div class="photo-container">
-            <img [src]="selectedPhoto || devPhoto" 
-                 alt="Photo de profil" 
-                 class="profile-photo">
-            <label class="btn-change-photo" title="Changer la photo">
-              <i class="fas fa-camera"></i>
-              <input type="file" class="file-input"
-                     (change)="onFileSelected($event)" 
-                     accept="image/*">
-            </label>
           </div>
-
-          <small class="text-muted d-block mt-2">Formats supportés: JPG, PNG (max 2MB)</small>
-
-          <button *ngIf="selectedPhoto" 
-                  class="btn btn-primary mt-3"
-                  (click)="updatePhoto()"
-                  [disabled]="isLoading">
-            <i class="fas fa-save me-1"></i> Enregistrer la photo
-          </button>
         </div>
       </div>
     </div>

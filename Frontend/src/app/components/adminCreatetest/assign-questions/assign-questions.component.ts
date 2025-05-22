@@ -101,11 +101,27 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-assign-questions',
   templateUrl: './assign-questions.component.html',
-  styleUrls: ['./assign-questions.component.css'],
+  styleUrls: ['./assign-questions.component.scss'],
   imports: [CommonModule, FormsModule],
   standalone: true,
 })
 export class AssignQuestionsComponent implements OnInit {
+  getTypeIcon(type: string): string {
+    const icons: {[key: string]: string} = {
+      'QCM': '☑️',
+      'Multiple Response': '☑️☑️',
+      'True/False': '✓✗',
+      'Fill in the Blank': '✍️',
+      'Matching/Ordering': '⇅',
+      'Numeric': '123',
+      'Short Answer': '✏️',
+      'Essay': '📝',
+      'File Upload': '📤',
+      'Text': '✏️',
+      'Code': '</>'
+    };
+    return icons[type] || '?';
+  }
   @Input() testId: number | null = null;  // Récupérer l'ID du test
   questions: Question[] = [];
   filteredQuestions: Question[] = []; // Questions filtrées
@@ -113,9 +129,67 @@ export class AssignQuestionsComponent implements OnInit {
   lastOrdre: number = 0; // Dernier ordre utilisé pour l'incrémentation
   @Output() questionsFinalized = new EventEmitter<void>(); // Émet l'événement quand les questions sont finalisées
   @Output() questionsAssignedEvent = new EventEmitter<void>(); // ✅ pour notifier au parent
+totalPoints: any;
 
   constructor(private questionService: QuestionService,private route: ActivatedRoute, private testService: TestService) {}
-  questionsAssigned: boolean = false; // Valeur par défaut, à changer lorsque les questions sont assignées
+questionsAssigned: boolean = false; 
+// Ajoutez ces propriétés à votre classe
+currentPage: number = 1;
+itemsPerPage: number = 3; // Nombre de questions par page
+
+get totalPages(): number {
+  return Math.ceil(this.filteredQuestions.length / this.itemsPerPage);
+}
+
+getPaginatedQuestions(): Question[] {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  const endIndex = startIndex + this.itemsPerPage;
+  return this.filteredQuestions.slice(startIndex, endIndex);
+}
+
+nextPage(): void {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+  }
+}
+
+previousPage(): void {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+  }
+}
+closeQuestions() {
+  this.showQuestions = false;  // Masque la liste des questions
+  // Optionnel : Réinitialiser les filtres si nécessaire
+  // this.resetFilters();
+}
+// Méthode pour générer les numéros de page à afficher
+getPageNumbers(): number[] {
+  const pages = [];
+  const maxVisiblePages = 3; // Nombre maximum de pages visibles
+  
+  let startPage = Math.max(1, this.currentPage - 1);
+  let endPage = Math.min(this.totalPages, startPage + maxVisiblePages - 1);
+  
+  // Ajuster si on est près de la fin
+  if (endPage - startPage < maxVisiblePages - 1) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+  
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
+  }
+  
+  return pages;
+}
+
+// Méthode pour aller à une page spécifique
+goToPage(page: number): void {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+  }
+}
+// Modifiez la méthode filterQuestions() pour réinitialiser la pagination
 
   ngOnInit(): void {
     this.testId = Number(this.route.snapshot.paramMap.get('id'));
@@ -154,16 +228,17 @@ export class AssignQuestionsComponent implements OnInit {
   }
 
   // Fonction de filtrage basée sur la recherche
-  filterQuestions() {
+  /*filterQuestions() {
     if (this.searchTerm.trim() === '') {
-      this.filteredQuestions = this.questions; // Afficher toutes les questions si rien n'est recherché
+      this.filteredQuestions = this.questions;
     } else {
       this.filteredQuestions = this.questions.filter((question) =>
         question.enonce.toLowerCase().includes(this.searchTerm.toLowerCase()) || 
         question.type.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
-  }
+    this.currentPage = 1; // Réinitialiser à la première page après filtrage
+  }*/
 
   assignQuestionToTest(question: Question) {
     // Vérification des points et ordre
@@ -215,5 +290,123 @@ export class AssignQuestionsComponent implements OnInit {
       );
     }
   }
-  
+  // Dans votre composant
+// Dans votre composant
+questionTypes = [
+  { value: 'QCM', label: 'Multiple Choice' },
+  { value: 'Text', label: 'Text Answer' },
+  { value: 'Code', label: 'Code Answer' }
+];
+
+questionLevels = [
+  { value: 'FACILE', label: 'FACILE' },
+  { value: 'MOYEN', label: 'MOYEN' },
+  { value: 'DIFFICILE', label: 'DIFFICILE' }
+];
+
+activeTypeFilter: string | null = null;
+activeLevelFilter: string | null = null;
+
+getQuestionNumber(index: number): number {
+  return (this.currentPage - 1) * this.itemsPerPage + index + 1;
 }
+
+filterByType(type: string) {
+  this.activeTypeFilter = type;
+  this.filterQuestions();
+}
+
+filterByLevel(level: string) {
+  this.activeLevelFilter = level;
+  this.filterQuestions();
+}
+
+clearTypeFilter() {
+  this.activeTypeFilter = null;
+  this.filterQuestions();
+}
+
+clearLevelFilter() {
+  this.activeLevelFilter = null;
+  this.filterQuestions();
+}
+
+clearAllFilters() {
+  this.activeTypeFilter = null;
+  this.activeLevelFilter = null;
+  this.searchTerm = '';
+  this.filterQuestions();
+}
+
+/*filterQuestions() {
+  let filtered = this.questions;
+  
+  // Filtre par type
+  if (this.activeTypeFilter) {
+    filtered = filtered.filter(q => q.type === this.activeTypeFilter);
+  }
+  
+  // Filtre par niveau
+  if (this.activeLevelFilter) {
+    filtered = filtered.filter(q => q.niveau === this.activeLevelFilter);
+  }
+  
+  // Filtre par texte
+  if (this.searchTerm.trim() !== '') {
+    const term = this.searchTerm.toLowerCase();
+    filtered = filtered.filter(q => 
+      q.enonce.toLowerCase().includes(term) || 
+      (q.type && q.type.toLowerCase().includes(term)) ||
+      (q.niveau && q.niveau.toLowerCase().includes(term))
+    );
+  }
+  
+  this.filteredQuestions = filtered;
+  this.currentPage = 1;
+}*/
+// Ajoutez ces propriétés
+
+showQuestions: boolean = false;
+
+applyFilters() {
+  this.showQuestions = true;
+  this.filterQuestions();
+}
+
+resetFilters() {
+  this.activeTypeFilter = null;
+  this.activeLevelFilter = null;
+  this.searchTerm = '';
+  this.showQuestions = false;
+  this.filteredQuestions = [];
+}
+
+// Modifiez la méthode filterQuestions
+filterQuestions() {
+  if (!this.showQuestions) return;
+
+  let filtered = this.questions;
+  
+  // Filtre par type
+  if (this.activeTypeFilter) {
+    filtered = filtered.filter(q => q.type === this.activeTypeFilter);
+  }
+  
+  // Filtre par niveau
+  if (this.activeLevelFilter) {
+    filtered = filtered.filter(q => q.niveau === this.activeLevelFilter);
+  }
+  
+  // Filtre par texte
+  if (this.searchTerm.trim() !== '') {
+    const term = this.searchTerm.toLowerCase();
+    filtered = filtered.filter(q => 
+      q.enonce.toLowerCase().includes(term) || 
+      (q.type && q.type.toLowerCase().includes(term)) ||
+      (q.niveau && q.niveau.toLowerCase().includes(term))
+    );
+  }
+  
+  this.filteredQuestions = filtered;
+  this.currentPage = 1;
+}}

@@ -64,19 +64,6 @@
       <h3 class="question-title">Q{{ currentQuestionIndex + 1 }} : {{ questions[currentQuestionIndex]?.enonce }}</h3>
       <p class="question-level">{{ questions[currentQuestionIndex]?.niveau }}</p>
 
-      <!-- QCM Question -->
-      <!-- <div *ngIf="questions[currentQuestionIndex]?.type === 'QCM'" class="options-container">
-    <div *ngFor="let option of questions[currentQuestionIndex]?.answerOptions" class="option">
-      <input type="checkbox" 
-       (change)="toggleSelection(option.id, $event)" 
-       [checked]="selectedOptionIds.includes(option.id)"
-       [id]="'option_' + option.id"
-       name="qcmQuestion_{{ questions[currentQuestionIndex].id }}" />
-
-      <label [for]="'option_' + option.id">{{ option?.text }}</label>
-    </div>
-    
-  </div> -->
       <div *ngIf="questions[currentQuestionIndex]?.type === 'QCM'" class="options-container">
         <div *ngFor="let option of questions[currentQuestionIndex]?.answerOptions" class="option">
           <input type="checkbox" (change)="toggleSelection(option.id, $event)"
@@ -88,31 +75,9 @@
       </div>
 
       <div *ngIf="questions[currentQuestionIndex]?.type === 'Text'" class="text-container">
-        <textarea placeholder="Votre réponse ici..." (input)="markAnswered()"></textarea>
+        <textarea placeholder="Votre réponse ici..."  [(ngModel)]="textAnswer" (input)="markAnswered()"></textarea>
       </div>
-      <!-- Gestion des réponses en Code -->
-      <!-- Gestion des réponses en Code -->
-      <!-- <div *ngIf="questions[currentQuestionIndex]?.type === 'Code'" class="code-container">
-  <label>Langage :</label>
-  <select [(ngModel)]="codeAnswers[currentQuestionIndex].language">
-    <option value="javascript">JavaScript</option>
-    <option value="python">Python</option>
-    <option value="java">Java</option>
-    <option value="c">C</option>
-    <option value="cpp">C++</option>
-    <option value="php">PHP</option>
-  </select>
 
-  <ace-editor
-    [(text)]="codeAnswers[currentQuestionIndex].codeSnippet"
-    [options]="{ theme: 'monokai', mode: codeAnswers[currentQuestionIndex].language }"
-    style="min-height: 300px; width: 100%;">
-  </ace-editor>
-
-  <button (click)="runCode(currentQuestionIndex)">▶ Exécuter</button>
-
-  <pre class="output">Résultat : {{ executionResults[currentQuestionIndex] || "Aucun résultat encore." }}</pre>
-</div> -->
       <div *ngIf="questions[currentQuestionIndex]?.type === 'Code'" class="code-question">
         <label for="language">Langage :</label>
         <select id="language" [(ngModel)]="selectedLanguage">

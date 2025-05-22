@@ -1,4 +1,3 @@
-/* Réduction du body */
 body {
     font-family: "Arial", sans-serif;
     background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
@@ -8,53 +7,28 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    max-width: 900px; /* Réduction de la largeur max */
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Réduction de la taille du conteneur */
+/* Conteneur principal */
 .container {
     max-width: 800px;
     margin: 20px auto;
-    padding: 30px; /* Réduction du padding */
+    padding: 30px;
     background: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
 
-/* Ajustement des titres */
+/* Titre du formulaire */
 h2 {
-    font-size: 22px; /* Réduction de la taille */
-    margin-bottom: 15px;
-}
-
-/* Ajustement des inputs et boutons */
-input, select {
-    padding: 8px;
-    font-size: 14px;
-}
-
-button {
-    padding: 10px 15px;
-    font-size: 14px;
-}
-
-/* Réduction des animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-h2 {
-    font-size: 32px;
+    font-size: 26px;
     font-weight: bold;
     background: linear-gradient(90deg, #07012f, #615f5f, #0c0142, #0a0706);
     background-size: 200%;
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shining 4s linear infinite;
@@ -62,12 +36,216 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Animation plus simple */
 @keyframes shining {
-    0% {
-        background-position: 0%;
-    }
-    100% {
-        background-position: 200%;
-    }
+    0% { background-position: 0%; }
+    100% { background-position: 200%; }
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Champs input et select */
+input, select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    transition: border 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #07012f;
+    outline: none;
+}
+
+input[type="text"] {
+    flex: 1;
+    font-size: 14px;
+    padding: 8px;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+/* Select spécifique */
+select {
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+/* Groupes */
+.horizontal-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 180px;
+}
+
+/* Titres de section */
+h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #07012f;
+    margin-bottom: 15px;
+}
+
+/* Zones dynamiques */
+div[formArrayName="answerOptions"],
+div[formArrayName="codeAnswers"] {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+div[formGroupName] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+}
+
+div[formArrayName="codeAnswers"] > div {
+    margin-bottom: 15px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+ace-editor {
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Résultat */
+pre.output {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 15px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Boutons */
+button {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button + button {
+    margin-left: 10px;
+}
+
+button[type="button"] {
+    background-color: #07012f;
+    color: white;
+    font-size: 14px;
+    padding: 8px 12px;
+    margin-top: 10px;
+}
+
+button[type="button"]:hover {
+    background-color: #0c0142;
+}
+
+button[type="button"].delete {
+    background-color: #e74c3c;
+    padding: 5px 8px;
+}
+
+button[type="button"].delete:hover {
+    background-color: #c0392b;
+}
+
+button[type="button"]:first-child {
+    background-color: #07012f;
+    color: white;
+}
+
+button[type="button"]:first-child:hover {
+    background-color: #0c0142;
+}
+/* Styling spécifique aux options de réponse QCM */
+.answer-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #f1f3f5;
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.answer-option:hover {
+    background-color: #e9ecef;
+}
+
+.answer-option input[type="text"] {
+    flex-grow: 1;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.answer-option input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 10px;
+}
+
+/* Supprimer bouton avec position absolue */
+.answer-option button.delete {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: transparent;
+    color: #e74c3c;
+    font-size: 18px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+.answer-option button.delete:hover {
+    color: #c0392b;
+}
+
+/* Bouton "Ajouter une option" */
+button.add-option-btn {
+    margin-top: 10px;
+    background-color: #198754;
+    color: white;
+    padding: 8px 14px;
+    font-size: 14px;
+}
+
+button.add-option-btn:hover {
+    background-color: #157347;
 }

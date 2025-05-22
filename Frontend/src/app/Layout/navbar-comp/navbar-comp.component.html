@@ -60,11 +60,56 @@
     </div>
 
 
-    <!-- Logout Button -->
+    <!-- Logout Button 
     <div class="action">
       <button mat-raised-button color="primary" (click)="logout()">
         <mat-icon>logout</mat-icon> Logout
       </button>
+    </div>-->
+    <!-- Avatar utilisateur -->
+     
+
+    <!-- Dans la partie right-side, remplacez l'image actuelle par : -->
+<!-- Remplacez la partie image dans votre HTML par : -->
+<!-- Ajoutez ceci dans votre template après l'avatar -->
+<div class="user-avatar-container">
+  <div class="small-avatar" (click)="toggleUserMenu()">
+    <img [src]="userPhotoUrl || 'assets/default-avatar.png'" alt="User" />
+  </div></div>
+  
+<div class="user-menu" *ngIf="isUserMenuOpen">
+  <div class="menu-header">
+    <div class="menu-avatar">
+      <img [src]="userPhotoUrl || 'assets/default-avatar.png'" alt="Photo utilisateur" />
+    </div>
+    <div class="menu-user-info">
+      <h4>{{ user.username }}</h4>
+      <p>{{ user.email }}</p>
     </div>
   </div>
+
+  <div class="menu-content">
+    <button class="menu-item" (click)="viewProfile()">
+      <mat-icon>account_circle</mat-icon>
+      <span>Voir mon profil</span>
+    </button>
+
+    <button class="menu-item" (click)="openSettings()">
+      <mat-icon>settings</mat-icon>
+      <span>Paramètres & confidentialité</span>
+    </button>
+
+    <button class="menu-item" (click)="manageAccounts()">
+      <mat-icon>people</mat-icon>
+      <span>Gérer les comptes</span>
+    </button>
+
+    <div class="menu-divider"></div>
+
+    <button class="menu-item logout-btn" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Déconnexion</span>
+    </button>
+  </div>
 </div>
+</div></div>

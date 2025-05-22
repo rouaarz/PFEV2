@@ -91,16 +91,37 @@ export class AuthService {
   );
 }
 */
-login(loginData: any): Observable<any> {
+/*login(loginData: any): Observable<any> {
   return this.http.post(`${this.apiUrl}/signin`, loginData).pipe(
     catchError(this.handleError),
     tap((response: any) => {
       localStorage.setItem('accessToken', response.accessToken); // ✅
-      localStorage.setItem('roles', JSON.stringify(response.roles)); // ✅
+      localStorage.setItem('roles', JSON.stringify(response.roles));
+    })
+  );
+}*/
+login(loginData: any): Observable<any> {
+  return this.http.post(`${this.apiUrl}/signin`, loginData).pipe(
+    catchError(this.handleError),
+    tap((response: any) => {
+      localStorage.setItem('accessToken', response.accessToken);
+      localStorage.setItem('roles', JSON.stringify(response.roles));
+
+      // Si "user" est inclus dans la réponse
+      if (response.user) {
+        localStorage.setItem('user', JSON.stringify(response.user));
+      } else {
+        // Construire manuellement si nécessaire
+        const user = {
+          username: response.username,
+          email: response.email,
+          photoUrl: response.image || null
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+      }
     })
   );
 }
-
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Une erreur inconnue s\'est produite !';

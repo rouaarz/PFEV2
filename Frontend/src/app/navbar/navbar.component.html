@@ -1,42 +1,74 @@
 <header id="header" class="header">
-    <div class="nav-container">
-        <div class="header-left">
-            <a href="#" class="logo">
-                <i class="fas fa-code"></i>
-                <span>...</span>
-            </a>
-            <button class="mobile-menu-btn" aria-label="Menu mobile">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-        <div class="nav-right-group">
-        <nav class="nav-links">
-            <div class="nav-close-btn">
-                <i class="fas fa-times"></i>
-            </div>
-            <a href="#" class="active">Accueil</a>
-            &nbsp;  &nbsp; 
-            <a routerLink="/tests">Tests</a>
-            &nbsp;  &nbsp;  
-            <a href="#features">Fonctionnalités</a>
-            &nbsp;  &nbsp;
-            <a href="#features">Solutions</a>
-            &nbsp;  &nbsp;
-            <a href="#contact">Contact</a>
-            &nbsp;  &nbsp;
-        </nav>
+  <div class="nav-container">
+    <div class="header-left">
+      <a href="#" class="logo">
+        <i class="fas fa-code"></i>
+        <span>TechAssess</span>
+      </a>
+      <button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="nav-right-group">
+      <!-- Backdrop -->
+      <div class="mobile-menu-backdrop" 
+           [class.open]="isMobileMenuOpen" 
+           (click)="closeMobileMenu()"></div>
+      
+      <!-- Navigation Links -->
+      <nav class="nav-links" [class.open]="isMobileMenuOpen">
         
-        <div class="auth-buttons">
-            <ng-container *ngIf="!isLoggedIn; else loggedIn">
-              <a [routerLink]="['/signin']" class="btn btn-login">Connexion</a>
-              &nbsp;  &nbsp;
-              <a [routerLink]="['/signup']" class="btn btn-primary">S'inscrire</a>
-            </ng-container>
-          
-            <ng-template #loggedIn>
-              <button (click)="logout()" class="btn btn-danger">Déconnexion</button>
-            </ng-template>
+        
+        <a routerLink="/" (click)="closeAllMenus()">Accueil</a> &nbsp; &nbsp;
+        <a routerLink="/testsbyadmin" (click)="closeAllMenus()">Tests</a> &nbsp; &nbsp;
+        <a routerLink="/tests" (click)="closeAllMenus()">Tests technique</a> &nbsp; &nbsp;
+        <a routerLink="/contact" (click)="closeAllMenus()">Contact</a> &nbsp; &nbsp; &nbsp; &nbsp; 
+        
+   
+      </nav>
+
+      <!-- Desktop Right Side -->
+      <div class="right-side">
+       
+        <div class="action user-avatar-container" *ngIf="isLoggedIn">
+          <div class="user-avatar" (click)="toggleUserMenu($event)">
+            <img [src]="userPhotoUrl || 'assets/default-avatar.png'" alt="User">
           </div>
-          
-    </div></div>
+          <div class="user-menu" [class.open]="isUserMenuOpen">
+            <div class="menu-header">
+              <div class="menu-avatar">
+                <img [src]="userPhotoUrl || 'assets/default-avatar.png'" alt="User">
+              </div>
+              <div class="menu-user-info">
+                <h4>{{ user?.username }}</h4>
+                <p>{{ user?.email }}</p>
+              </div>
+            </div>
+            <div class="menu-content">
+             <button class="menu-item" [routerLink]="['/editDev', developpeur.id]"  (click)="closeAllMenus()">
+                <i class="fas fa-user"></i>
+                <span>Mon profil</span>
+            </button>
+              <button class="menu-item" [routerLink]="['/dashboard-developpeur']" (click)="closeAllMenus()">
+                <i class="fas fa-edit"></i>
+                <span>parametres</span>
+              </button>
+              <div class="menu-divider"></div>
+              <button class="menu-item logout-btn" (click)="logout(); closeAllMenus()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Auth Buttons -->
+        <div class="auth-buttons-container" *ngIf="!isLoggedIn">
+          <a routerLink="/signin" class="btn btn-login">Connexion</a> &nbsp; &nbsp;
+          <a routerLink="/signup" class="btn btn-primary">S'inscrire</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>

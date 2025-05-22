@@ -42,3 +42,15 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+# Supprime node_modules du suivi Git (mais pas du disque dur)
+git rm -r --cached node_modules
+
+# Ajoute node_modules à .gitignore s’il n’y est pas déjà
+echo "node_modules/" >> .gitignore
+
+# Commit les changements
+git add .gitignore
+git commit -m "Remove node_modules and update .gitignore"
+
+# Push sur le dépôt distant
+git push

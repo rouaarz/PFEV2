@@ -164,6 +164,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/User';
 
 @Component({
   selector: 'app-navbar-comp',
@@ -177,13 +179,20 @@ export class NavbarCompComponent implements OnInit {
   showNotifications = false;
   newItemsCount = 0;
   roles = JSON.parse(localStorage.getItem('roles') || '[]');
+  user!: User ;
+  
+
+  userPhotoUrl: string | null = null;
+  isUserMenuOpen=false;
 
   constructor(
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private userService: UserService
   ) {}
 
-  ngOnInit(): void {
+  /*ngOnInit(): void {
+    this.userPhotoUrl = localStorage.getItem('photoURL'); // Exemple
     this.loadNotifications();
 
     // Auto-refresh every 30 seconds
@@ -191,6 +200,84 @@ export class NavbarCompComponent implements OnInit {
       this.loadNotifications();
     }, 30000);
   }
+  
+  ngOnInit(): void {
+    this.loadNotifications();
+  
+    this.userService.getUserPhoto().subscribe({
+      next: (blob: Blob) => {
+        const reader = new FileReader();
+  
+        reader.onload = () => {
+          const base64Image = reader.result as string;
+          console.log("Image base64:", base64Image); // pour débogage
+          this.userPhotoUrl = base64Image;
+        };
+  
+        reader.onerror = (e) => {
+          console.error('Erreur lors de la lecture du blob image', e);
+        };
+  
+        reader.readAsDataURL(blob);
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement de la photo utilisateur', err);
+      }
+    });
+  */
+    ngOnInit(): void {
+      this.loadNotifications();
+    
+      const userId = localStorage.getItem('developpeurId');
+      if (userId) {
+        this.userService.getUserById(+userId).subscribe({
+          next: (userData) => {
+            this.user = userData;
+          },
+          error: (err) => {
+            console.error("Erreur lors de la récupération de l'utilisateur", err);
+          }
+        });
+      }
+    
+      this.userService.getUserPhoto().subscribe({
+        next: (blob: Blob) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.userPhotoUrl = reader.result as string;
+          };
+          reader.readAsDataURL(blob);
+        },
+        error: (err) => {
+          console.error('Erreur lors du chargement de la photo utilisateur', err);
+        }
+      });
+    
+      setInterval(() => {
+        this.loadNotifications();
+      }, 30000);
+    }
+    
+    toggleUserMenu() {
+      this.isUserMenuOpen = !this.isUserMenuOpen;
+    }
+  
+    openSettings() {
+      this.isUserMenuOpen = false;
+      // Logique pour ouvrir la page des paramètres
+    }
+  
+    viewProfile() {
+      this.isUserMenuOpen = false;
+      // Logique pour aller au profil utilisateur
+    }
+  
+    manageAccounts() {
+      this.isUserMenuOpen = false;
+      // Logique pour la gestion des comptes (ex: redirection vers une autre page)
+      this.router.navigate(['/admin/users']); // exemple
+    }
+  
 
   loadNotifications(): void {
     this.notificationService.getAllNotifications().subscribe({

@@ -147,22 +147,21 @@ export class ChartdemandeComponent implements OnInit {
       }
     ]
   };*/
-  chartData: ChartData<'pie'> = {
+chartData: ChartData<'pie'> = {
     labels: ['Facile', 'Moyen', 'Difficile'],
     datasets: [{
       data: [],
       backgroundColor: [
-        'rgb(95, 202, 7)', // Vert vif
-        '#FF9800',           // Orange vif
-        '#F44336'            // Rouge vif
-      ],
-      
+  '#20c997', // Turquoise
+  '#ff6b6b', // Saumon
+  '#9775fa'  // Lilas
+],
       borderColor: '#ffffff',
       borderWidth: 2,
       hoverBackgroundColor: [
-        'rgb(95, 202, 7)', // Vert vif
-        '#FF9800',           // Orange vif
-        '#F44336' // Rouge vif
+       '#20c997', 
+  '#ff6b6b',
+  '#9775fa' 
       ],
       hoverBorderColor: '#ffffff',
       hoverOffset: 15
