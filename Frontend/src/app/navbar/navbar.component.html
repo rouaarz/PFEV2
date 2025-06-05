@@ -12,26 +12,27 @@
 
     <div class="nav-right-group">
       <!-- Backdrop -->
-      <div class="mobile-menu-backdrop" 
-           [class.open]="isMobileMenuOpen" 
-           (click)="closeMobileMenu()"></div>
-      
+      <div class="mobile-menu-backdrop" [class.open]="isMobileMenuOpen" (click)="closeMobileMenu()"></div>
+
       <!-- Navigation Links -->
       <nav class="nav-links" [class.open]="isMobileMenuOpen">
-        
-        
+
+
         <a routerLink="/" (click)="closeAllMenus()">Accueil</a> &nbsp; &nbsp;
+        <a *ngIf="isLoggedIn" [routerLink]="['/dashboard-developpeur']" (click)="closeAllMenus()">Dashboard</a> &nbsp; &nbsp;
+
         <a routerLink="/testsbyadmin" (click)="closeAllMenus()">Tests</a> &nbsp; &nbsp;
         <a routerLink="/tests" (click)="closeAllMenus()">Tests technique</a> &nbsp; &nbsp;
-        <a routerLink="/contact" (click)="closeAllMenus()">Contact</a> &nbsp; &nbsp; &nbsp; &nbsp; 
-        
-   
+        <a routerLink="/contact" (click)="closeAllMenus()">Contact</a> &nbsp; &nbsp; &nbsp; &nbsp;
+
+
       </nav>
 
       <!-- Desktop Right Side -->
       <div class="right-side">
-       
+
         <div class="action user-avatar-container" *ngIf="isLoggedIn">
+
           <div class="user-avatar" (click)="toggleUserMenu($event)">
             <img [src]="userPhotoUrl || 'assets/default-avatar.png'" alt="User">
           </div>
@@ -46,10 +47,10 @@
               </div>
             </div>
             <div class="menu-content">
-             <button class="menu-item" [routerLink]="['/editDev', developpeur.id]"  (click)="closeAllMenus()">
+              <button class="menu-item" [routerLink]="['/editDev', developpeur.id]" (click)="closeAllMenus()">
                 <i class="fas fa-user"></i>
                 <span>Mon profil</span>
-            </button>
+              </button>
               <button class="menu-item" [routerLink]="['/dashboard-developpeur']" (click)="closeAllMenus()">
                 <i class="fas fa-edit"></i>
                 <span>parametres</span>

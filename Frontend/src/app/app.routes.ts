@@ -57,7 +57,6 @@ export const routes: Routes = [
   { path: 'Confirmationemail', component: ConfirmationEmailComponent },
   { path: 'dash', component: DashboardComponent },
 
-  { path: 'edit-question/:id', component: EditQuestionComponent },
   { path: 'test/:testId', component: TestDetailComponent },
   { path: 'tests', component: TestListComponent },
   { path: 'testsbyadmin', component: TestBYAdminComponent },
@@ -91,6 +90,7 @@ export const routes: Routes = [
       { path: 'edit-test/:id', component: CreateTestComponent },
       { path: 'tests-create', component: CreateTestComponent },
       { path: 'test-details/:id', component: TestDetailsComponent },
+      { path: 'edit-question/:id', component: EditQuestionComponent },
 
       
       {

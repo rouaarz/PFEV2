@@ -1,15 +1,4 @@
-<!-- <div class="score-container">
-    <h2>Score du test</h2>
-    
-    <div *ngIf="score !== null" class="score-value">
-      <p>Votre score : <strong>{{ score }}%</strong></p>
-    </div>
-  
-    <div *ngIf="errorMessage" class="error-message">
-      <p>{{ errorMessage }}</p>
-    </div>
-</div>
-   -->
+<!-- 
 <div class="score-container">
   <h2>Score du test <strong>{{ testName }}</strong></h2>
 
@@ -17,11 +6,9 @@
     <div class="progress-bar" [style.width.%]="score"></div>
   </div>
 
-  <!-- Affichage du score avec la barre de progression -->
   <div *ngIf="score !== null" class="score-value">
     <p>Votre score : <strong>{{ score }}%</strong></p>
 
-    <!-- Message motivant basé sur le score -->
     <div class="score-message" [ngClass]="{'excellent': score >= 80, 'good': score >= 50, 'try-again': score < 50}">
       <p *ngIf="score >= 80">🎉 Bravo ! Vous avez réussi avec un excellent score !</p>
       <p *ngIf="score >= 50 && score < 80">👍 Bon travail, mais vous pouvez encore progresser !</p>
@@ -29,7 +16,6 @@
     </div>
   </div>
 
-  <!-- Actions possibles -->
   <div class="actions">
     <button *ngIf="score !== null && score < 100" (click)="repasserTest()" class="btn retry-btn">
       <i class="material-icons">replay</i> Repasser le test
@@ -37,7 +23,6 @@
     <button (click)="partagerScore()" class="btn share-btn">
       <i class="material-icons">share</i> 
     </button>
-    <!-- Bouton Analyser le résultat -->
     <div class="actions">
       <button *ngIf="score !== null" (click)="analyserResultat()" class="btn analyze-btn">
         <i class="material-icons">bar_chart</i> Analyser le résultat
@@ -46,7 +31,51 @@
 
   </div>
 
-  <!-- Affichage des messages d'erreur -->
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+</div> -->
+<div class="score-container"> 
+  <h2>Score du test <strong>{{ testName }}</strong></h2>
+
+  <!-- Barre de progression -->
+  <div *ngIf="score !== null" class="progress-bar-container">
+    <div class="progress-bar" [style.width.%]="animatedScore"></div>
+  </div>
+
+  <!-- Affichage du score -->
+  <div *ngIf="score !== null" class="score-value fade-in">
+    <p>Votre score : <strong>{{ score }}%</strong></p>
+
+    <!-- Message motivant -->
+    <div class="score-message fade-in" 
+         [ngClass]="{
+           'excellent': score >= 65,
+           'good': score >= 50 && score < 65,
+           'try-again': score < 50
+         }">
+      <p *ngIf="score >= 65">🎉 Bravo ! Vous avez réussi avec un excellent score !</p>
+      <p *ngIf="score >= 50 && score < 65">👍 Bon travail, mais vous pouvez encore progresser !</p>
+      <p *ngIf="score < 50">💪 Ne vous découragez pas ! Retentez le test pour vous améliorer.</p>
+    </div>
+  </div>
+
+  <!-- Boutons d'action -->
+  <div class="actions fade-in">
+    <button *ngIf="score !== null && score < 100" (click)="repasserTest()" class="btn retry-btn">
+      <i class="material-icons">replay</i> Repasser le test
+    </button>
+
+    <button (click)="partagerScore()" class="btn share-btn">
+      <i class="material-icons">share</i> Partager
+    </button>
+
+    <button *ngIf="score !== null" (click)="analyserResultat()" class="btn analyze-btn">
+      <i class="material-icons">bar_chart</i> Analyser le résultat
+    </button>
+  </div>
+
+  <!-- Message d'erreur -->
   <div *ngIf="errorMessage" class="error-message">
     <p>{{ errorMessage }}</p>
   </div>

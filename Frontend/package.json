@@ -30,6 +30,8 @@
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.9",
     "ionicons": "^7.4.0",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "material-design-icons": "^3.0.1",
     "material-icons": "^1.13.14",
     "ng-particles": "^3.12.0",

@@ -21,13 +21,22 @@
   </div>
    -->
 <div class="question-display" *ngIf="reponse">
-  <div class="question-number">
-    Question {{ currentQuestionIndex + 1 }}
+  <!-- <div class="question-number">
+    Question {{ currentQuestionIndex + 1 }} 
   </div>
-
+{{reponse.question.enonce}}
   <div class="question-level">
     Niveau : {{ reponse.question.niveau || 'Non défini' }}
+  </div> -->
+<div class="question-header">
+  <div class="question-title">
+     Question {{ currentQuestionIndex + 1 }} : {{reponse.question.enonce}}
+
   </div>
+  <div class="question-badge">
+    Niveau : {{ reponse.question.niveau || 'Non défini' }}
+  </div>
+</div>
 
   <!-- <li *ngFor="let option of reponse.question.answerOptions" [ngClass]="getOptionClass(option)">
     {{ option.text }}
@@ -48,7 +57,7 @@
     </li>
   </ul>
   
-<div *ngIf="reponse.reponseLibre">
+<!-- <div *ngIf="reponse.reponseLibre">
   <p><strong>Votre Réponse :</strong> 
     <span [ngClass]="{'correct-answer': reponse.isCorrect, 'incorrect-answer': !reponse.isCorrect}">
       {{ reponse.reponseLibre }}
@@ -65,5 +74,36 @@
   <p><strong>Feedback :</strong> {{ reponse.feedback }}</p>
     <div *ngIf="!reponse.isCorrect">
     <p><strong>Réponse correcte :</strong> {{ reponse.reponseCorrecte }}</p>
+  </div>
+</div> -->
+<div class="response-summary" *ngIf="reponse.reponseLibre">
+  <p>
+    <strong>
+       Votre réponse est 
+      <span [ngClass]="{'correct-answer': reponse.isCorrect, 'incorrect-answer': !reponse.isCorrect}">
+        {{ reponse.isCorrect ? 'correcte' : 'incorrecte' }}
+      </span> :
+    </strong>
+  </p>
+  <p class="user-response">
+    « {{ reponse.reponseLibre }} »
+    <span *ngIf="reponse.isCorrect; else incorrectIcon"> ✔️</span>
+    <ng-template #incorrectIcon> ❌</ng-template>
+  </p>
+</div>
+
+<div class="response-details" *ngIf="reponse.explication || reponse.feedback">
+  <p class="ia-mention"><strong> Explication et feedback générés par l'IA</strong></p>
+
+  <div class="correct-answer-block" *ngIf="!reponse.isCorrect && reponse.reponseCorrecte">
+    <p><strong>✅  La bonne réponse était :</strong> {{ reponse.reponseCorrecte }}</p>
+  </div>
+
+  <div *ngIf="reponse.explication">
+    <p><strong> 🔹 Explication AI :</strong> {{ reponse.explication }}</p>
+  </div>
+
+  <div *ngIf="reponse.feedback">
+    <p><strong>🔹 Feedback AI:</strong> {{ reponse.feedback }}</p>
   </div>
 </div>

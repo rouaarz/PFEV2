@@ -1,76 +1,4 @@
 
-// import { Component, OnInit } from '@angular/core';
-// import { ActivatedRoute, Router } from '@angular/router';
-// import { ScoreService } from '../../services/score.service';
-// import { CommonModule } from '@angular/common';
-
-// @Component({
-//   selector: 'app-score',
-//   templateUrl: './score.component.html',
-//   imports: [CommonModule],
-//   styleUrl: './score.component.css',
-//   standalone: true,
-// })
-// export class ScoreComponent implements OnInit {
-//   testId!: number;
-//   developpeurId!: number;
-//   token!: string;
-//   score: number | null = null;
-//   errorMessage: string | null = null;
-
-//   constructor(
-//     private route: ActivatedRoute,
-//     private router: Router,
-//     private scoreService: ScoreService
-//   ) {}
-
-//   ngOnInit() {
-//     this.testId = Number(this.route.snapshot.paramMap.get('testId'));
-//     this.developpeurId = Number(this.route.snapshot.paramMap.get('developpeurId'));
-//     this.token = localStorage.getItem('accessToken') || '';
-  
-//     console.log("🛠 testId:", this.testId);
-//     console.log("🛠 developpeurId:", this.developpeurId);
-//     console.log("🛠 token:", this.token);
-  
-//     if (!this.testId || !this.developpeurId || !this.token) {
-//       this.errorMessage = 'Informations manquantes !';
-//       return;
-//     }
-  
-//     this.fetchScore();
-//   }
-  
-
-//   fetchScore() {
-//     this.scoreService.getScore(this.testId, this.developpeurId, this.token).subscribe({
-//       next: (data) => {
-//         if (data.status === 'success') {
-//           this.score = data.score;
-//         } else {
-//           this.errorMessage = data.message;
-//         }
-//       },
-//       error: () => {
-//         this.errorMessage = 'Erreur lors de la récupération du score.';
-//       },
-//     });
-//   }
-//   calculateScore(testId: number) {
-//     this.scoreService.calculateScore(testId, this.token).subscribe({
-//       next: (response) => {
-//         if (response.status === 'success') {
-//           this.score = response.score;
-//         } else {
-//           this.errorMessage = response.message;
-//         }
-//       },
-//       error: (err) => {
-//         this.errorMessage = err.error.message || 'Erreur lors du calcul du score';
-//       }
-//     });
-//   }
-// }
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScoreService } from '../../services/score.service';
@@ -93,7 +21,7 @@ export class ScoreComponent implements OnInit {
   errorMessage: string | null = null;
 
   testName: string = '';
-
+animatedScore: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -133,7 +61,10 @@ export class ScoreComponent implements OnInit {
     this.scoreService.getScore(this.testId, this.developpeurId, this.token).subscribe({
       next: (data) => {
         if (data.status === 'success') {
-          this.score = data.score;
+        this.score = data.score;
+        setTimeout(() => {
+          this.animatedScore = this.score!;
+        }, 200); // petit délai pour l’effet
         } else {
           this.errorMessage = data.message;
         }

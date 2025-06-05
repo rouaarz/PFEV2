@@ -1,26 +1,4 @@
-/* .score-container {
-    text-align: center;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    max-width: 400px;
-    margin: auto;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .score-value {
-    font-size: 20px;
-    font-weight: bold;
-    color: #28a745;
-  }
-  
-  .error-message {
-    color: red;
-    font-weight: bold;
-  }
-   */
-/* Container principal */
+/* 
 .score-container {
   padding: 20px;
   background-color: #f7f7f7;
@@ -29,6 +7,8 @@
   max-width: 600px;
   margin: 20px auto;
   text-align: center;
+   position: relative;
+  top: 100px;
 }
 
 .score-container h2 {
@@ -65,6 +45,7 @@
 
 .score-message.good {
   color: #ffca28;
+
 }
 
 .score-message.try-again {
@@ -91,8 +72,8 @@
 }
 
 .actions i {
-  margin-right: 8px; /* Espacement entre l'icône et le texte */
-  font-size: 1.3rem; /* Taille de l'icône */
+  margin-right: 8px; 
+  font-size: 1.3rem; 
 }
 
 .retry-btn {
@@ -118,4 +99,137 @@
   font-weight: bold;
   margin-top: 20px;
 }
+ */
+.score-container {
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+  position: relative;
+  top: 100px;
+}
 
+.score-container h2 {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.progress-bar-container {
+  background-color: #e0e0e0;
+  height: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #88c3f0;
+  border-radius: 5px;
+  transition: width 1.5s ease-in-out; /* ← Modifie ici */
+}
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.score-value {
+  margin-bottom: 20px;
+}
+
+.score-message {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.score-message.excellent {
+  color: #28a745;
+}
+
+.score-message.good {
+  color: #ffca28;
+}
+
+.score-message.try-again {
+  color: #f44336;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.actions button {
+  min-width: 180px;
+  height: 45px;
+  font-size: 1rem;
+  padding: 0 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+  box-sizing: border-box;
+}
+
+.actions i {
+  margin-right: 8px;
+  font-size: 1.3rem;
+}
+
+.retry-btn {
+  background-color: #88c3f0;
+  color: white;
+}
+
+.retry-btn:hover {
+  background-color: #74b6e6;
+}
+
+.share-btn {
+  background-color: #317AC1;
+  color: white;
+}
+
+.share-btn:hover {
+  background-color: #2766a6;
+}
+
+.analyze-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.analyze-btn:hover {
+  background-color: #449d48;
+}
+
+.error-message {
+  color: #f44336;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .actions button {
+    width: 100%;
+  }
+}

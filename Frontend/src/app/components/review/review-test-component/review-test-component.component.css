@@ -1,7 +1,6 @@
-Positionnement du bouton Retour au Score
 .back-to-score {
-  position: fixed;              /* Fixe le bouton en haut de la page */
-  top: 20px;                    /* Place le bouton à 20px du bord supérieur */
+  position: relative;              /* Fixe le bouton en haut de la page */
+  top: 50px;                    /* Place le bouton à 20px du bord supérieur */
   left: 20px;                   /* Place le bouton à 20px du bord gauche */
   background-color: #3498db;    /* Couleur de fond bleu */
   color: white;                 /* Texte en blanc */
@@ -21,11 +20,13 @@ Positionnement du bouton Retour au Score
 
 /* Style du conteneur principal du test */
 .test-review {
+    position: relative;
+  top: 100px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 30px;
   background: linear-gradient(to bottom, #ffffff, #f9f9f9);
   border-radius: 12px;
-  max-width: 900px;
+  max-width: 100%;
   margin: 0 auto;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid #e1e1e1;
@@ -76,4 +77,25 @@ Positionnement du bouton Retour au Score
 .navigation-buttons button[disabled] {
   background-color: #95a5a6;
   cursor: not-allowed;
+}
+.test-review h1 {
+  font-size: 36px;
+  font-weight: 800;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.test-review h1::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: #3498db;
+  margin: 10px auto 0;
+  border-radius: 2px;
 }

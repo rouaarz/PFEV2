@@ -1,100 +1,122 @@
 <div class="test-page-container">
-  <!-- Barre de recherche pro -->
-  <div class="search-bar-container">
-    <div class="search-header">
-      <h2>Tests disponibles</h2>
-      <div class="search-bar">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" placeholder="Rechercher un test par titre, description..." [(ngModel)]="searchText">
-        <button class="search-btn" (click)="searchTests()">Rechercher</button>
-      </div>
+
+    <div class="search-bar-container">
+        <div class="search-bar">
+            <input type="text" placeholder=" Recherche par titre, description  . . . ." [(ngModel)]="searchText">
+            <button (click)="searchTests()"><i class="fas fa-search"></i></button>
+        </div>
     </div>
-  </div>
+    <div class="content-container">
 
-  <div class="content-container">
-    <!-- Filtres pro -->
-    <div class="filters-sidebar">
-      <div class="filter-section">
-        <h3 class="filter-title">Filtres</h3>
-        
-        <div class="filter-group">
-          <h4 class="filter-subtitle">Difficulté</h4>
-          <div class="filter-options">
-            <div class="filter-option" (click)="filterByDifficulte(null)">
-              <span class="filter-badge tous">Tous</span>
+        <div class="filters-sidebar">
+
+            <div class="filter-section">
+                <h5>Filtre</h5>
+
+                <h4>Difficulté</h4>
+                <ul>
+                    <li (click)="filterByDifficulte(null)">
+                        <span class="badge tous">Tous</span>
+                    </li>
+                    <li (click)="filterByDifficulte('Facile')">
+                        <span class="badge easy">Facile</span> {{ facileCount }}
+                    </li>
+                    <li (click)="filterByDifficulte('Intermédiaire')">
+                        <span class="badge medium">Intermédiaire</span> {{ intermediaireCount }}
+                    </li>
+                    <li (click)="filterByDifficulte('Difficile')">
+                        <span class="badge hard">Difficile</span> {{ difficileCount }}
+                    </li>
+                </ul>
             </div>
-            <div class="filter-option" (click)="filterByDifficulte('Facile')">
-              <span class="filter-badge easy">Facile</span>
-              <span class="filter-count">{{ facileCount }}</span>
+
+            <div class="filter-section">
+                <h4>Type</h4>
+                <div *ngFor="let type of visibleTypes">
+                    <label>
+                        <input type="checkbox" [checked]="selectedTypes.includes(type)"
+                            (change)="toggleTypeSelection(type)">
+                        {{ type }} ({{ typeCounts[type] || 0 }})
+                    </label>
+                </div>
+                <a href="#" (click)="toggleShowAllTypes(); $event.preventDefault()">
+                    {{ showAllTypes ? 'Voir moins' : '# Voir plus' }}
+                </a>
             </div>
-            <div class="filter-option" (click)="filterByDifficulte('Intermédiaire')">
-              <span class="filter-badge medium">Intermédiaire</span>
-              <span class="filter-count">{{ intermediaireCount }}</span>
+            <div class="filter-section">
+                <h4>Technologies</h4>
+
+
+                <div class="tech-buttons">
+                    <button *ngFor="let tech of visibleTechnologies" class="tech-btn"
+                        [class.selected]="selectedTechnologies.includes(tech)"
+                        (click)="toggleTechnologySelection(tech)">
+                        {{ tech }} ({{ technologyCounts[tech] || 0 }})
+                    </button>
+                </div>
+
+                <a href="#" (click)="toggleShowAllTechnologies(); $event.preventDefault()">
+                    {{ showAllTechnologies ? 'Voir moins' : 'Voir plus' }}
+                </a>
             </div>
-            <div class="filter-option" (click)="filterByDifficulte('Difficile')">
-              <span class="filter-badge hard">Difficile</span>
-              <span class="filter-count">{{ difficileCount }}</span>
-            </div>
-          </div>
+
         </div>
 
-        <div class="filter-group">
-          <h4 class="filter-subtitle">Type</h4>
-          <div class="type-options">
-            <div *ngFor="let type of visibleTypes" class="type-option">
-              <label class="custom-checkbox">
-                <input type="checkbox" [checked]="selectedTypes.includes(type)" (change)="toggleTypeSelection(type)">
-                <span class="checkmark"></span>
-                <span class="type-label">{{ type }}</span>
-              </label>
-              <span class="type-count">({{ typeCounts[type] || 0 }})</span>
+        <div class="test-list-container">
+            <div class="technology-filter">
+                <div class="filter-group">
+                    <h4 class="filter-subtitle">Technologie</h4>
+                    <div class="tech-options">
+                        <button *ngFor="let tech of visibleTechnologies" class="tech-btn"
+                            [class.selected]="selectedTechnologies.includes(tech)"
+                            (click)="toggleTechnologySelection(tech)">
+                            {{ tech }} ({{ typeCounts[tech] || 0 }})
+                        </button>
+                    </div>
+                    <a class="view-more" href="#" (click)="toggleShowAllTechnologies(); $event.preventDefault()">
+                        {{ showAllTechnologies ? 'Voir moins' : 'Voir plus...' }}
+                    </a>
+                </div>
             </div>
-          </div>
-          <a class="view-more" href="#" (click)="toggleShowAllTypes(); $event.preventDefault()">
-            {{ showAllTypes ? 'Voir moins' : 'Voir plus...' }}
-          </a>
+            <div class="test-card" *ngFor="let test of filteredTests">
+
+                <div class="card-header">
+                    <i [class]="getIcon(test.type)"></i>
+                    <h3>{{ test.titre }}</h3>
+                </div>
+
+                <div class="badges">
+                    <span class="badge limiteTentatives">{{ test.type }}</span>
+
+                    <span class="badge" [ngClass]="{
+              'easy': test.niveauDifficulte === 'Facile',
+              'medium': test.niveauDifficulte === 'Intermédiaire',
+              'hard': test.niveauDifficulte === 'Difficile'
+            }">{{ test.niveauDifficulte }}</span>
+                </div>
+
+                <p>{{ test.description | slice:0:100 }}...</p>
+                <div class="meta">
+                    <span><i class="fas fa-question-circle"></i> {{ test.questionsCount || 0 }} questions</span>
+                </div>
+                <div class="meta">
+                    <span><i class="fas fa-clock"></i> {{ test.duree }} minutes</span>
+                </div>
+                <span *ngFor="let tech of test.technologies" class="badge technologie-badge">
+                    {{ tech }}
+                </span>
+                <div class="start-button">
+                    <button class="btn btn-primary" (click)="goToQuestions(test.id)">
+                        <i class="fas fa-play-circle"></i> Commencer le test
+                    </button>
+                </div>
+                <div class="footer">
+                    <small><i class="fas fa-user"></i> Par chef {{ test.createur?.username || 'Inconnu' }}</small>
+                    <small><i class="fas fa-calendar-alt"></i> {{ test.dateCreation | date:'dd/MM/yyyy' }}</small>
+                </div>
+            </div>
         </div>
-      </div>
+
     </div>
 
-    <!-- Liste des tests pro -->
-    <div class="test-list-container">
-      <div class="test-card" *ngFor="let test of filteredTests">
-        <div class="card-header">
-          <div class="card-icon">
-            <i [class]="getIcon(test.type)"></i>
-          </div>
-          <div class="card-title">
-            <h3>{{ test.titre }}</h3>
-            <div class="card-meta">
-              <span><i class="far fa-user"></i> {{ test.createur?.username || 'Inconnu' }}</span>
-              <span><i class="far fa-calendar-alt"></i> {{ test.dateCreation | date:'dd/MM/yyyy' }}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-badges">
-          <span class="badge type-badge">{{ test.type }}</span>
-          <span class="badge difficulty-badge" [ngClass]="{
-            'easy': test.niveauDifficulte === 'Facile',
-            'medium': test.niveauDifficulte === 'Intermédiaire',
-            'hard': test.niveauDifficulte === 'Difficile'
-          }">{{ test.niveauDifficulte }}</span>
-        </div>
-
-        <p class="card-description">{{ test.description | slice:0:120 }}...</p>
-
-        <div class="card-footer">
-          <div class="footer-meta">
-            <span><i class="far fa-question-circle"></i> {{ test.questionsCount || 0 }} questions</span>
-            <span><i class="far fa-clock"></i> {{ test.duree }} min</span>
-          </div>
-          <button class="start-btn" (click)="goToQuestions(test.id)">
-            <i class="fas fa-play"></i> Commencer
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
-

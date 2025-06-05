@@ -13,6 +13,7 @@
 <div class="test-review">
   <h1>Analyse des réponses du test</h1>
   <app-result-graph [results]="reponses"></app-result-graph>
+  <button class="back-to-score" (click)="scrollToScore()">Retour au Score</button>
 
 
   <!-- Affichage du nombre de réponses correctes sur le total des questions -->
@@ -22,7 +23,6 @@
   </div>
 
   <!-- Bouton Retour au Score -->
-  <button class="back-to-score" (click)="scrollToScore()">Retour au Score</button>
 
   <!-- Affichage de la question actuelle -->
   <app-question-display 

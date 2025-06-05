@@ -43,12 +43,16 @@
     <!-- Graphs -->
     <div class="graphs-row">
       <div class="graph">
-        <canvas baseChart [data]="barChartData" [type]="barChartType"></canvas>
+        <canvas id="barChart" baseChart [data]="barChartData" [type]="barChartType"></canvas>
+
+        <!-- <canvas baseChart [data]="barChartData" [type]="barChartType"></canvas> -->
       </div>
 
       <div class="graph">
         <h3>📊 Taux de réussite / échec</h3>
-        <canvas baseChart [data]="doughnutChartData" [type]="doughnutChartType"></canvas>
+        <canvas id="doughnutChart" baseChart [data]="doughnutChartData" [type]="doughnutChartType"></canvas>
+
+        <!-- <canvas baseChart [data]="doughnutChartData" [type]="doughnutChartType"></canvas> -->
       </div>
     </div>
 
@@ -140,7 +144,9 @@
         </div>
       </div>
     </div>
+    <button (click)="exportPDF()">Exporter PDF</button>
+    <button (click)="exportModalPDF()">Exporter ce PDF</button>
 
-    <button (click)="print()">🖨️ Imprimer ce rapport</button>
+    <!-- <button (click)="print()">🖨️ Imprimer ce rapport</button> -->
   </div>
 </div>

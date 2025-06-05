@@ -1,223 +1,375 @@
 .test-page-container {
-    padding: 24px;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f0f2f5;
-    min-height: 100vh;
-  }
-  .search-bar-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    margin-bottom: 24px;
-  }
-  
-  .search-bar {
-    display: flex;
-    margin-bottom: 24px;
-  }
-  
-  .search-bar input {
-    flex: 1;
-    padding: 12px 14px;
-    border: 1px solid #ccc;
-    border-radius: 8px 0 0 8px;
-    font-size: 15px;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-  
-  .search-bar input:focus {
-    border-color: #673ab7;
-  }
-  
-  .search-bar button {
-    padding: 12px 20px;
-    background-color: #673ab7;
-    color: white;
-    border: none;
-    border-radius: 0 8px 8px 0;
+padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.search-bar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 24px;
+}
+
+.search-bar {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px 0 0 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-bar input:focus {
+  border-color: #673ab7;
+}
+
+.search-bar button {
+  padding: 12px 20px;
+  background-color: #673ab7;
+  color: white;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+  background-color: #5a2ea6;
+}
+
+.content-container {
+  display: flex;
+  gap: 24px;
+}
+
+.filters-sidebar {
+  width: 260px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 24px;
+  height: calc(100vh - 48px);
+  overflow-y: auto;
+}
+
+.filter-section {
+  margin-bottom: 24px;
+}
+
+.filter-section h4 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.filter-section h5 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #000000;
+  text-align: center;
+}
+
+.filter-section label {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  font-size: 14px;
+  color: #444;
+  margin: 6px 0;
+
+}
+
+
+.filter-section input[type="checkbox"] {
+  margin-right: 8px;
+  /* Space between the checkbox and text */
+}
+
+.type-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.type-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f9f9f9;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.type-item:hover {
+  background-color: #ececec;
+}
+
+.type-item.selected {
+  background-color: #cce5ff;
+  border: 1px solid #3399ff;
+}
+
+.type-item i {
+  font-size: 14px;
+  width: 18px;
+  text-align: center;
+  color: #444;
+}
+
+.type-label {
+  flex: 1;
+  text-transform: capitalize;
+}
+
+.count {
+  font-size: 11px;
+  color: #777;
+}
+
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  display: inline-block;
+  margin-right: 6px;
+  margin-bottom: 8px;
+}
+
+.easy {
+  cursor: pointer;
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.medium {
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .search-bar button:hover {
-    background-color: #5a2ea6;
-  }
-  .content-container {
-    display: flex;
-    gap: 24px;
-  }
-  
-  .filters-sidebar {
-    width: 260px;
-    background-color: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 24px;
-    height: calc(100vh - 48px);
-    overflow-y: auto;
-  }
-  
-  .filter-section {
-    margin-bottom: 24px;
-  }
-  
-  .filter-section h4 {
-    font-size: 16px;
-    margin-bottom: 12px;
-    color: #333;
-  }
-  
-  .filter-section h5 {
-    font-size: 20px;
-    margin-bottom: 12px;
-    color: #000000;
-    text-align: center;
-  }
-  .filter-section label {
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    font-size: 14px;
-    color: #444;
-    margin: 6px 0;
-  
-  }
-  
-  
-  .filter-section input[type="checkbox"] {
-    margin-right: 8px;  /* Space between the checkbox and text */
-  }
-  
-  
-  
-  .badge {
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    display: inline-block;
-    margin-right: 6px;
-    margin-bottom: 8px;
-  }
-  
-  .easy {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  
-  .medium {
-    background-color: #fff3cd;
-    color: #856404;
-  }
-  
-  .hard {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-  
-  .tous {
-    background-color: #e0e0e0;
-    color: #333;
-  }
-  
-  .test-list-container {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-    align-items: start;
-    max-height: calc(100vh - 48px);
-    overflow-y: auto;
-  }
-  
-  .test-card {
-    background-color: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    transition: transform 0.2s, box-shadow 0.3s;
-  }
-  
-  .test-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-  }
-  
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-  }
-  
-  .card-header h3 {
-    margin: 0;
-    font-size: 17px;
-    color: #333;
-  }
-  
-  .badgetype {
-    display: inline-block;
-    margin-top: 10px;
-    background-color: #E1A624;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-size: 13px;
-  }
-  
-  .badges {
-    margin: 12px 0;
-  }
-  
-  .limiteTentatives {
-    background-color: #e0f7fa;
-    color: #006064;
-  }
-  
-  .level {
-    background-color: #f3e5f5;
-    color: #6a1b9a;
-  }
-  
-  .meta {
-    font-size: 13px;
-    color: #666;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 12px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  
-  .start-button {
-    margin-top: 16px;
-    text-align: right;
-  }
-  
-  .start-button .btn {
-    background-color: #fff3cd;
-    color: #856404;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 14px;
-    font-size: 14px;
-    transition: background-color 0.3s;
-  }
-  
-  .start-button .btn:hover {
-    background-color: #f7d87d;
-  }
-  
-  .footer {
-    margin-top: 14px;
-    font-size: 12px;
-    color: #888;
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px solid #eee;
-    padding-top: 10px;
-  }
-  
+
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.hard {
+    cursor: pointer;
+
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.tous {
+    cursor: pointer;
+
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.test-list-container {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 48px;
+
+}
+
+.test-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-left: 100px;
+}
+
+.pagination ::ng-deep .ngx-pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination ::ng-deep .ngx-pagination li {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.test-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #333;
+}
+
+.badgetype {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: #E1A624;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.badges {
+  margin: 12px 0;
+}
+
+.limiteTentatives {
+  background-color: #e0e0e0;
+  color: #006064;
+}
+
+.level {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.meta {
+  font-size: 13px;
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.start-button {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.start-button .btn {
+  background-color: #fff3cd;
+  color: #856404;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.start-button .btn:hover {
+  background-color: #f7d87d;
+}
+
+.footer {
+  margin-top: 14px;
+  font-size: 12px;
+  color: #888;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.tech-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tech-btn {
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.tech-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.tech-btn.selected {
+  background-color: #cce5ff;
+  border: 1px solid #3399ff;
+
+}
+
+.tech-btn.all {
+  margin-bottom: 10px;
+}
+
+.badge.technologie-badge {
+  background-color: #6c757d;
+  /* gris foncé */
+  color: white;
+  margin-left: 5px;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Filtre de technologie */
+.technology-filter {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+  grid-column: 1 / -1;
+}
+
+.tech-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.tech-option {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.tech-option:hover {
+  background-color: #e9ecef;
+}
+
+.tech-label {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  color: #34495e;
+}
+
+.tech-count {
+  margin-left: 0.5rem;
+  font-size: 0.8125rem;
+  color: #95a5a6;
+}

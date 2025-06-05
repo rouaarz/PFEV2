@@ -6,7 +6,6 @@
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
-  border-left: 4px solid #2c3e50; /* Bordure bleu-gris */
   color: #34495e; /* Texte sombre pour une lecture agréable */
 }
 
@@ -140,4 +139,39 @@ strong {
 /* Icône incorrecte */
 .question-display li .incorrect {
   color: #e74c3c; /* Rouge pour incorrect */
+}
+/* Header stylé pour chaque question */
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f1f8ff;
+  padding: 16px;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 2px solid #d6e9f8;
+  margin-bottom: 15px;
+}
+
+/* Titre de la question dans le header */
+.question-header .question-title {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+}
+
+/* Badge de niveau */
+.question-header .question-badge {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+.ia-mention {
+  font-size: 13px;
+  color: #1b71b8;
+  margin-bottom: 10px;
 }
