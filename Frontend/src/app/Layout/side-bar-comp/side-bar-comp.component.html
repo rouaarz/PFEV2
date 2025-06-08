@@ -1,4 +1,3 @@
-
 <mat-drawer-container class="allSidebar">
   <mat-drawer [class]="OpenedSideBar ? 'sidebar' : 'sidebar close'" mode="side" opened="true">
     <div class="logo">
@@ -8,7 +7,7 @@
     <ul>
       <li>
         <a [routerLink]="['/dash']" [ngClass]="{'active': current === '/dash'}">
-          <mat-icon class="icon">grid_view</mat-icon>
+          <mat-icon class="icon">dashboard</mat-icon>
           <p class="nav-item">
             Dashboard
           </p>
@@ -16,63 +15,59 @@
       </li>
      <li>
         <a [routerLink]="['/admin/List-Question']" [ngClass]="{'active': current === '/admin/List-Question'}">
-          <mat-icon class="icon">engineering</mat-icon>
+          <mat-icon class="icon">quiz</mat-icon>
           <p class="nav-item">
-            Gerer les questions
+            Gérer les questions
           </p>
         </a>
       </li>
       <li>
         <a [routerLink]="['/admin/TestManagement']" [ngClass]="{'active': current === '/admin/TestManagement'}">
-          <mat-icon class="icon">engineering</mat-icon>
+          <mat-icon class="icon">assignment_turned_in</mat-icon>
           <p class="nav-item">
-            Gerer les tests
+            Gérer les tests
           </p>
         </a>
       </li>
-      <li  *ngIf="roles.includes('ROLE_ADMIN')">
+      <li *ngIf="roles.includes('ROLE_ADMIN')">
         <a [routerLink]="['/admin/list-Chefs']" [ngClass]="{'active': current === '/admin/list-Chefs'}">
-          <mat-icon class="icon">engineering</mat-icon>
+          <mat-icon class="icon">supervisor_account</mat-icon>
           <p class="nav-item">
-            Gerer Les chefs
+            Gérer les chefs
           </p>
         </a>
       </li>
       <li *ngIf="roles.includes('ROLE_ADMIN')">
         <a [routerLink]="['/admin/activation-Compte']" [ngClass]="{'active': current === '/admin/activation-Compte'}">
-          <mat-icon class="icon">engineering</mat-icon>
+          <mat-icon class="icon">how_to_reg</mat-icon>
           <p class="nav-item">
-            Gerer les comptes
+            Gérer les comptes
           </p>
         </a>
       </li>
       <li *ngIf="roles.includes('ROLE_ADMIN')">
         <a [routerLink]="['/admin/edit', admin.id]" class="nav-link">
-          <mat-icon class="icon">person</mat-icon>
-          <p class="nav-item">Edit Profile</p>
+          <mat-icon class="icon">manage_accounts</mat-icon>
+          <p class="nav-item">Modifier profil</p>
         </a>
       </li>
       <li *ngIf="roles.includes('ROLE_CHEF')">
         <a [routerLink]="['/admin/editchef', chef.id]" class="nav-link">
-          <mat-icon class="icon">person</mat-icon>
-          <p class="nav-item">Edit Profile</p>
+          <mat-icon class="icon">manage_accounts</mat-icon>
+          <p class="nav-item">Modifier profil</p>
         </a>
       </li>
       <li *ngIf="roles.includes('ROLE_DEVELOPPEUR')">
         <a [routerLink]="['/admin/editDev', chef.id]" class="nav-link">
-          <mat-icon class="icon">person</mat-icon>
-          <p class="nav-item">Edit Profile</p>
+          <mat-icon class="icon">manage_accounts</mat-icon>
+          <p class="nav-item">Modifier profil</p>
         </a>
       </li>
       
-      
-
-      
-
       <li>
         <a class="close_sidebar" (click)="OpenedSideBar=!OpenedSideBar">
           <mat-icon class="icon">
-            {{OpenedSideBar ? 'arrow_left' : 'arrow_right'}}
+            {{OpenedSideBar ? 'chevron_left' : 'chevron_right'}}
           </mat-icon>
         </a>
       </li>

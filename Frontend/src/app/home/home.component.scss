@@ -179,7 +179,7 @@
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            color: white;
+            color: black;
         }
         
         .feature-card:hover::before {
@@ -187,12 +187,12 @@
         }
         
         .feature-card:hover .feature-icon {
-            color: white;
+            color: var(--primary);
         }
         
         .feature-card:hover .feature-title,
         .feature-card:hover .feature-desc {
-            color: white;
+            // color: rgb(0, 0, 0);
         }
         
         .feature-icon {

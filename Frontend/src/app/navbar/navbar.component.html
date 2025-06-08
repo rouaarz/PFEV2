@@ -16,23 +16,28 @@
 
       <!-- Navigation Links -->
       <nav class="nav-links" [class.open]="isMobileMenuOpen">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeAllMenus()">Accueil</a>
+        <ng-container *ngIf="!isLoggedIn">
+          <a href="#fonctionnalites" (click)="closeAllMenus()">Fonctionnalités</a>
+          <a href="#technos" (click)="closeAllMenus()">Technologies</a>
+          <a routerLink="/contact" routerLinkActive="active" (click)="closeAllMenus()">Contact</a>
+        </ng-container>
 
-
-        <a routerLink="/" (click)="closeAllMenus()">Accueil</a> &nbsp; &nbsp;
-        <a *ngIf="isLoggedIn" [routerLink]="['/board-developpeur']" (click)="closeAllMenus()">Dashboard</a> &nbsp; &nbsp;
-
-        <a routerLink="/testsbyadmin" (click)="closeAllMenus()">Tests</a> &nbsp; &nbsp;
-        <a routerLink="/tests" (click)="closeAllMenus()">Tests technique</a> &nbsp; &nbsp;
-        <a routerLink="/contact" (click)="closeAllMenus()">Contact</a> &nbsp; &nbsp; &nbsp; &nbsp;
-
+        <ng-container *ngIf="isLoggedIn">
+          <a [routerLink]="['/board-developpeur']" routerLinkActive="active" (click)="closeAllMenus()">Dashboard</a>
+          <a routerLink="/testsbyadmin" routerLinkActive="active" (click)="closeAllMenus()">Tests</a>
+          <a routerLink="/tests" routerLinkActive="active" (click)="closeAllMenus()">Tests technique</a>
+          <a class="btn btn-outline" [routerLink]="['/editDev', developpeur.id]" routerLinkActive="active">Mon
+            Profil</a>
+        </ng-container>
 
       </nav>
-
-      <!-- Desktop Right Side -->
+      <!-- Right side user/avatar/login buttons -->
       <div class="right-side">
 
+        <!-- Si connecté : menu utilisateur -->
         <div class="action user-avatar-container" *ngIf="isLoggedIn">
-
           <div class="user-avatar" (click)="toggleUserMenu($event)">
             <img [src]="userPhotoUrl || 'assets/default-avatar.png'" alt="User">
           </div>
@@ -53,7 +58,7 @@
               </button>
               <button class="menu-item" [routerLink]="['/dashboard-developpeur']" (click)="closeAllMenus()">
                 <i class="fas fa-edit"></i>
-                <span>parametres</span>
+                <span>Paramètres</span>
               </button>
               <div class="menu-divider"></div>
               <button class="menu-item logout-btn" (click)="logout(); closeAllMenus()">
@@ -64,7 +69,7 @@
           </div>
         </div>
 
-        <!-- Desktop Auth Buttons -->
+        <!-- Si NON connecté : boutons Connexion / S'inscrire -->
         <div class="auth-buttons-container" *ngIf="!isLoggedIn">
           <a routerLink="/signin" class="btn btn-login">Connexion</a> &nbsp; &nbsp;
           <a routerLink="/signup" class="btn btn-primary">S'inscrire</a>

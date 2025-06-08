@@ -7,6 +7,7 @@ import { QuestionService } from '../services/question-service.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-questions',
@@ -16,6 +17,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
   styleUrls: ['./list-questions.component.scss'] // Correction ici
 })
 export class ListQuestionsComponent implements OnInit, OnDestroy {
+  token = localStorage.getItem('accessToken') ?? '';
 
   @Input() questions: Question[] = [];
   @Output() editQuestion = new EventEmitter<Question>();
@@ -50,35 +52,54 @@ export class ListQuestionsComponent implements OnInit, OnDestroy {
   }
 
   
-  onDeleteQuestion(id: number) {
-    // Demande de confirmation avant la suppression
-    const isConfirmed = confirm('Êtes-vous sûr de vouloir supprimer cette question ?');
-    
-    if (!isConfirmed) {
-      return; // Si l'utilisateur annule, on arrête la suppression
-    }
-  
-    console.log('Suppression reçue avec ID :', id);
-    
-    // Appel à la méthode du service pour supprimer la question de la base de données
-    this.questionService.deleteQuestion(id).subscribe({
-      next: () => {
-        // Si la suppression côté serveur est réussie, on supprime la question de la liste locale
-        this.questions = this.questions.filter(q => q.id !== id);
-        this.filteredQuestions = this.filteredQuestions.filter(q => q.id !== id);
-  
-        // Optionnel: Ajuster la pagination si nécessaire
-        if (this.filteredQuestions.length === 0 && this.currentPage > 1) {
-          this.currentPage -= 1; // Passer à la page précédente si la page actuelle est vide
+onDeleteQuestion(id: number) {
+  Swal.fire({
+    title: 'Êtes-vous sûr ?',
+    text: 'Cette action supprimera définitivement la question.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Oui, supprimer',
+    cancelButtonText: 'Annuler',
+        backdrop: false
+
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.questionService.deleteQuestion(id).subscribe({
+        next: () => {
+          // Mise à jour des listes locales
+          this.questions = this.questions.filter(q => q.id !== id);
+          this.filteredQuestions = this.filteredQuestions.filter(q => q.id !== id);
+
+          // Ajuster la pagination si nécessaire
+          if (this.filteredQuestions.length === 0 && this.currentPage > 1) {
+            this.currentPage -= 1;
+          }
+
+          Swal.fire({
+            title: 'Supprimée !',
+            text: 'La question a été supprimée avec succès.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        },
+        error: (err) => {
+          console.error('Erreur lors de la suppression :', err);
+          Swal.fire({
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors de la suppression.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
         }
-        alert('Question supprimée avec succès');
-      },
-      error: (err) => {
-        console.error('Erreur lors de la suppression :', err);
-        alert('Une erreur est survenue lors de la suppression');
-      }
-    });
-  }
+      });
+    }
+  });
+
+}
+
     
   
   searchQuestions(){

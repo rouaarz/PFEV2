@@ -174,8 +174,23 @@ chartData: ChartData<'pie'> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
+       title: {
+      display: true,
+      text: 'Répartition des niveaux de difficulté',
+      align: 'center',
+      color: '#212529', // Couleur standard h3 (gris foncé Bootstrap)
+      font: {
+        size: 20,           // Taille proche d'un h3
+        weight: 'bold',     // Gras comme h3
+        family: "'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif"
+      },
+      padding: {
+        top: 10,
+        bottom: 30
+      }
+    },
       legend: {
-        position: 'right',
+        position: 'bottom',
         labels: {
           padding: 20,
           font: {

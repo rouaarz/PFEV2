@@ -69,52 +69,51 @@
 
         /* Image Hero */
         .hero-image-container {
-            flex: 1;
-            position: relative;
-            height: 100%;
-            min-height: 500px;
-            animation: fadeInRight 1s ease-out;
-        }
+    flex: 1;
+    position: relative;
+    height: 100%;
+    min-height: 500px;
+    animation: fadeInRight 1s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .hero-image {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            border: 15px solid white;
-        }
+.hero-image {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+}
 
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            display: block;
-            border-radius: 10px;
-            transition: transform 0.5s ease;
-        }
+.hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 16px;
+    transition: transform 0.4s ease;
+    object-fit: cover;
+}
 
-        .hero-image:hover img {
-            transform: scale(1.03);
-        }
+.hero-image:hover img {
+    transform: scale(1.03);
+}
 
-        /* Décoration */
-        .hero-decoration {
-            position: absolute;
-            width: 800px;
-            height: 800px;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            background: linear-gradient(45deg, rgba(72, 149, 239, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%);
-            right: -200px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1;
-            animation: float 8s ease-in-out infinite alternate;
-        }
+.hero-decoration {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50% 50% 40% 60% / 50% 60% 40% 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(67, 97, 238, 0.05), transparent);
+    right: -150px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    animation: float 8s ease-in-out infinite alternate;
+}
 
         /* Horizontal Tests Section */
         .horizontal-tests {
@@ -188,6 +187,101 @@
             color: white;
             font-size: 1.5rem;
         }
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 280px;
+  color: #fff;
+}
+
+.footer-heading {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #fff;
+  position: relative;
+}
+
+.footer-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background-color: #ff5f56;
+  border-radius: 3px;
+}
+
+.contact-form {
+  background-color: #1a1f3c;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.contact-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 1rem;
+}
+
+.contact-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border: 2px solid #ff5f56;
+  background-color: #fff;
+}
+
+.submit-btn {
+  background-color: #ff5f56;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #e64b45;
+}
+
+.submit-btn {
+    padding: 0.8rem 1.2rem;
+    background-color: #ff5f56;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.submit-btn:hover {
+    opacity: 0.9;
+}
 
         .test-title {
             font-size: 1.5rem;
@@ -385,25 +479,26 @@
         .dot-green {
             background: #27c93f;
         }
-.features {
+
+        .features {
             padding: 4rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         .features h2 {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
             color: black;
         }
-        
+
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
-        
+
         .feature-card {
             background: white;
             border-radius: 10px;
@@ -412,16 +507,18 @@
             text-align: center;
             transition: transform 0.3s;
         }
-        
+
         .feature-card:hover {
             transform: translateY(-10px);
+            color: #000;
         }
-        
+
         .feature-icon {
             font-size: 3rem;
             color: var(--primary);
             margin-bottom: 1rem;
         }
+
         .editor-title {
             margin-left: 20px;
             font-family: 'Courier New', monospace;
@@ -631,7 +728,7 @@
             display: inline-block;
             padding: 15px 40px;
             background: white;
-            color: rgba(0, 0, 0, 0.3);
+            color: blueviolet;
             border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
@@ -642,6 +739,7 @@
         .cta-btn:hover {
             transform: translateY(-5px);
             background: linear-gradient(135deg, #0926a9, #27037a);
+            color: #ffffff;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
 
@@ -707,6 +805,8 @@
         .feature-card:hover {
             transform: translateY(-0.625rem);
             box-shadow: 0 0.9375rem 1.875rem rgba(0, 0, 0, 0.1);
+                        color: #000;
+
         }
 
         .feature-icon {
@@ -747,6 +847,9 @@
 
         .feature-card:hover .feature-wave {
             transform: scaleX(1);
+                        color: #000;
+
+
         }
 
         .section-title {
@@ -774,6 +877,8 @@
 
             .feature-card:hover {
                 transform: none;
+                            color: #000;
+
             }
         }
 
@@ -1150,6 +1255,9 @@
                 transform: translateY(0);
             }
         }
+html {
+  scroll-behavior: smooth;
+}
 
         .hero-subtitle {
             font-size: clamp(1rem, 2vw, 1.1rem);
@@ -1244,10 +1352,15 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <h1 class="hero-title">
+                <!-- <h1 class="hero-title">
                     <span class="word">L'évaluation technique</span>
                     <span class="word">précit</span>
                     
+                </h1> -->
+                <h1 class="hero-title">
+                    <span class="word">Évaluation Technique </span>
+                    <span class="word">Pilotée par l’IA.</span>
+
                 </h1>
                 <p class="hero-subtitle">
                     Boostez vos compétences techniques ! Notre solution évalue votre niveau, identifie vos lacunes et
@@ -1264,8 +1377,79 @@
             </div>
         </div>
     </section>
-    <!-- Horizontal Tests Section -->
-    <section class="features">
+<section class="features" id="fonctionnalites">
+    <h2 class="section-title">Fonctionnalités pour les <span>développeurs</span></h2>
+    <div class="features-grid">
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-code"></i>
+            </div>
+            <h3 class="feature-title">Éditeur de code en ligne</h3>
+            <p class="feature-desc">Un environnement de développement intégré (IDE) directement accessible depuis la plateforme pour coder, compiler et exécuter vos solutions en temps réel.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-puzzle-piece"></i>
+            </div>
+            <h3 class="feature-title">Tests techniques adaptés</h3>
+            <p class="feature-desc">Participez à des évaluations personnalisées selon votre niveau (débutant, intermédiaire, avancé) et vos compétences (Java, python, etc.).</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-random"></i>
+            </div>
+            <h3 class="feature-title">Diversité des questions</h3>
+            <p class="feature-desc">Répondez à des QCM, des questions ouvertes, ou réalisez des exercices pratiques de codage pour démontrer votre savoir-faire.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h3 class="feature-title">Analyse par IA</h3>
+            <p class="feature-desc">Profitez d'une correction intelligente qui évalue votre logique, la qualité du code et la pertinence de vos réponses textuelles.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <h3 class="feature-title">Retour instantané</h3>
+            <p class="feature-desc">Obtenez des retours immédiats sur vos performances pour comprendre vos erreurs et progresser rapidement.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas  fa-shield-alt"></i>
+            </div>
+            <h3 class="feature-title">Sécurité renforcée</h3>
+            <p class="feature-desc">Protection avancée contre les menaces avec chiffrement de bout en bout et authentification multi-facteurs.</p>
+        </div>
+
+    </div>
+</section>
+
+
+    <!-- Stats Section -->
+    <section class="parallax-section"
+        style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+        <div class="parallax-content">
+            <h2 class="parallax-title">Une bonne évaluation technique ne juge pas, elle révèle</h2>
+            <p class="parallax-text">Chez <strong>TechAssess</strong>, nous croyons que chaque développeur mérite une
+                évaluation
+                juste, objective et orientée amélioration continue.</p>
+        </div>
+
+    </section>
+
+
+
+    <!-- Section Parallaxe -->
+
+    <section class="features" id="technos">
         <h2>Langages Supportés</h2>
         <div class="features-grid">
             <div class="feature-card">
@@ -1275,7 +1459,7 @@
                 <h3>JavaScript</h3>
                 <p>ES6+, Node.js, React, Vue...</p>
             </div>
-            
+
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fab fa-python"></i>
@@ -1283,7 +1467,7 @@
                 <h3>Python</h3>
                 <p>Django, Flask, Algorithmie...</p>
             </div>
-            
+
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-code"></i>
@@ -1293,201 +1477,62 @@
             </div>
         </div>
     </section>
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">10,000+</div>
-                <div class="stat-label">Candidats évalués</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">500+</div>
-                <div class="stat-label">Entreprises partenaires</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">50+</div>
-                <div class="stat-label">Tests disponibles</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">98%</div>
-                <div class="stat-label">Satisfaction clients</div>
-            </div>
-        </div>
-    </section>
-    <section class="features">
-        <h2 class="section-title">Nos <span>fonctionnalités</span> exclusives</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
-                <h3 class="feature-title">Performance ultime</h3>
-                <p class="feature-desc">Une technologie optimisée pour des temps de chargement ultra-rapides et une
-                    expérience utilisateur fluide.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-palette"></i>
-                </div>
-                <h3 class="feature-title">Design personnalisable</h3>
-                <p class="feature-desc">Des centaines de combinaisons de couleurs et de styles pour une identité
-                    visuelle unique.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3 class="feature-title">Sécurité renforcée</h3>
-                <p class="feature-desc">Protection avancée contre les menaces avec chiffrement de bout en bout et
-                    authentification multi-facteurs.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3 class="feature-title">Analyses intelligentes</h3>
-                <p class="feature-desc">Des tableaux de bord intuitifs pour suivre vos performances et optimiser votre
-                    stratégie.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <h3 class="feature-title">IA intégrée</h3>
-                <p class="feature-desc">Notre intelligence artificielle vous assiste dans la création et l'optimisation
-                    de contenu.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-infinity"></i>
-                </div>
-                <h3 class="feature-title">Évolutivité infinie</h3>
-                <p class="feature-desc">Une infrastructure qui s'adapte à votre croissance, quelle que soit votre
-                    taille.</p>
-            </div>
-        </div>
-    </section>
 
-
-    <!-- Section Parallaxe -->
-    <section class="parallax-section"
-        style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-        <div class="parallax-content">
-            <h2 class="parallax-title">Une technologie révolutionnaire</h2>
-            <p class="parallax-text">Nous repoussons les limites du possible avec une approche innovante qui combine
-                design, performance et intelligence artificielle pour des résultats exceptionnels.</p>
-        </div>
-    </section>
-
-    <!-- Section Témoignages -->
-    <section class="testimonials">
-        <h2 class="section-title">Ils nous <span>font confiance</span></h2>
-        <div class="testimonial-slider">
-            <div class="testimonial-track">
-                <div class="testimonial-card">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="testimonial-avatar">
-                    <p class="testimonial-quote">"TechAssess a complètement transformé notre processus de recrutement
-                        technique. La plateforme nous a permis de réduire de 50% le temps de screening des candidats
-                        tout en améliorant la qualité de nos embauches."</p>
-                    <h4 class="testimonial-author">Sophie Martin</h4>
-                    <p class="testimonial-role">Directrice RH, TechCorp</p>
-                </div>
-                <div class="testimonial-card">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="testimonial-avatar">
-                    <p class="testimonial-quote">"La qualité des tests et l'environnement de codage intégré ont dépassé
-                        toutes nos attentes. Nous avons pu standardiser nos évaluations techniques à l'échelle
-                        mondiale."</p>
-                    <h4 class="testimonial-author">Thomas Lefèvre</h4>
-                    <p class="testimonial-role">CTO, Innovate Solutions</p>
-                </div>
-                <div class="testimonial-card">
-                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client" class="testimonial-avatar">
-                    <p class="testimonial-quote">"L'équipe de TechAssess a été incroyablement réactive pour adapter les
-                        tests à nos besoins spécifiques. Les rapports détaillés nous donnent une vision claire des
-                        compétences de chaque candidat."</p>
-                    <h4 class="testimonial-author">Camille Dubois</h4>
-                    <p class="testimonial-role">Responsable Recrutement, GlobalBrand</p>
-                </div>
-            </div>
-            <div class="slider-dots">
-                <div class="slider-dot active"></div>
-                <div class="slider-dot"></div>
-                <div class="slider-dot"></div>
-            </div>
-        </div>
-    </section>
 
     <!-- Section CTA -->
     <section class="cta-section" id="cta">
         <div class="cta-content">
-            <h2 class="cta-title">Prêt à révolutionner votre recrutement technique ?</h2>
-            <p class="cta-text">Rejoignez des centaines d'entreprises qui évaluent leurs candidats avec précision et
-                efficacité grâce à notre plateforme.</p>
-            <a href="#" class="cta-btn">Essai gratuit 30 jours</a>
+            <h2 class="cta-title">Prêt à non seulement tester vos compétences, mais aussi à les faire évoluer ?</h2>
+            <p class="cta-text"> Rejoignez <strong>TechAssess</strong> et accédez à une évaluation
+                intelligente, fiable et taillée pour votre progression technique.
+            </p>
+            <a  [routerLink]="['/signup']" class="cta-btn">S'inscrire maintenant</a>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-wave">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
-                preserveAspectRatio="none">
-                <path
-                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                    class="shape-fill"></path>
-            </svg>
+<footer>
+  <div class="footer-wave">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
+  </div>
+  <div class="footer-content">
+    <!-- Colonne Logo & À propos -->
+    <div class="footer-col">
+      <div class="footer-logo">
+        <i class="fas fa-code"></i>
+        <span>TechAssess</span>
+      </div>
+      <p class="footer-about">Outils d’évaluation technique intelligents pour les développeurs ambitieux.</p>
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+    
+    <!-- Colonne Formulaire de contact -->
+    <div class="footer-col">
+      <h3 class="footer-heading">Contactez-nous</h3>
+      <form action="#" method="post" class="contact-form">
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Votre nom" required>
         </div>
-        <div class="footer-content">
-            <div class="footer-col">
-                <div class="footer-logo">
-                    <i class="fas fa-code"></i>
-                    <span>TechAssess</span>
-                </div>
-                <p class="footer-about">Nous créons des outils d'évaluation technique innovants qui transforment le
-                    processus de recrutement des développeurs.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h3 class="footer-heading">Produit</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Fonctionnalités</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Tarifs</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> API</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Intégrations</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Nouveautés</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3 class="footer-heading">Ressources</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Documentation</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Guides</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Webinaires</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Centre d'aide</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3 class="footer-heading">Entreprise</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Carrières</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Presse</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Politique de confidentialité</a></li>
-                </ul>
-            </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Votre email" required>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 TechAssess. Tous droits réservés. Conçu avec <i class="fas fa-heart"
-                    style="color: #ff5f56;"></i> à TUNIS.</p>
+        <div class="form-group">
+          <textarea name="message" placeholder="Votre message" required></textarea>
         </div>
-    </footer>
+        <button type="submit" class="submit-btn">Envoyer</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 TechAssess. Tous droits réservés. Conçu avec <i class="fas fa-heart" style="color: #ff5f56;"></i> à CNI TUNIS.</p>
+  </div>
+</footer>
 
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>

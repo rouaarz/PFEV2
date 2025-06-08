@@ -63,12 +63,16 @@
     background: #a9a9a9;
     color:  #000000;
   }
-  .active{
-    color: #a9a9a9;;
-  }
-  .active:hover{
-    color: #a9a9a9;; 
-  }
+.nav-link.active {
+  background: none;
+  color: blue !important;
+  font-weight: bold;
+  text-decoration: underline;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+
 .log{
 width: 465px;
 height: 50px;

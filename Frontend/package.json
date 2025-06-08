@@ -40,6 +40,7 @@
     "ngx-ace-wrapper": "^17.0.0",
     "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.22.0",
     "tslib": "^2.3.0",
     "tsparticles": "^3.8.1",
     "tsparticles-slim": "^2.12.0",

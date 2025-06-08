@@ -3,3 +3,64 @@
     margin: 15px;
   
 }
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #f0f0f0; /* gris clair */
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #ccc; /* ligne en dessous */
+}
+
+.stat-header i {
+  font-size: 2rem;
+  color: #333;
+}
+
+.stat-header h3 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #333;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #000000;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.dashboard {
+  background-color: #f8f9fc; /* fond général gris très clair */
+  min-height: 100vh;
+  padding: 30px 0;
+}
+
+app-chartdemande,
+app-chartsubscribers {
+  display: block;
+  background: #fff; /* même fond blanc que les cards */
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  border: 1px solid #ddd;
+}
