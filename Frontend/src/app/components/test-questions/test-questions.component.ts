@@ -336,6 +336,7 @@ import { AceEditorModule } from 'ngx-ace-editor-wrapper';
 })
 
 export class TestQuestionsComponent implements OnInit {
+  Object = Object;
   questions: any[] = [];
   currentQuestionIndex: number = 0;
   testTitle: string = 'Test en Cours'; // Valeur par défaut
@@ -344,7 +345,7 @@ export class TestQuestionsComponent implements OnInit {
   developpeurId!: number; // Valeur constante pour l'ID du développeur
   responses: { [key: number]: number[] } = {}; // Stocke les réponses par question
   testTermine: boolean = false;
-  token!: string | null; // Ajoute cette ligne
+  token!: string; // Ajoute cette ligne
 
   totalTime!: number; // Temps total en secondes
   remainingTime: number = this.totalTime; // Temps restant
@@ -365,10 +366,36 @@ export class TestQuestionsComponent implements OnInit {
   executionResults: string[] = [];
   codeAnswer: string = '';  // Réponse du développeur au code
   executionResult: string = '';  // Résultat de l'exécution du code
-  editorOptions = { theme: 'monokai', mode: 'javascript' }
+  themes: string[] = [
+    'chrome',
+    'monokai',
+    'github',
+    'twilight',
+    'tomorrow_night',
+    'solarized_light',
+    'solarized_dark',
+    'dracula'
+  ];
+
+  selectedTheme = 'chrome'; // Valeur par défaut
+  editorOptions = {
+    fontSize: 14,
+    showLineNumbers: true,
+    highlightActiveLine: true,
+    tabSize: 2,
+    useSoftTabs: true,
+    wrap: true,
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true,
+    enableSnippets: true
+  };
+
   expectedOutput: string = '7'; // Résultat attendu, ici pour la somme de 3 et 4
   isCorrect: boolean | null = null;  // Indicateur de validité du code (correct ou incorrect)
   textAnswer: string = '';
+  markedQuestions: number[] = []; // IDs des questions marquées
+  Infinity: any;
+
   constructor(private scoreService: ScoreService, private fb: FormBuilder, private codeExecutionService: CodeExecutionService // <-- Ajouter ici
     , private testService: TestService, private router: Router, private route: ActivatedRoute, private http: HttpClient) {
 
@@ -382,12 +409,25 @@ export class TestQuestionsComponent implements OnInit {
       this.router.navigate(['/signin']);
       return; // Arrêter l'exécution
     }
-            
+
 
     this.loadSavedResponses();
     this.testId = Number(this.route.snapshot.paramMap.get('testId'));
     this.selectedOptionIds = this.responses[this.questions[this.currentQuestionIndex]?.id] || [];
     this.markAnswered();
+    // const savedMarked = localStorage.getItem('markedQuestions');
+    // if (savedMarked) {
+    //   this.markedQuestions = JSON.parse(savedMarked);
+    //   console.log("📌 Questions marquées chargées :", this.markedQuestions);
+    // }
+    // Dans ngOnInit()
+    const savedMarked = localStorage.getItem(`markedQuestions_test_${this.testId}`);
+    if (savedMarked) {
+      this.markedQuestions = JSON.parse(savedMarked);
+      console.log("📌 Questions marquées chargées :", this.markedQuestions);
+    } else {
+      this.markedQuestions = []; // Réinitialiser si pas de données pour ce test
+    }
     const storedId = localStorage.getItem('developpeurId');
     if (!storedId) {
       console.error("❌ developpeurId est undefined !");
@@ -413,50 +453,114 @@ export class TestQuestionsComponent implements OnInit {
       }
     });
 
-     this.scoreService.getScore(this.testId, this.developpeurId, this.token)
+    this.scoreService.getScore(this.testId, this.developpeurId, this.token)
   }
 
 
   loadSavedResponses() {
-    const savedResponses = localStorage.getItem('responses');
+    // const savedResponses = localStorage.getItem('responses');
+    const savedResponses = localStorage.getItem(`responses_test_${this.testId}`);
+
     if (savedResponses) {
       this.responses = JSON.parse(savedResponses); // Récupérer les réponses depuis le localStorage
     }
   }
-  toggleSelection(optionId: number, event: Event) {
-    const isChecked = (event.target as HTMLInputElement).checked;
+  // toggleSelection(optionId: number, event: Event) {
+  //   const isChecked = (event.target as HTMLInputElement).checked;
 
-    if (isChecked) {
-      this.selectedOptionIds.push(optionId);
+  //   if (isChecked) {
+  //     this.selectedOptionIds.push(optionId);
+  //   } else {
+  //     this.selectedOptionIds = this.selectedOptionIds.filter(id => id !== optionId);
+  //   }
+
+  //   this.isAnswered = this.selectedOptionIds.length > 0; // ✅ Vérifie si au moins une option est sélectionnée
+
+  //   console.log("Options sélectionnées :", this.selectedOptionIds);
+  //   console.log("isAnswered:", this.isAnswered);
+  // }
+
+  toggleSelection(optionId: number): void {
+    const index = this.selectedOptionIds.indexOf(optionId);
+    if (index === -1) {
+      this.selectedOptionIds.push(optionId); // Ajouter si pas encore sélectionné
     } else {
-      this.selectedOptionIds = this.selectedOptionIds.filter(id => id !== optionId);
+      this.selectedOptionIds.splice(index, 1); // Retirer si déjà sélectionné
     }
 
-    this.isAnswered = this.selectedOptionIds.length > 0; // ✅ Vérifie si au moins une option est sélectionnée
+    this.isAnswered = this.selectedOptionIds.length > 0;
+    this.saveProgressToLocalStorage(); // ✅ Sauvegarder la progression
 
     console.log("Options sélectionnées :", this.selectedOptionIds);
     console.log("isAnswered:", this.isAnswered);
+  }
+  isChecked(optionId: number): boolean {
+    return this.selectedOptionIds.includes(optionId);
+  }
+  toggleMarkQuestion() {
+    const currentQuestionId = this.questions[this.currentQuestionIndex].id;
+    const index = this.markedQuestions.indexOf(currentQuestionId);
+
+    if (index === -1) {
+      this.markedQuestions.push(currentQuestionId);
+    } else {
+      this.markedQuestions.splice(index, 1);
+    }
+    // localStorage.setItem('markedQuestions', JSON.stringify(this.markedQuestions));
+
+    localStorage.setItem(`markedQuestions_test_${this.testId}`, JSON.stringify(this.markedQuestions));
+    console.log("📌 Questions marquées :", this.markedQuestions);
   }
 
 
   getTestDetails(): void {
     this.testService.getTestById(this.testId).subscribe(test => {
-      this.testTitle = test.titre; // Mettre à jour le titre
-      if (test.duree != null) {
-        this.totalTime = test.duree * 60; // ✅ Mettre à jour le temps uniquement si duree n'est pas null
-        this.remainingTime = this.totalTime;
-        this.startTimer(); // ✅ Démarrer le timer uniquement si la durée est définie
-      }
+      this.testTitle = test.titre;
 
+      if (test.duree != null) {
+        this.totalTime = test.duree * 60; // Convertir les minutes en secondes
+
+        const savedTime = localStorage.getItem(`remainingTime_test_${this.testId}`);
+
+        if (savedTime !== null) {
+          // ✅ Cas 1 : Un temps sauvegardé existe → reprendre à partir de ce temps
+          this.remainingTime = parseInt(savedTime, 10);
+        } else {
+          // 🔁 Cas 2 : Pas de temps sauvegardé → lancer un nouveau timer
+          this.remainingTime = this.totalTime;
+        }
+
+        this.startTimer();
+      }
+      else {
+        // Cas où la durée est null → pas de timer
+        // this.totalTime = 0;
+        // this.remainingTime = 0;
+        this.totalTime = -1; // Utiliser -1 pour représenter un temps illimité
+        this.remainingTime = -1;
+        this.remainingHours = -1;
+        this.remainingMinutes = -1;
+        this.remainingSeconds = -1;
+      }
     });
   }
 
+
+
   updateTimer() {
+    if (this.totalTime === -1) {
+      const timerElement = document.querySelector('.timer-text');
+      if (timerElement) {
+        timerElement.textContent = '∞'; // Afficher le symbole infini
+      }
+      return;
+    }
     if (this.remainingTime > 0) {
       this.remainingTime--;
       this.remainingHours = Math.floor(this.remainingTime / 3600);
       this.remainingMinutes = Math.floor((this.remainingTime % 3600) / 60);
       this.remainingSeconds = this.remainingTime % 60;
+      localStorage.setItem(`remainingTime_test_${this.testId}`, this.remainingTime.toString());
 
       const timerElement = document.querySelector('.timer-text');
       const progressCircle = document.querySelector('.timer-progress') as SVGCircleElement;
@@ -482,7 +586,7 @@ export class TestQuestionsComponent implements OnInit {
       // Attendre un peu avant la redirection (ex: 2 secondes pour s’assurer que le score est bien récupéré)
       setTimeout(() => {
         this.terminerTest();
-      }, 2000);
+      }, 1000);
     }
   }
 
@@ -497,9 +601,13 @@ export class TestQuestionsComponent implements OnInit {
         if (response.status === 'success') {
           this.score = response.score;
           console.log("✅ Score calculé :", this.score);
+          clearInterval(this.timerInterval); // Stop le timer
 
           // Une fois le score récupéré, terminer le test proprement
-          this.terminerTest();
+          setTimeout(() => {
+            this.terminerTest();
+          }, 3000);
+
         } else {
           this.errorMessage = response.message;
         }
@@ -509,6 +617,9 @@ export class TestQuestionsComponent implements OnInit {
         console.error("❌ Erreur lors du calcul du score :", this.errorMessage);
       }
     });
+    this.fetchScore();
+    clearInterval(this.timerInterval); // Stop le timer
+
   }
 
 
@@ -523,9 +634,26 @@ export class TestQuestionsComponent implements OnInit {
   }
 
   terminerTest() {
+    if (Object.keys(this.responses).length === 0) {
+      alert("⚠ Vous devez répondre à au moins une question avant de terminer le test.");
+      return;
+    }
+    // if (this.markedQuestions.length > 0) {
+    //   const confirmFinish = confirm(`⚠ Vous avez ${this.markedQuestions.length} question(s) marquée(s). Voulez-vous vraiment terminer le test ?`);
+    //   if (!confirmFinish) {
+    //     return; // Annule la soumission
+    //   }
+    // }
+    if (this.markedQuestions.length > 0) {
+      const confirmFinish = confirm(`⚠ Vous avez ${this.markedQuestions.length} question(s) marquée(s) dans CE TEST. Voulez-vous vraiment terminer ?`);
+      if (!confirmFinish) {
+        return;
+      }
+    }
     if (this.testTermine) return; // ✅ Évite double soumission
     this.testTermine = true; // ✅ Bloque une autre tentative
-
+    // 🟢 Supprimer le temps sauvegardé
+    localStorage.removeItem(`remainingTime_test_${this.testId}`);
     console.log("🔍 developpeurId dans terminerTest():", this.developpeurId);
     if (!this.developpeurId || !this.testId) {
       console.error("Erreur : developpeurId ou testId est undefined !");
@@ -536,27 +664,31 @@ export class TestQuestionsComponent implements OnInit {
 
       alert("Test terminé ! Vos réponses ont été envoyées.");
       this.enregistrerReponse(this.questions[this.currentQuestionIndex].id, this.selectedOptionIds);
+      // this.fetchScore();
       this.ngOnInit();
     }
     else {
       this.onFinishTest();
     }
     this.router.navigate(['/test', this.testId, 'score', this.developpeurId]);
+    localStorage.removeItem(`markedQuestions_test_${this.testId}`);
+
     localStorage.removeItem('responses');
+
 
   }
 
   nextQuestion() {
     console.log("isAnswered:", this.isAnswered);
-    if (!this.isAnswered) {
-      alert('Veuillez répondre à la question avant de passer à la suivante.');
-      return;
-    }
+    // if (!this.isAnswered) {
+    //   alert('Veuillez répondre à la question avant de passer à la suivante.');
+    //   return;
+    // }
 
     this.enregistrerReponse(this.questions[this.currentQuestionIndex].id, this.selectedOptionIds);
 
-    
-     if (this.currentQuestionIndex < this.questions.length - 1) {
+
+    if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
       this.selectedOptionIds = this.responses[this.questions[this.currentQuestionIndex].id] || []; // ✅ Charger les réponses enregistrées
       this.markAnswered();
@@ -564,6 +696,13 @@ export class TestQuestionsComponent implements OnInit {
   }
 
 
+  goToQuestion(index: number): void {
+    this.currentQuestionIndex = index;
+    // Réinitialise l’état si besoin
+    this.textAnswer = '';
+    this.codeAnswer = '';
+    this.executionResult = '';
+  }
 
 
 
@@ -599,8 +738,11 @@ export class TestQuestionsComponent implements OnInit {
       body.language = this.selectedLanguage; // facultatif si backend accepte
     }
 
-    localStorage.setItem('responses', JSON.stringify(this.responses));
+    // localStorage.setItem('responses', JSON.stringify(this.responses));
+    localStorage.setItem(`responses_test_${this.testId}`, JSON.stringify(this.responses));
 
+    // Mettre à jour la progression
+    this.saveProgressToLocalStorage();
     this.http.post('http://localhost:8083/api/responses/enregistrer', body, { headers }).subscribe(
       (response: any) => {
         console.log('Réponse enregistrée', response);
@@ -613,9 +755,9 @@ export class TestQuestionsComponent implements OnInit {
 
 
 
-  isChecked(questionId: number, optionId: number): boolean {
-    return this.responses[questionId]?.includes(optionId) ?? false;
-  }
+  // isChecked(questionId: number, optionId: number): boolean {
+  //   return this.responses[questionId]?.includes(optionId) ?? false;
+  // }
   // Soumettre le test
 
 
@@ -677,7 +819,8 @@ export class TestQuestionsComponent implements OnInit {
       this.executionResult = "⚠️ Aucun code à exécuter.";
       return;
     }
-    const languageId = this.getLanguageId(this.selectedLanguage); // Utilise le langage sélectionné
+    const language = this.questions[this.currentQuestionIndex]?.language;
+    const languageId = this.getLanguageId(language); // Utilise le langage sélectionné
 
     this.codeExecutionService.executeCode(this.codeAnswer, languageId).subscribe(
       response => {
@@ -689,7 +832,45 @@ export class TestQuestionsComponent implements OnInit {
     );
   }
 
+  
+  saveProgressToLocalStorage() {
+  const progressList = JSON.parse(localStorage.getItem('test_progress_list') || '[]');
+  
+  // Compter seulement les réponses pour CE test
+  const answeredQuestions = Object.keys(this.responses).length;
+  
+  const currentProgress = {
+    testId: this.testId,
+    totalQuestions: this.questions.length,
+    answeredQuestions: answeredQuestions,
+    lastUpdated: new Date().toISOString()
+  };
 
+  const existingIndex = progressList.findIndex((p: any) => p.testId === this.testId);
+  if (existingIndex !== -1) {
+    progressList[existingIndex] = currentProgress;
+  } else {
+    progressList.push(currentProgress);
+  }
+
+  localStorage.setItem('test_progress_list', JSON.stringify(progressList));
+}
+  fetchScore() {
+    this.scoreService.getScore(this.testId, this.developpeurId, this.token).subscribe({
+      next: (data) => {
+        if (data.status === 'success') {
+          this.score = data.score;
+          setTimeout(() => {
+          }, 200); // petit délai pour l’effet
+        } else {
+          this.errorMessage = data.message;
+        }
+      },
+      error: () => {
+        this.errorMessage = 'Erreur lors de la récupération du score.';
+      },
+    });
+  }
 
 
 }

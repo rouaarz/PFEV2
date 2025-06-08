@@ -1,5 +1,4 @@
 <div class="test-page-container">
-
     <div class="search-bar-container">
         <div class="search-bar">
             <input type="text" placeholder=" Recherche par titre, description  . . . ." [(ngModel)]="searchText">
@@ -7,70 +6,60 @@
         </div>
     </div>
     <div class="content-container">
-
         <div class="filters-sidebar">
-
             <div class="filter-section">
                 <h5>Filtre</h5>
-
                 <h4>Difficulté</h4>
                 <ul>
                     <li (click)="filterByDifficulte(null)">
-                        <span class="badge tous">Tous</span>
+                        <span class="badge tous" [ngClass]="{ 'selected': selectedDifficulte === null }">
+                            Tous
+                        </span>
+                        {{ facileCount + intermediaireCount + difficileCount }}
                     </li>
                     <li (click)="filterByDifficulte('Facile')">
-                        <span class="badge easy">Facile</span> {{ facileCount }}
+                        <span class="badge easy" [ngClass]="{ 'selected': selectedDifficulte === 'Facile' }">
+                            Facile
+                        </span>
+                        {{ facileCount }}
                     </li>
                     <li (click)="filterByDifficulte('Intermédiaire')">
-                        <span class="badge medium">Intermédiaire</span> {{ intermediaireCount }}
+                        <span class="badge medium" [ngClass]="{ 'selected': selectedDifficulte === 'Intermédiaire' }">
+                            Intermédiaire
+                        </span>
+                        {{ intermediaireCount }}
                     </li>
                     <li (click)="filterByDifficulte('Difficile')">
-                        <span class="badge hard">Difficile</span> {{ difficileCount }}
+                        <span class="badge hard" [ngClass]="{ 'selected': selectedDifficulte === 'Difficile' }">
+                            Difficile
+                        </span>
+                        {{ difficileCount }}
                     </li>
                 </ul>
             </div>
 
             <div class="filter-section">
                 <h4>Type</h4>
-                <div *ngFor="let type of visibleTypes">
-                    <label>
-                        <input type="checkbox" [checked]="selectedTypes.includes(type)"
-                            (change)="toggleTypeSelection(type)">
-                        {{ type }} ({{ typeCounts[type] || 0 }})
-                    </label>
+                <div class="type-list">
+                    <div *ngFor="let type of visibleTypes" class="type-item"
+                        [class.selected]="selectedTypes.includes(type)" (click)="toggleTypeSelection(type)">
+                        <i [ngClass]="getIcon(type)"></i>
+                        <span class="type-label">{{ type }}</span>
+                        <span class="count">({{ typeCounts[type] || 0 }})</span>
+                    </div>
                 </div>
-                <a href="#" (click)="toggleShowAllTypes(); $event.preventDefault()">
-                    {{ showAllTypes ? 'Voir moins' : '# Voir plus' }}
-                </a>
             </div>
-            <div class="filter-section">
-                <h4>Technologies</h4>
-
-
-                <div class="tech-buttons">
-                    <button *ngFor="let tech of visibleTechnologies" class="tech-btn"
-                        [class.selected]="selectedTechnologies.includes(tech)"
-                        (click)="toggleTechnologySelection(tech)">
-                        {{ tech }} ({{ technologyCounts[tech] || 0 }})
-                    </button>
-                </div>
-
-                <a href="#" (click)="toggleShowAllTechnologies(); $event.preventDefault()">
-                    {{ showAllTechnologies ? 'Voir moins' : 'Voir plus' }}
-                </a>
-            </div>
-
         </div>
 
         <div class="test-list-container">
             <div class="technology-filter">
                 <div class="filter-group">
-                    <h4 class="filter-subtitle">Technologie</h4>
+                    <h5 class="filter-subtitle">Technologie</h5>
                     <div class="tech-options">
                         <button *ngFor="let tech of visibleTechnologies" class="tech-btn"
                             [class.selected]="selectedTechnologies.includes(tech)"
                             (click)="toggleTechnologySelection(tech)">
-                            {{ tech }} ({{ typeCounts[tech] || 0 }})
+                            {{ tech }} ({{ technologyCounts[tech] || 0 }})
                         </button>
                     </div>
                     <a class="view-more" href="#" (click)="toggleShowAllTechnologies(); $event.preventDefault()">
@@ -78,45 +67,84 @@
                     </a>
                 </div>
             </div>
-            <div class="test-card" *ngFor="let test of filteredTests">
 
+            <div class="test-card"
+                *ngFor="let test of filteredTests | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
                 <div class="card-header">
-                    <i [class]="getIcon(test.type)"></i>
-                    <h3>{{ test.titre }}</h3>
+                    <i [class]="getIcon(test.technologies?.[0])"></i>
+                    <div class="header-text">
+                        <h3>{{ test.titre }}</h3>
+                        <p>{{ test.description | slice:0:100 }}...</p>
+                    </div>
                 </div>
 
                 <div class="badges">
                     <span class="badge limiteTentatives">{{ test.type }}</span>
-
                     <span class="badge" [ngClass]="{
-              'easy': test.niveauDifficulte === 'Facile',
-              'medium': test.niveauDifficulte === 'Intermédiaire',
-              'hard': test.niveauDifficulte === 'Difficile'
-            }">{{ test.niveauDifficulte }}</span>
+                        'easy': test.niveauDifficulte === 'Facile',
+                        'medium': test.niveauDifficulte === 'Intermédiaire',
+                        'hard': test.niveauDifficulte === 'Difficile'
+                    }">{{ test.niveauDifficulte }}</span>
                 </div>
 
-                <p>{{ test.description | slice:0:100 }}...</p>
-                <div class="meta">
-                    <span><i class="fas fa-question-circle"></i> {{ test.questionsCount || 0 }} questions</span>
+                <div class="card-content">
+                    <div class="progress-summary" *ngIf="getTestProgress(test.id) as progress">
+                        <p class="progress-info">
+                            <span>{{ ((progress.answeredQuestions / progress.totalQuestions) * 100) | number:'1.0-0' }}%
+                                complété</span>
+                            <span *ngIf="scores[test.id] !== undefined" class="separator">|</span>
+                            <span *ngIf="scores[test.id] !== undefined">Score obtenu : {{ scores[test.id] }}%</span>
+                        </p>
+                        <div class="progress-bar">
+                            <div class="progress-fill"
+                                [style.width.%]="(progress.answeredQuestions / progress.totalQuestions) * 100"></div>
+                        </div>
+                    </div>
+                    <div class="meta">
+                        <span><i class="fas fa-question-circle"></i> {{ test.questionsCount || 0 }} questions</span>
+                        <span class="separator">|</span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            {{ test.duree ? test.duree + ' minutes' : 'Durée illimitée' }}
+                        </span>
+                    </div>
                 </div>
-                <div class="meta">
-                    <span><i class="fas fa-clock"></i> {{ test.duree }} minutes</span>
+                <div class="tech-badges-container" *ngIf="test.technologies && test.technologies.length > 0">
+                    <span *ngFor="let tech of test.technologies" class="badge technologie-badge">
+                        {{ tech }}
+                    </span>
                 </div>
-                <span *ngFor="let tech of test.technologies" class="badge technologie-badge">
-                    {{ tech }}
-                </span>
+
+
                 <div class="start-button">
-                    <button class="btn btn-primary" (click)="goToQuestions(test.id)">
-                        <i class="fas fa-play-circle"></i> Commencer le test
+                    <button class="btn btn-primary" (click)="goToQuestions(test.id)"
+                        *ngIf="getTestProgress(test.id) as progress">
+                        <i class="fas" [ngClass]="{
+                            'fa-edit': !progress || ((progress.answeredQuestions / progress.totalQuestions) * 100) < 100,
+                            'fa-redo': ((progress.answeredQuestions / progress.totalQuestions) * 100) === 100
+                        }"></i>
+                        {{
+                        ((progress.answeredQuestions / progress.totalQuestions) * 100) === 100
+                        ? 'Repasser '
+                        : (progress.answeredQuestions > 0 ? 'Compléter ' : 'Commencer ')
+                        }}
+                    </button>
+                    <button class="btn btn-primary" (click)="goToQuestions(test.id)" *ngIf="!getTestProgress(test.id)">
+                        <i class="fas fa-play-circle"></i>
+                        Commencer
                     </button>
                 </div>
                 <div class="footer">
                     <small><i class="fas fa-user"></i> Par chef {{ test.createur?.username || 'Inconnu' }}</small>
                     <small><i class="fas fa-calendar-alt"></i> {{ test.dateCreation | date:'dd/MM/yyyy' }}</small>
                 </div>
+
+
             </div>
+
+            <pagination-controls (pageChange)="currentPage = $event" previousLabel="Précédent" nextLabel="Suivant"
+                [autoHide]="true" class="pagination">
+            </pagination-controls>
         </div>
-
     </div>
-
 </div>

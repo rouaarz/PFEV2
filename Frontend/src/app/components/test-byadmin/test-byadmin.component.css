@@ -1,5 +1,5 @@
 .test-page-container {
-padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
+  padding: 74px 24px 24px 24px;
   font-family: 'Segoe UI', sans-serif;
   background-color: #f0f2f5;
   min-height: 100vh;
@@ -47,10 +47,12 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
 .content-container {
   display: flex;
   gap: 24px;
+  /* max-width: 1200px;
+  margin: 0 auto; */
 }
 
 .filters-sidebar {
-  width: 260px;
+  width: 220px;
   background-color: white;
   border-radius: 12px;
   padding: 20px;
@@ -86,13 +88,10 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
   font-size: 14px;
   color: #444;
   margin: 6px 0;
-
 }
-
 
 .filter-section input[type="checkbox"] {
   margin-right: 8px;
-  /* Space between the checkbox and text */
 }
 
 .type-list {
@@ -139,7 +138,7 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
   color: #777;
 }
 
-
+/* Badge commun */
 .badge {
   padding: 4px 10px;
   border-radius: 12px;
@@ -147,33 +146,61 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
   display: inline-block;
   margin-right: 6px;
   margin-bottom: 8px;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+.badge.selected {
+  transform: scale(1.1);
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Easy */
 .easy {
-  cursor: pointer;
   background-color: #d4edda;
   color: #155724;
 }
 
-.medium {
-    cursor: pointer;
+.easy:hover,
+.easy.selected {
+  background-color: #b8dfc4;
+  color: #0c3d26;
+}
 
+/* Medium */
+.medium {
   background-color: #fff3cd;
   color: #856404;
 }
 
-.hard {
-    cursor: pointer;
+.medium:hover,
+.medium.selected {
+  background-color: #ffe39b;
+  color: #5c4300;
+}
 
+/* Hard */
+.hard {
   background-color: #f8d7da;
   color: #721c24;
 }
 
-.tous {
-    cursor: pointer;
+.hard:hover,
+.hard.selected {
+  background-color: #f1b0b7;
+  color: #4a0f15;
+}
 
+/* Tous */
+.tous {
   background-color: #e0e0e0;
   color: #333;
+}
+
+.tous:hover,
+.tous.selected {
+  background-color: #c7c7c7;
+  color: #111;
 }
 
 .test-list-container {
@@ -181,35 +208,32 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
-  align-items: start;
+  align-items: stretch;
   margin-bottom: 48px;
-
 }
 
+/* .test-card {
+  background-color: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 320px;
+} */
 .test-card {
   background-color: white;
   border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.3s;
-}
-.pagination {
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
   display: flex;
-  justify-content: center;
-  margin-left: 100px;
+  flex-direction: column;
+  height: 100%;
+  min-height: 280px; /* Réduit de 380px à 280px */
 }
-
-.pagination ::ng-deep .ngx-pagination {
-  display: flex;
-  list-style: none;
-  padding: 0;
-}
-
-.pagination ::ng-deep .ngx-pagination li {
-  margin: 0 5px;
-  cursor: pointer;
-}
-
 .test-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
@@ -217,25 +241,32 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
 
 .card-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+}
+
+.header-text {
+  flex: 1;
 }
 
 .card-header h3 {
-  margin: 0;
+  margin: 0 0 8px 0;
   font-size: 17px;
   color: #333;
+  line-height: 1.3;
 }
 
-.badgetype {
-  display: inline-block;
-  margin-top: 10px;
-  background-color: #E1A624;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-size: 13px;
+.card-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .badges {
@@ -252,14 +283,20 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
   color: #6a1b9a;
 }
 
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .meta {
   font-size: 13px;
   color: #666;
   display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
   flex-wrap: wrap;
-  gap: 8px;
 }
 
 .start-button {
@@ -268,17 +305,21 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
 }
 
 .start-button .btn {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: #1184ff;
+  border: 1px solid #3399ff;
   border: none;
-  border-radius: 8px;
+  border-radius: 50px;
   padding: 8px 14px;
   font-size: 14px;
   transition: background-color 0.3s;
 }
 
 .start-button .btn:hover {
-  background-color: #f7d87d;
+  background: linear-gradient(135deg, #067eff, #3aa9ff);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(6, 126, 255, 0.4);
+  transition: all 0.3s ease;
 }
 
 .footer {
@@ -291,11 +332,11 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
   padding-top: 10px;
 }
 
-.tech-buttons {
+.tech-badges-container {
+  margin: 12px 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 6px;
 }
 
 .tech-btn {
@@ -315,7 +356,6 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
 .tech-btn.selected {
   background-color: #cce5ff;
   border: 1px solid #3399ff;
-
 }
 
 .tech-btn.all {
@@ -324,15 +364,18 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
 
 .badge.technologie-badge {
   background-color: #6c757d;
-  /* gris foncé */
   color: white;
-  margin-left: 5px;
-  font-size: 0.8rem;
-  padding: 2px 6px;
-  border-radius: 4px;
+  margin: 0;
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
 }
 
-/* Filtre de technologie */
 .technology-filter {
   background-color: #fff;
   border-radius: 0.75rem;
@@ -372,4 +415,119 @@ padding: 74px 24px 24px 24px; /* 50px en haut au lieu de top */
   margin-left: 0.5rem;
   font-size: 0.8125rem;
   color: #95a5a6;
+}
+
+.progress-summary {
+  font-family: Arial, sans-serif;
+  color: #555555;
+  margin: 12px 0;
+}
+
+.progress-summary p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+.progress-summary .progress-info {
+  display: flex;
+  gap: 8px;
+  color: #555555;
+  font-size: 14px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.progress-summary .progress-info span {
+  white-space: nowrap;
+}
+
+.progress-summary .progress-info .separator {
+  color: #aaa;
+  user-select: none;
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: #e0e0e0;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background-color: #3b82f6;
+  height: 100%;
+  width: 0;
+  transition: width 0.3s ease;
+  border-radius: 4px 0 0 4px;
+}
+
+.start-button .btn-warning {
+  background-color: #1184ff;
+  border: 1px solid #3399ff;
+  border: none;
+  border-radius: 50px;
+  padding: 8px 14px;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.start-button .btn-warning:hover {
+  background-color: #e4b22e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.score-badge {
+  background-color: #4caf50;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.start-button .btn-warning:active {
+  transform: translateY(0);
+}
+
+.start-button .btn i {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.start-button .btn {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-left: 100px;
+}
+
+.pagination ::ng-deep .ngx-pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination ::ng-deep .ngx-pagination li {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.view-more {
+  color: #673ab7;
+  font-size: 0.875rem;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.view-more:hover {
+  text-decoration: underline;
 }

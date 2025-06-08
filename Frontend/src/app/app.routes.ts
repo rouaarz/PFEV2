@@ -64,7 +64,7 @@ export const routes: Routes = [
   { path: 'test/:testId/score/:developpeurId', component: ScoreComponent },
   { path: 'invitations/:invitationId', component: InvitationComponent },
 
-  { path: 'dashboard-developpeur', component: DashboardDeveloppeurComponent },
+  { path: 'board-developpeur', component: DashboardDeveloppeurComponent },
   {
     path: 'editDev/:id', 
     component: EditProfileDeveloppeurComponent 

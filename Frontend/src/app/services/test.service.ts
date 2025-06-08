@@ -39,7 +39,28 @@ export class TestService {
   getTestById(id: number): Observable<Test> {
     return this.http.get<Test>(`${this.apiUrl}/${id}/details`);
   }
-  
+//   getSuggestedTests(email: string, technologie: string, niveau: string) {
+//   return this.http.get<any[]>(`${this.apiUrl}`, {
+//     params: {
+//       email,
+//       technologie,
+//       niveau
+//     }
+//   });
+// }
+getTestsSuggeres(emailDev: string, technologie: string, niveauDifficulte: string, isNext: boolean): Observable<Test[]> {
+  const payload = {
+    emailDev,
+    technologie,
+    niveauDifficulte,
+    isNext
+  };
+
+  const url = `${this.apiUrl}/suggestions`; // <- ajoute /suggestions ici
+  return this.http.post<Test[]>(url, payload);
+}
+
+
  
   addQuestionsToTest(testId: number, testQuestions: any[], token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

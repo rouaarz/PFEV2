@@ -35,7 +35,7 @@
     <p>{{ errorMessage }}</p>
   </div>
 </div> -->
-<div class="score-container"> 
+<div class="score-container">
   <h2>Score du test <strong>{{ testName }}</strong></h2>
 
   <!-- Barre de progression -->
@@ -48,8 +48,7 @@
     <p>Votre score : <strong>{{ score }}%</strong></p>
 
     <!-- Message motivant -->
-    <div class="score-message fade-in" 
-         [ngClass]="{
+    <div class="score-message fade-in" [ngClass]="{
            'excellent': score >= 65,
            'good': score >= 50 && score < 65,
            'try-again': score < 50
@@ -74,9 +73,65 @@
       <i class="material-icons">bar_chart</i> Analyser le résultat
     </button>
   </div>
+<h5  class="suggestion-title">Votre prochain défi :</h5>
+  <div *ngIf="suggestedTest" class="test-card suggested-test">
+  <h5>{{ suggestedTest.titre }}</h5>
 
-  <!-- Message d'erreur -->
-  <div *ngIf="errorMessage" class="error-message">
-    <p>{{ errorMessage }}</p>
+    <div class="card-header">
+      <!-- <i [class]="getIcon(suggestedTest.technologies?.[0])"></i> -->
+      <div class="header-text">
+        <p>{{ suggestedTest.description | slice:0:100 }}...</p>
+      </div>
+    </div>
+
+    <div class="badges">
+      <span class="badge limiteTentatives">{{ suggestedTest.type }}</span>
+      <span class="badge" [ngClass]="{
+          'easy': suggestedTest.niveauDifficulte === 'Facile',
+          'medium': suggestedTest.niveauDifficulte === 'Intermédiaire',
+          'hard': suggestedTest.niveauDifficulte === 'Difficile'
+        }">{{ suggestedTest.niveauDifficulte }}</span>
+    </div>
+
+    <div class="card-content">
+      <div class="meta">
+        <span><i class="fas fa-question-circle"></i> {{ suggestedTest.nbQuestions || 0 }} questions</span>
+        <span class="separator">|</span>
+        <span>
+          <i class="fas fa-clock"></i>
+          {{ suggestedTest.duree ? suggestedTest.duree + ' minutes' : 'Durée illimitée' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="tech-badges-container" *ngIf="suggestedTest.technologies && suggestedTest.technologies.length > 0">
+      <span *ngFor="let tech of suggestedTest.technologies" class="badge technologie-badge">
+        {{ tech }}
+      </span>
+    </div>
+
+    <div class="start-button">
+      <button class="btn btn-primary" (click)="goToQuestions(suggestedTest.id)">
+        <i class="fas fa-play-circle"></i>
+        Commencer
+      </button>
+    </div>
+
+    <div class="footer">
+      <small><i class="fas fa-user"></i> Par {{ suggestedTest.createur?.username || 'Inconnu' }}</small>
+      <small><i class="fas fa-calendar-alt"></i> {{ suggestedTest.dateCreation | date:'dd/MM/yyyy' }}</small>
+    </div>
   </div>
+
+
+
+
+
+
+  <!-- Template alternatif si erreur -->
+  <ng-template #erreurOuChargement>
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  </ng-template>
 </div>

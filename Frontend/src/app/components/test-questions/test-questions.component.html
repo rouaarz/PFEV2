@@ -1,5 +1,4 @@
-<div class="test-container">
-  <!-- Header avec logo et timer -->
+<!-- <div class="test-container">
   <header class="test-header">
     <div class="container">
       <div class="test-header-content">
@@ -15,60 +14,58 @@
               <i class="fas fa-question-circle"></i> Question {{ currentQuestionIndex + 1 }}/{{ questions.length }}
             </div>
             <div class="test-meta-item">
-              <i class="fas fa-tachometer-alt"></i> Niveau: <span class="niveau-badge">{{ questions[currentQuestionIndex]?.niveau }}</span>
+              <span class="niveau-badge" [ngClass]="{
+    'niveau-facile': questions[currentQuestionIndex]?.niveau === 'Facile',
+    'niveau-intermediaire': questions[currentQuestionIndex]?.niveau === 'Intermédiaire',
+    'niveau-difficile': questions[currentQuestionIndex]?.niveau === 'Difficile'
+  }">
+                {{ questions[currentQuestionIndex]?.niveau }}
+              </span>
             </div>
           </div>
         </div>
         <div class="test-timer">
           <div class="timer-content">
-            <i class="fas fa-clock"></i> 
-            <span class="timer-digits">{{ remainingHours }}:{{ remainingMinutes | number:'2.0' }}:{{ remainingSeconds | number:'2.0' }}</span>
+            <i class="fas fa-clock"></i>
+            <span class="timer-digits">{{ remainingHours }}:{{ remainingMinutes | number:'2.0' }}:{{ remainingSeconds |
+              number:'2.0' }}</span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Contenu principal -->
   <main class="container">
     <div class="test-content">
-      <!-- Barre latérale de navigation -->
       <aside class="question-sidebar">
         <div class="question-nav">
           <h3><i class="fas fa-map-marked-alt"></i> Navigation</h3>
           <div class="question-grid">
-            <div *ngFor="let question of questions; let i = index" 
-                 class="question-number"
-                 [class.active]="i === currentQuestionIndex"
-             >
+            <div *ngFor="let question of questions; let i = index" class="question-number"
+              [class.active]="i === currentQuestionIndex">
               {{ i + 1 }}
-              <span class="question-mark-icon" ></span>
+              <span class="question-mark-icon"></span>
             </div>
           </div>
         </div>
 
         <div class="test-actions">
-      
+
           <button class="btn btn-finish" (click)="terminerTest()">
             <i class="fas fa-paper-plane"></i> Terminer le test
           </button>
         </div>
       </aside>
 
-      <!-- Question principale -->
       <article class="question-main">
         <div class="question-header">
           <div class="question-text">
             <h3>Question {{ currentQuestionIndex + 1 }}</h3>
             <p>{{ questions[currentQuestionIndex]?.enonce }}</p>
           </div>
-          <!-- <button class="btn btn-mark" (click)="toggleMarkQuestion()">
-            <i class="far fa-star" [class.fas]="isQuestionMarked(currentQuestionIndex)"></i>
-            {{ isQuestionMarked(currentQuestionIndex) ? 'Marquée' : 'Marquer' }}
-          </button> -->
+        
         </div>
 
-        <!-- Question QCM -->
         <div *ngIf="questions[currentQuestionIndex]?.type === 'QCM'" class="options-container">
           <div *ngFor="let option of questions[currentQuestionIndex]?.answerOptions" class="option-item">
             <label class="option-label">
@@ -83,7 +80,6 @@
           </div>
         </div>
 
-        <!-- Question Texte -->
         <div *ngIf="questions[currentQuestionIndex]?.type === 'Text'" class="text-answer-container">
           <label class="answer-label">Votre réponse :</label>
           <textarea placeholder="Écrivez votre réponse ici..." [(ngModel)]="textAnswer" (input)="markAnswered()"
@@ -91,7 +87,6 @@
           <div class="character-count">{{ textAnswer?.length || 0 }} caractères</div>
         </div>
 
-        <!-- Question Code -->
         <div *ngIf="questions[currentQuestionIndex]?.type === 'Code'" class="code-question-container">
           <div class="language-selector">
             <label>Langage :</label>
@@ -104,7 +99,7 @@
               <option value="php">PHP</option>
             </select>
           </div>
-          
+
           <div class="code-editor-wrapper">
             <div class="editor-header">
               <span>solution.{{ selectedLanguage }}</span>
@@ -129,7 +124,6 @@
           </div>
         </div>
 
-        <!-- Navigation entre questions -->
         <div class="question-navigation">
           <button class="btn btn-prev" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
             <i class="fas fa-arrow-left"></i> Question précédente
@@ -137,12 +131,206 @@
           <div class="progress-indicator">
             Progression : {{ currentQuestionIndex + 1 }}/{{ questions.length }}
           </div>
-          <button class="btn btn-next" (click)="nextQuestion()"
-            *ngIf="currentQuestionIndex < questions.length - 1">
+          <button class="btn btn-next" (click)="nextQuestion()" *ngIf="currentQuestionIndex < questions.length - 1">
             Question suivante <i class="fas fa-arrow-right"></i>
           </button>
-          <button class="btn btn-finish" (click)="terminerTest()"
-            *ngIf="currentQuestionIndex === questions.length - 1">
+          <button class="btn btn-finish" (click)="terminerTest()" *ngIf="currentQuestionIndex === questions.length - 1">
+            Terminer le test
+          </button>
+        </div>
+      </article>
+    </div>
+  </main>
+</div>
+
+<ng-template #noQuestions>
+  <div class="no-questions">
+    <div class="no-questions-content">
+      <i class="fas fa-question-circle"></i>
+      <p>Aucune question disponible pour ce test.</p>
+      <button class="btn btn-primary" (click)="retourListeTests()">Retour à la liste des tests</button>
+    </div>
+  </div>
+</ng-template> -->
+
+<div class="test-container">
+  <div class="container">
+
+    <header class="test-header">
+      <div class="test-header-content">
+        <div class="test-info">
+          <div class="test-title-wrapper">
+            <button class="btn return-btn" (click)="retourListeTests()">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>{{ testTitle }}</h2>
+          </div>
+          <div class="test-meta">
+            <div class="test-meta-item">
+              <div class="progress-indicator">
+                Question : {{ currentQuestionIndex + 1 }}/{{ questions.length }}
+              </div>
+            </div>
+            <div class="test-meta-item">
+              <span class="badge" [ngClass]="{
+  'easy': questions[currentQuestionIndex]?.niveau === 'FACILE',
+  'medium': questions[currentQuestionIndex]?.niveau === 'MOYEN',
+  'hard': questions[currentQuestionIndex]?.niveau === 'DIFFICILE'
+}">
+                {{ questions[currentQuestionIndex]?.niveau }}
+              </span>
+
+            </div>
+          </div>
+        </div>
+        <!-- <div class="test-timer">
+          <div class="timer-content">
+            <i class="fas fa-clock"></i>
+            <span class=" timer-digits">
+              {{ remainingHours }}:{{ remainingMinutes | number:'2.0' }}:{{ remainingSeconds | number:'2.0' }}
+            </span>
+          </div> -->
+
+        <!-- </div> -->
+        <!-- <div class="test-timer">
+          <div class="timer-content">
+            <i class="fas fa-clock"></i>
+            <span class="timer-digits">
+              {{ totalTime === -1 ? '∞' : (remainingHours + ':' + (remainingMinutes | number:'2.0') + ':' +
+              (remainingSeconds | number:'2.0')) }}
+            </span>
+          </div>
+        </div> -->
+        <div class="test-timer">
+          <div class="timer-content">
+            <i class="fas fa-clock"></i>
+            <span class="timer-digits">
+              <!-- Affiche l'icône infinity si temps illimité, sinon le timer normal -->
+              <ng-container *ngIf="totalTime === -1; else timerDisplay">
+                <i class="fas fa-infinity infinity-icon"></i>
+              </ng-container>
+              <ng-template #timerDisplay>
+                {{ remainingHours }}:{{ remainingMinutes | number:'2.0' }}:{{ remainingSeconds | number:'2.0' }}
+              </ng-template>
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- <div class="progress-summary">
+      <p>Questions répondues : {{ Object.keys(responses).length }} / {{ questions.length }}</p>
+    </div> -->
+  </div>
+
+
+  <main class="container">
+    <div class="test-content">
+      <aside class="question-sidebar">
+        <div class="question-nav">
+          <h3><i class="fas fa-map-marked-alt"></i> Navigation</h3>
+          <div class="question-grid">
+            <div *ngFor="let question of questions; let i = index" class="question-number"
+              [class.active]="i === currentQuestionIndex" (click)="goToQuestion(i)">
+              {{ i + 1 }}
+              <i class="fas fa-bookmark icon-check" *ngIf="markedQuestions.includes(question.id)"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="test-actions">
+          <button class="btn btn-finish" (click)="terminerTest()">
+            <i class="fas fa-paper-plane"></i> Terminer le test
+          </button>
+        </div>
+      </aside>
+
+      <article class="question-main">
+        <div class="question-header">
+          <div class="question-text">
+            <h3>Question {{ currentQuestionIndex + 1 }}</h3>
+            <p>{{ questions[currentQuestionIndex]?.enonce }}</p>
+          </div>
+        </div>
+
+        <!-- QCM -->
+        <div *ngIf="questions[currentQuestionIndex]?.type === 'QCM'" class="options-container">
+
+          <ul class="qcm-options">
+            <li *ngFor="let option of questions[currentQuestionIndex]?.answerOptions"
+              [class.selected]="selectedOptionIds.includes(option.id)" (click)="toggleSelection(option.id)">
+              <span class="option-letter">{{ option.label }}.</span>
+              <span class="option-text">{{ option.text }}</span>
+            </li>
+          </ul>
+
+        </div>
+
+        <!-- Réponse texte -->
+        <div *ngIf="questions[currentQuestionIndex]?.type === 'Text'" class="text-answer-container">
+          <label class="answer-label">Votre réponse :</label>
+          <textarea placeholder="Écrivez votre réponse ici..." [(ngModel)]="textAnswer" (input)="markAnswered()"
+            class="form-control text-answer"></textarea>
+          <div class="character-count">{{ textAnswer?.length || 0 }} caractères</div>
+        </div>
+
+        <!-- Question code -->
+        <div *ngIf="questions[currentQuestionIndex]?.type === 'Code'" class="code-question-container">
+          <!-- <div class="language-selector">
+             <label>Langage :</label>
+           <select [(ngModel)]="selectedLanguage" class="form-select">
+              <option value="javascript">JavaScript</option>
+              <option value="python">Python</option>
+              <option value="java">Java</option>
+              <option value="c">C</option>
+              <option value="cpp">C++</option>
+              <option value="php">PHP</option>
+            </select>
+          </div> -->
+          <div class="theme-selector">
+            <label>Théme :</label>
+            <select [(ngModel)]="selectedTheme" class="theme-selector">
+              <option *ngFor="let theme of themes" [value]="theme">{{ theme }}</option>
+            </select>
+          </div>
+          <div class="code-editor-wrapper">
+            <div class="editor-header">
+              <span>solution.{{questions[currentQuestionIndex]?.language}}</span>
+              <button class="btn btn-run" (click)="runCode()">
+                <i class="fas fa-play"></i> Exécuter
+              </button>
+            </div>
+            <ace-editor [(text)]="codeAnswer" [mode]="questions[currentQuestionIndex]?.language" [theme]="selectedTheme"
+              [options]="editorOptions" style="height: 300px; width: 100%;" (change)="onCodeChange()"></ace-editor>
+          </div>
+
+          <div class="execution-results">
+            <div class="results-header">
+              <i class="fas fa-terminal"></i> Résultats d'exécution
+            </div>
+            <div class="results-content" [ngClass]="{
+              'success': executionResult && !executionResult.includes('Error'),
+              'error': executionResult && executionResult.includes('Error')
+            }">
+              <pre>{{ executionResult || "Cliquez sur 'Exécuter' pour voir les résultats de votre code." }}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-navigation">
+          <button class="btn btn-prev" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
+            <i class="fas fa-arrow-left"></i> précédente
+          </button>
+          <button class=" btn-mark"
+            [ngClass]="{ 'marked': markedQuestions.includes(questions[currentQuestionIndex]?.id) }"
+            (click)="toggleMarkQuestion()">
+            {{ markedQuestions.includes(questions[currentQuestionIndex]?.id) ? ' Marquée' : ' Marquer' }}
+          </button>
+
+
+          <button class="btn btn-next" (click)="nextQuestion()" *ngIf="currentQuestionIndex < questions.length - 1">
+            suivante <i class="fas fa-arrow-right"></i>
+          </button>
+          <button class="btn btn-finish" (click)="terminerTest()" *ngIf="currentQuestionIndex === questions.length - 1">
             Terminer le test
           </button>
         </div>

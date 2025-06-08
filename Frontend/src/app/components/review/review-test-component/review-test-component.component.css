@@ -26,7 +26,7 @@
   padding: 30px;
   background: linear-gradient(to bottom, #ffffff, #f9f9f9);
   border-radius: 12px;
-  max-width: 100%;
+  max-width: 90%;
   margin: 0 auto;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid #e1e1e1;
@@ -78,8 +78,8 @@
   background-color: #95a5a6;
   cursor: not-allowed;
 }
-.test-review h1 {
-  font-size: 36px;
+.test-review h3 {
+  font-size: 28px;
   font-weight: 800;
   color: #2c3e50;
   text-align: center;

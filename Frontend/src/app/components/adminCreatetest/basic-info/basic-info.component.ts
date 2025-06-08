@@ -70,10 +70,10 @@ export class BasicInfoComponent {
     id: undefined, // Ne pas définir l'ID pour éviter que ce soit 0
     titre: '',
     description: '',
-    duree: 0,  // Remplace `null` par `0` pour correspondre au type `number | null`
+    duree: 0, // Remplace `null` par `0` pour correspondre au type `number | null`
     type: '',
     accesPublic: false,
-    limiteTentatives: 0,  // Remplace `null` par `0` si c'est un nombre
+    limiteTentatives: 0, // Remplace `null` par `0` si c'est un nombre
     statut: '',
     niveauDifficulte: '',
     nbQuestions: 0,
@@ -81,8 +81,8 @@ export class BasicInfoComponent {
     dateExpiration: null,
     createur: { id: 0, username: '' },
     testQuestions: [],
-    version: 0, // ⚡ Ajoute cette ligne si `@Version` est utilisé
-
+    version: 0,
+    technologies: null
   };
   
 

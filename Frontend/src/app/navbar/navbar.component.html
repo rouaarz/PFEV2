@@ -19,7 +19,7 @@
 
 
         <a routerLink="/" (click)="closeAllMenus()">Accueil</a> &nbsp; &nbsp;
-        <a *ngIf="isLoggedIn" [routerLink]="['/dashboard-developpeur']" (click)="closeAllMenus()">Dashboard</a> &nbsp; &nbsp;
+        <a *ngIf="isLoggedIn" [routerLink]="['/board-developpeur']" (click)="closeAllMenus()">Dashboard</a> &nbsp; &nbsp;
 
         <a routerLink="/testsbyadmin" (click)="closeAllMenus()">Tests</a> &nbsp; &nbsp;
         <a routerLink="/tests" (click)="closeAllMenus()">Tests technique</a> &nbsp; &nbsp;
