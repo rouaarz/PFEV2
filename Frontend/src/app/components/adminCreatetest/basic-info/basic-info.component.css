@@ -13,6 +13,60 @@
   flex-direction: column;
   justify-content: center;
 }
+.tech-add-section {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.add-tech-container {
+  display: flex;
+  margin-top: 8px;
+}
+
+.tech-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.btn-add-tech {
+  padding: 8px 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.btn-add-tech:hover {
+  background-color: #45a049;
+}
+
+/* Style pour les tags sélectionnés */
+.selected-tech-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.tech-tag {
+  background-color: #e0e0e0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.tech-tag button {
+  margin-left: 5px;
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
 
 .page-container:hover {
   transform: translateY(-5px);

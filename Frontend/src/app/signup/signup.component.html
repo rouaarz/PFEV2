@@ -22,16 +22,16 @@
         <span class="logo-text">TechAssess</span>
       </a>
       
-      <h1>Join Our Community</h1>
-      <p>Create an account and discover the potential of the services you use.</p>
+       <h1>Rejoignez Notre Communauté</h1>
+      <p>Créez un compte et découvrez le potentiel des services que vous utilisez.</p>
     </div>
   </div>
 
   <!-- Colonne formulaire -->
   <div class="signin-form">
     <div class="form-container">
-      <h2>Welcome to <span class="brand">TechAssess</span></h2>
-      <p class="subtitle">Sign Up to get started</p>
+     <h2>Bienvenue sur <span class="brand">TechAssess</span></h2>
+      <p class="subtitle">Inscrivez-vous pour commencer</p>
 
       <!-- Message d'erreur -->
       <div *ngIf="errorMessage" class="error-message">
@@ -47,7 +47,7 @@
           <label for="username">Username</label>
           <div class="underline"></div>
           <p *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched" class="input-error">
-            ❌ Username must be between 3 and 20 characters
+            ❌Le nom d'utilisateur doit contenir entre 3 et 20 caractères
           </p>
         </div>
         
@@ -56,7 +56,7 @@
           <label for="email">Email</label>
           <div class="underline"></div>
           <p *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="input-error">
-            ❌ Please enter a valid email address
+            ❌Veuillez entrer une adresse email valide
           </p>
         </div>
         
@@ -74,12 +74,12 @@
             </svg>
           </span>
           <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" class="input-error">
-            <div *ngIf="signupForm.get('password')?.hasError('required')">❌ Password is required</div>
+            <div *ngIf="signupForm.get('password')?.hasError('required')">❌  Le mot de passe est requis</div>
             <div *ngIf="!signupForm.get('password')?.hasError('required')">
-              ❌ Password must:
+              ❌ Le mot de passe doit:
               <ul>
-                <li *ngIf="signupForm.get('password')?.hasError('minlength')">Be at least 8 characters long</li>
-                <li *ngIf="signupForm.get('password')?.hasError('passwordComplexity')">Include at least one number and one uppercase letter</li>
+                <li *ngIf="signupForm.get('password')?.hasError('minlength')">Contenir au moins 8 caractères</li>
+                <li *ngIf="signupForm.get('password')?.hasError('passwordComplexity')">Inclure au moins un chiffre et une majuscule</li>
               </ul>
             </div>
           </div>
@@ -87,7 +87,7 @@
         
         <div class="input-group password-group">
           <input id="confirmPassword" formControlName="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" required>
-          <label for="confirmPassword">Confirm Password</label>
+          <label for="confirmPassword">Confirmer le mot de passe</label>
           <div class="underline"></div>
           <!-- Icône eye -->
           <span class="toggle-password" (click)="toggleConfirmPasswordVisibility()">
@@ -99,32 +99,31 @@
             </svg>
           </span>
           <p *ngIf="signupForm.hasError('passwordMismatch')" class="input-error">
-            ❌ Passwords don't match
+            ❌ Les mots de passe ne correspondent pas
           </p>
         </div>
-<!--         
-        <div class="input-group">
-          <select id="role" formControlName="role">
-            <option value="" disabled selected>Select your role</option>
-            <option value="developpeur">Developer</option>
-            <option value="chefprojet">Project Manager</option>
-          </select>
-          <div class="underline"></div>
-        </div> -->
+        
+       <div class="input-group">
+  <input type="text" value="Développeur" disabled>
+  <input type="hidden" id="role" formControlName="role" value="developpeur">
+  <div class="underline"></div>
+</div>
+
+
 
         <button type="submit" [disabled]="signupForm.invalid" class="btn-signin">
-          <span>Sign Up</span>
+          <span>S'inscrire</span>
           <svg viewBox="0 0 24 24">
             <path fill="currentColor" d="M10 17l5-5-5-5v10z"/>
           </svg>
         </button>
 
         <div class="divider">
-          <span>Already have an account?</span>
+          <span>Vous avez déjà un compte ?</span>
         </div>
 
         <a routerLink="/signin" class="btn-signup">
-          Sign In
+        Se connecter
         </a>
       </form>
     </div>

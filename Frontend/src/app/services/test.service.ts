@@ -111,6 +111,9 @@ getTestsSuggeres(emailDev: string, technologie: string, niveauDifficulte: string
     headers: { Authorization: `Bearer ${token}` }
   });
 }
+getTestCountByNiveau(niveau: string): Observable<number> {
+  return this.http.get<number>(`http://localhost:8083/tests/count/niveau/${niveau}`);
+}
 
 }
 

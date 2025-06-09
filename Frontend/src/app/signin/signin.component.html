@@ -1,3 +1,4 @@
+
 <div class="signin-container">
   <!-- Colonne image avec diaporama -->
   <div class="signin-image">
@@ -24,16 +25,16 @@
         </svg>
         <span>TechAssess</span>
       </a>
-      <h1>Master Technical Assessments</h1>
-      <p>Join our community of developers and recruiters</p>
+       <h1>Maîtrisez les Évaluations Techniques</h1>
+      <p>Rejoignez notre communauté de développeurs</p>
     </div>
   </div>
 
   <!-- Colonne formulaire -->
   <div class="signin-form">
     <div class="form-container">
-      <h2>Welcome to <span class="brand">TechAssess</span></h2>
-      <p class="subtitle">Sign in to access your technical dashboard</p>
+       <h2>Bienvenue sur <span class="brand">TechAssess</span></h2>
+      <p class="subtitle">Connectez-vous pour accéder à votre tableau de bord</p>
 
       <!-- Message d'erreur -->
       <div *ngIf="errorMessage" class="error-message">
@@ -46,7 +47,7 @@
       <form class="form-content">
         <div class="input-group">
           <input type="text" id="staticEmail" required #usernameRef>
-          <label for="staticEmail">Username or Email</label>
+          <label for="staticEmail">Username </label>
           <div class="underline"></div>
         </div>
 
@@ -70,26 +71,26 @@
         <a [routerLink]="['/forgot-password']" 
            class="forgot-link"
            routerLinkActive="active">
-          Forgot password?
+          Mot de passe oublié ?
         </a>
       </div>
 
         <button (click)="log($event)" type="submit" class="btn-signin">
-          <span>Sign In</span>
+          <span>Se connecter</span>
           <svg viewBox="0 0 24 24">
             <path fill="currentColor" d="M10 17l5-5-5-5v10z"/>
           </svg>
         </button>
 
         <div class="divider">
-          <span>New to TechAssess?</span>
+          <span>Nouveau sur TechAssess ?</span>
         </div>
 
         <button [routerLink]="['/signup']" 
         type="button" 
         class="btn-signup"
         routerLinkActive="active">
-  Create Account
+  Créer un compte
 </button>
       </form>
     </div>
@@ -122,3 +123,4 @@ width: 20px;
 height: 20px;
 }
 </style>
+

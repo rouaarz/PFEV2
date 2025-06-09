@@ -521,3 +521,28 @@
   opacity: .3;
   transition: 0s;
 }
+.error-message {
+  font-size: 0.875rem;
+  color: red;
+
+  .error-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0.5rem;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: green;
+
+      &.invalid {
+        color: red;
+      }
+
+      i {
+        width: 16px;
+      }
+    }
+  }
+}

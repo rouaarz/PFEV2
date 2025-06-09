@@ -1,8 +1,15 @@
 <div class="container">
-    <h2>Développeurs assignés à {{ chefSelectionne?.username }}</h2>
+   
+     <h2 *ngIf="isAdminView">
+  Développeurs assignés à {{ chefSelectionne?.username }}
+</h2>
+<h2 *ngIf="!isAdminView">
+  Mes développeurs assignés
+</h2>
+
   
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let dev of developpeursAssignes">
+      <li class="list-group-item" *ngFor="let dev of developpeursAssignes" >
         {{ dev.username }} - {{ dev.email }}
       </li>
     </ul>
@@ -10,4 +17,4 @@
 
   </div>
   
-  <button class="btn btn-secondary mt-3" routerLink="/admin/list-Chefs">⬅ Retour</button>
+  <button *ngIf="isAdminView" class="btn btn-secondary mt-3" routerLink="/admin/list-Chefs">⬅ Retour</button>

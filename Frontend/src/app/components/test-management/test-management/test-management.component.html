@@ -24,11 +24,11 @@
     </select>
   </div>
 
-  <div class="flex justify-end gap-4 mb-4">
-    <button (click)="addTest()" class="btn-assign-test text-white d-flex align-items-center">
+  <div class="flex gap-4 mb-4">
+    <button (click)="addTest()" class="btn-assign-test text-white flex items-center">
       <i class="fas fa-plus mr-2"></i> Ajouter un Test
     </button>
-    <button (click)="addTestAlea()" class="btn-assign-test text-white d-flex align-items-center">
+    <button (click)="addTestAlea()" class="btn-assign-test text-white flex items-center">
       <i class="fas fa-random mr-2"></i> Générer un Test aléatoire
     </button>
   </div>
@@ -57,7 +57,7 @@
         <td class="py-2 px-4 text-center">{{ test.type }}</td>
         <td class="py-2 px-4 text-center">{{ test.statut }}</td>
         <td class="py-2 px-4 text-center"><button (click)="  result(test.id)" class="btn btn-primary "> Résultat
-            </button></td>
+          </button></td>
 
         <td class="py-2 px-4 text-center">
           <div class="btn-container">
@@ -75,7 +75,7 @@
             <button *ngIf="test.statut === 'BROUILLON'" (click)="  openPublishTestModal(test.id)"
               class="btn btn-primary "> publier
             </button>
-            
+
             <!-- <button *ngIf="test.statut === 'BROUILLON'" (click)="publishTest(test.id, false)"
               class="btn btn-info btn-sm-custom">
               <i class="fas fa-lock"></i>

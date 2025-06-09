@@ -34,6 +34,8 @@ export class AppComponent {
       '/Confirmationemail',
       '/reset-password',
       '/editDev',
+      '/Certif',
+
     ];
 
     // Vérifie les routes simples

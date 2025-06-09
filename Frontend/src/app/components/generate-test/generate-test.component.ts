@@ -42,7 +42,8 @@ export class GenerateTestComponent {
     pointsParQuestion: 5,
   };
 
-  techOptions = ['Java', 'Spring Boot', 'Angular', 'Node.js', 'Python', 'html'];
+  techOptions = ['C', 'C++', 'Java', 'Python', 'JavaScript', 'TypeScript', 
+  'PHP', 'SQL',  'Kotlin','React.js', 'Vue.js', 'Angular','HTML','CSS'];
   questionsPreview: any[] = [];
   selectedTech: string[] = [];
 

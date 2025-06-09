@@ -30,7 +30,10 @@
     <div class="horizontal-group">
       <div class="form-group">
         <label>Technologie :</label>
-        <input type="text" formControlName="technologie" placeholder="Ex: Java, Python..." required />
+        <select formControlName="technologie" required>
+          <option value="">-- Sélectionner une technologie --</option>
+          <option *ngFor="let tech of techOptions" [value]="tech">{{ tech }}</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -39,27 +42,26 @@
       </div>
     </div>
 
-<div *ngIf="isQCM">
-  <h3>Options de réponse :</h3>
-  <div formArrayName="answerOptions">
-    <div *ngFor="let option of answerOptions.controls; let i = index" [formGroupName]="i">
-      <input type="text" formControlName="text" placeholder="Réponse" required />
-      <input type="checkbox" formControlName="isCorrect" class="checkbox" /> Correcte ?
-      <button type="button" (click)="removeAnswerOption(i)" *ngIf="answerOptions.length > 1">🗑</button>
+    <div *ngIf="isQCM">
+      <h3>Options de réponse :</h3>
+      <div formArrayName="answerOptions">
+        <div *ngFor="let option of answerOptions.controls; let i = index" [formGroupName]="i">
+          <input type="text" formControlName="text" placeholder="Réponse" required />
+          <input type="checkbox" formControlName="isCorrect" class="checkbox" /> Correcte ?
+          <button type="button" (click)="removeAnswerOption(i)" *ngIf="answerOptions.length > 1">🗑</button>
+        </div>
+      </div>
+      <button type="button" (click)="addAnswerOption()">➕ Ajouter une option</button>
     </div>
-  </div>
-  <button type="button" (click)="addAnswerOption()">➕ Ajouter une option</button>
-</div>
 
-<!-- Gestion des réponses en Code -->
+    <!-- Gestion des réponses en Code -->
 
 
 
 
     <!-- Gestion des réponses en Code -->
     <div *ngIf="isCode">
-      <h3>Réponses en Code :</h3>
-      <button type="button" (click)="addCodeAnswer()">➕ Ajouter une réponse</button>
+      <h3>Configurer l' IDE:</h3>
 
       <div formArrayName="codeAnswers">
         <div *ngFor="let codeAnswer of codeAnswers.controls; let i = index" [formGroupName]="i">

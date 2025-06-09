@@ -44,7 +44,7 @@
 //       }
 //     });
 //   }
-  
+
 // }
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TestService } from '../../../services/test.service';
@@ -52,9 +52,9 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { Router, ActivatedRoute } from '@angular/router';  // Importation de ActivatedRoute pour extraire l'ID
-
-import { Test } from '../../../models/Test';  // Vérifiez si l'importation est correcte
+import { Router, ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
+import { Test } from '../../../models/Test';
 
 @Component({
   selector: 'app-basic-info',
@@ -64,16 +64,17 @@ import { Test } from '../../../models/Test';  // Vérifiez si l'importation est 
   standalone: true,
 })
 export class BasicInfoComponent {
-  @Input() testId: number | null = null; // L'ID du test à modifier
-  @Output() testCreated = new EventEmitter<number>(); // Émet l'ID du test créé
+  @Input() testId: number | null = null;
+  @Output() testCreated = new EventEmitter<number>();
+
   test: Test = {
-    id: undefined, // Ne pas définir l'ID pour éviter que ce soit 0
+    id: undefined,
     titre: '',
     description: '',
-    duree: 0, // Remplace `null` par `0` pour correspondre au type `number | null`
+    duree: 0,
     type: '',
     accesPublic: false,
-    limiteTentatives: 0, // Remplace `null` par `0` si c'est un nombre
+    limiteTentatives: 0,
     statut: '',
     niveauDifficulte: '',
     nbQuestions: 0,
@@ -84,45 +85,94 @@ export class BasicInfoComponent {
     version: 0,
     technologies: null
   };
-  
 
   token = localStorage.getItem('accessToken') ?? '';
 
-  constructor(private testService: TestService, private router: Router, private route: ActivatedRoute) {}
+  // 🔽 Liste des options de technologies disponibles
+  techOptions: string[] = ['C', 'C++', 'Java', 'Python', 'JavaScript', 'TypeScript', 
+  'PHP', 'SQL',  'Kotlin','React.js', 'Vue.js', 'Angular','HTML','CSS'];
+
+  // 🔽 Stocke les technologies sélectionnées dans le select multiple
+  selectedTech: string[] = [];
+  newTech: string = '';
+
+  constructor(private testService: TestService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // Si on est en mode modification, récupérer l'ID du test depuis l'URL
-    const testId = this.route.snapshot.paramMap.get('id');  // Utilisation de ActivatedRoute
+    const testId = this.route.snapshot.paramMap.get('id');
     if (testId) {
-      this.testId = +testId;  // Assurez-vous que l'ID est un nombre
+      this.testId = +testId;
       this.testService.getTestById(this.testId).subscribe({
         next: (data) => {
-          this.test = data;  // Pré-remplir le formulaire avec les données du test existant
+          this.test = data;
+
+          // 🔽 Initialiser les technologies sélectionnées à partir du test existant
+          this.selectedTech = this.test.technologies || [];
         },
         error: (err) => {
           console.error('Erreur lors de la récupération du test:', err);
-          alert('Erreur lors de la récupération du test');
+          Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: 'Impossible de récupérer les détails du test.',
+          });
         }
       });
     }
   }
+// Dans votre composant, ajoutez ces propriétés et méthodes :
 
-  onSubmit() {
-    const testToSend = { ...this.test }; // Créer une copie pour éviter de modifier `this.test`
-  
-    if (!this.testId) {
-      delete testToSend.id; // Supprimer l'ID pour éviter d'envoyer `0`
+// Méthode pour ajouter une nouvelle technologie
+addTech() {
+  if (this.newTech && !this.techOptions.includes(this.newTech)) {
+    // Ajoute la nouvelle technologie aux options disponibles
+    this.techOptions.push(this.newTech);
+    // Ajoute la nouvelle technologie aux technologies sélectionnées
+    this.selectedTech.push(this.newTech);
+    // Réinitialise le champ
+    this.newTech = '';
+  } else if (this.techOptions.includes(this.newTech)) {
+    // Si la technologie existe déjà, on l'ajoute juste aux sélectionnées si pas déjà présente
+    if (!this.selectedTech.includes(this.newTech)) {
+      this.selectedTech.push(this.newTech);
+      this.newTech = '';
     }
-  
+  }
+}
+
+// Méthode pour supprimer une technologie sélectionnée
+removeTech(tech: string) {
+  this.selectedTech = this.selectedTech.filter(t => t !== tech);
+}
+  onSubmit() {
+    // 🔽 Cloner le test et ajouter les technologies sélectionnées
+    const testToSend = { ...this.test };
+    testToSend.technologies = this.selectedTech;
+
+    if (!this.testId) {
+      delete testToSend.id;
+    }
+
     if (this.testId) {
       this.testService.updateTest(this.testId, testToSend, this.token).subscribe({
         next: () => {
-          alert('Test modifié avec succès!');
-          this.router.navigate(['/tests']);
+          Swal.fire({
+            icon: 'success',
+            title: 'Succès',
+            text: 'Test modifié avec succès !',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            this.router.navigate(['/tests']);
+          });
         },
         error: (err) => {
           console.error('Erreur lors de la modification du test:', err);
-          alert('Erreur lors de la modification du test');
+          Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors de la modification du test.'
+          });
         }
       });
     } else {
@@ -131,15 +181,26 @@ export class BasicInfoComponent {
           const testId = response.id;
           console.log('Test créé avec succès:', response);
           this.testCreated.emit(testId);
-          alert('Test créé avec succès!');
+          Swal.fire({
+            icon: 'success',
+            title: 'Succès',
+            text: 'Test créé avec succès !',
+            showConfirmButton: false,
+            timer: 1500
+          });
         },
         error: (err) => {
           console.error('Erreur lors de la création du test:', err);
-          alert('Erreur lors de la création du test');
+          Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors de la création du test.'
+          });
         }
       });
     }
   }
+
   getNiveauClass(niveau: string): string {
     switch (niveau) {
       case 'Facile':
@@ -152,5 +213,5 @@ export class BasicInfoComponent {
         return '';
     }
   }
-  
+
 }

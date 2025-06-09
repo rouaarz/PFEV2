@@ -45,6 +45,14 @@
           </p>
         </a>
       </li>
+      <li  *ngIf="roles.includes('ROLE_CHEF')">
+        <a [routerLink]="['/admin/developpeurs-assignes/:id']" [ngClass]="{'active': current === ''}">
+          <mat-icon class="icon">engineering</mat-icon>
+          <p class="nav-item">
+           Mes développeurs
+          </p>
+        </a>
+      </li>
       <li *ngIf="roles.includes('ROLE_ADMIN')">
         <a [routerLink]="['/admin/edit', admin.id]" class="nav-link">
           <mat-icon class="icon">manage_accounts</mat-icon>

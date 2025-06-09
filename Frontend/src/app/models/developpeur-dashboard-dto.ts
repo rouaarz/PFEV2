@@ -1,3 +1,4 @@
+import { Certification } from "./certification";
 import { TestStatDTO } from "./test-stat-dto";
 
 export interface DeveloppeurDashboardDTO {
@@ -5,4 +6,5 @@ export interface DeveloppeurDashboardDTO {
     chefEquipe: string;
     scoreGlobal: number;
     tests: TestStatDTO[];
+    certifications: Certification[];
   }

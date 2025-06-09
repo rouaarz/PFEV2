@@ -426,14 +426,28 @@ button:active {
 }
 
 /* Bouton "Assign to test" */
+/* Style pour les boutons d'ajout */
 .btn-assign-test {
-  background-color: #17a2b8; /* Cyan */
+  background-color: #17a2b8;
   color: white;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-right: 10px; /* Espacement entre les boutons */
+}
+
+.btn-assign-test:hover {
+  background-color: #138496;
+  transform: scale(1.02);
+}
+
+.btn-assign-test i {
+  margin-right: 8px;
 }
 /* Réduction de la taille des boutons */
 .btn-sm-custom {

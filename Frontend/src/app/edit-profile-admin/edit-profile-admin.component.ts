@@ -160,7 +160,7 @@ export class EditProfileAdminComponent implements OnInit {
 }
 */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AdminService } from '../services/admin.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -201,7 +201,11 @@ securityOpen = false;
       email: ['', [Validators.required, Validators.email]],
       grade: ['', Validators.required],
       oldPassword: [''],
-      newPassword: ['', [Validators.minLength(6)]],
+     newPassword: ['', [
+    Validators.required,
+    Validators.minLength(8),
+    this.passwordComplexityValidator()
+  ]],
       currentPassword: ['']
     });
   }
@@ -224,6 +228,20 @@ securityOpen = false;
       this.redirectToAdminList();
     }
   }
+
+  passwordComplexityValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    if (!value) return null;
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+    const valid = hasUpperCase && hasNumber;
+
+    return !valid ? { passwordComplexity: true } : null;
+  };
+}
+
 
   private loadAdminData(token: string): void {
     this.isLoading = true;

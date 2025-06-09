@@ -2,18 +2,30 @@
   <h2 style="font-size: 1.75rem;">📊 Statistiques du test : {{testDetails.titre}}</h2>
   <header style="margin-bottom: 2rem;">
     <h1 style="font-size: 1.75rem;"> </h1>
-    <p>{{testDetails.nbQuestions}} participants | Publié le {{testDetails.dateCreation}}</p>
+    <!-- <p>{{testDetails.nbQuestions}} participants | Publié le {{testDetails.dateCreation}}</p> -->
+    <p> Publié le {{testDetails.dateCreation}}</p>
+
   </header>
-  <div class="filter-row" style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+  <!-- <div class="filter-row" style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+        <input type="text" [(ngModel)]="searchTerm" (input)="applyFilters()" placeholder="Rechercher un développeur...">
+
     <select class="form-select" [(ngModel)]="selectedTentative" (change)="applyFilters()">
       <option value="">Toutes les tentatives</option>
       <option *ngFor="let t of tentativesDisponibles" [value]="t">{{ t }}</option>
     </select>
 
 
-    <input type="text" [(ngModel)]="searchTerm" (input)="applyFilters()" placeholder="Rechercher un développeur...">
-  </div>
+  </div> -->
+  <div class="filter-row" style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+    <!-- Barre de recherche -->
+    <input type="text" [(ngModel)]="searchTerm" (input)="applyFilters()" placeholder="Rechercher un développeur..."
+      style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; flex-grow: 1; margin-right: 1rem;">
 
+    <!-- Bouton d'export PDF -->
+    <button (click)="exportPDF()" class="btn-export-pdf">
+      <i class="fas fa-file-pdf"></i> Exporter en PDF
+    </button>
+  </div>
   <div class="data-grid">
 
     <!-- KPI cards -->
@@ -60,47 +72,47 @@
   </div>
 
 
-<div class="tab-container">
+  <div class="tab-container">
 
-  <table>
-    <thead>
-      <tr>
-        <th>Développeur</th>
-        <th>Score</th>
-        <th>Tentative</th>
-        <th>Temps passé</th>
-        <th>Détails</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let res of resultatsFiltres | paginate: { itemsPerPage: itemsPerPage, currentPage: p }" class="carte"
-        [ngClass]="res.apparence" class="score-high">
-        <td>
-          <div class="user-info">
-            <img src="https://i.pravatar.cc/40?img=1" alt="Avatar" class="avatar">
-            <div>
-              <div>{{ res.nom }}</div>
-              <div style="font-size: 12px; color: #666;">{{ res.email }}</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Développeur</th>
+          <th>Score</th>
+          <th>Tentative</th>
+          <th>Temps passé</th>
+          <th>Détails</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let res of resultatsFiltres | paginate: { itemsPerPage: itemsPerPage, currentPage: p }"
+          class="carte" [ngClass]="res.apparence" class="score-high">
+          <td>
+            <div class="user-info">
+              <img src="https://i.pravatar.cc/40?img=1" alt="Avatar" class="avatar">
+              <div>
+                <div>{{ res.nom }}</div>
+                <div style="font-size: 12px; color: #666;">{{ res.email }}</div>
+              </div>
+              <span class="badge gold">{{ res.badge }}</span>
+              <span *ngIf="res.etat == 'succès'" class="badge alert">{{ res.etat }}</span>
+              <span *ngIf="res.etat === 'échec'" class="badge echec">{{ res.etat }}</span>
+
             </div>
-            <span class="badge gold">{{ res.badge }}</span>
-            <span *ngIf="res.etat == 'succès'" class="badge alert">{{ res.etat }}</span>
-            <span *ngIf="res.etat === 'échec'" class="badge echec">{{ res.etat }}</span>
+          </td>
+          <td>{{ res.score | number:'1.1-1'}} %</td>
+          <td>{{ res.tentative }}</td>
+          <td>{{ res.temps }}</td>
+          <td><button (click)="openModal(testId, res)" style="background-color: #54a9da;">📊 Voir détails</button></td>
+          <td>
 
-          </div>
-        </td>
-        <td>{{ res.score | number:'1.1-1'}} %</td>
-        <td>{{ res.tentative }}</td>
-        <td>{{ res.temps }}</td>
-        <td><button (click)="openModal(testId, res)" style="background-color: #54a9da;">📊 Voir détails</button></td>
-        <td>
-          <button style="background-color: #27ae60;">Certificat</button>
-          <button style="background-color: #e74c3c;">Supprimer</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+            <button (click)="exportModalPDF()" style="background-color: #27ae60;">Exporter PDF</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 </div>
 
@@ -144,9 +156,7 @@
         </div>
       </div>
     </div>
-    <button (click)="exportPDF()">Exporter PDF</button>
-    <button (click)="exportModalPDF()">Exporter ce PDF</button>
 
-    <!-- <button (click)="print()">🖨️ Imprimer ce rapport</button> -->
+    <button (click)="exportModalPDF()">🖨️ Imprimer ce rapport</button>
   </div>
 </div>

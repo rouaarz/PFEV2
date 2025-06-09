@@ -1,0 +1,355 @@
+/* Structure principale */
+.certification-portfolio {
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+.certification-header {
+  background: linear-gradient(90deg, #3a0ca3, #4361ee);
+  color: white;
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.platform-logo {
+  max-height: 80px;
+}
+
+.platform-title {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.text-tech {
+  color: #4cc9f0;
+}
+
+.text-assess {
+  color: white;
+}
+
+.platform-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Carte de certification */
+.certification-card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-top: 4px solid #f72585;
+}
+
+.certification-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.12), 0 10px 10px rgba(0,0,0,0.08);
+}
+
+.bg-techassess-gradient {
+  background: linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%);
+}
+
+/* Badge holographique */
+.holographic-effect {
+  position: relative;
+  display: inline-block;
+}
+
+.holographic-effect:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0.3) 50%, 
+    rgba(255,255,255,0) 100%);
+  animation: hologram 3s infinite;
+  border-radius: 50%;
+}
+
+@keyframes hologram {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.certification-img {
+  height: 100px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+/* Détails de certification */
+.certification-details {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #e9ecef;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #3a0ca3;
+}
+
+.detail-value {
+  color: #495057;
+}
+
+.mono {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.highlight {
+  color: #f72585;
+  font-weight: 600;
+}
+
+/* QR Code */
+.qr-code {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #dee2e6;
+  padding: 5px;
+  background: white;
+}
+
+/* Signature officielle */
+.official-signature {
+  position: relative;
+  margin-top: 3rem;
+  padding: 2rem 0;
+  border-top: 1px dashed #adb5bd;
+}
+
+.signature-container {
+  display: inline-block;
+  position: relative;
+}
+
+.signature-img {
+  height: 60px;
+  opacity: 0.9;
+}
+
+.signature-text {
+  margin-top: 0.5rem;
+  color: #3a0ca3;
+}
+
+.certification-stamp {
+  position: absolute;
+  right: 20%;
+  top: 0;
+}
+
+.stamp-img {
+  height: 80px;
+  opacity: 0.8;
+  transform: rotate(15deg);
+}
+
+/* Boutons */
+.btn-techassess {
+  background-color: #4361ee;
+  color: white;
+  border: none;
+}
+
+.btn-techassess:hover {
+  background-color: #3a0ca3;
+  color: white;
+}
+
+.btn-outline-techassess {
+  border-color: #4361ee;
+  color: #4361ee;
+}
+
+.btn-outline-techassess:hover {
+  background-color: #4361ee;
+  color: white;
+}
+
+/* Bannière de vérification */
+.verification-banner {
+  border-left: 4px solid #f72585;
+  border-radius: 0 4px 4px 0;
+  background-color: #f8f9fa;
+}
+
+.verification-icon {
+  color: #f72585;
+  margin-right: 10px;
+}
+
+.verification-text {
+  font-weight: 500;
+  color: #3a0ca3;
+}
+
+/* Version mobile */
+@media (max-width: 768px) {
+  .certification-header {
+    text-align: center;
+  }
+  
+
+}
+/* Styles spécifiques pour les icônes */
+.fas, .svg-inline--fa {
+  transition: all 0.3s ease;
+}
+
+/* Icône de vérification */
+.verification-icon {
+  font-size: 1.2rem;
+  color: #f72585;
+  margin-right: 10px;
+  position: relative;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Icône de sécurité */
+.security-badge .fa-lock {
+  color: #4cc9f0;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.security-badge:hover .fa-lock {
+  transform: rotate(15deg);
+  color: #fff;
+}
+
+/* Icônes des boutons */
+.btn-techassess .fa-file-pdf,
+.btn-success .fa-share-alt,
+.btn-techassess .fa-rocket {
+  margin-right: 8px;
+}
+
+/* Animation des icônes de boutons */
+.btn-techassess:hover .fa-file-pdf {
+  animation: bounce 0.5s;
+}
+
+.btn-success:hover .fa-share-alt {
+  animation: spin 0.5s;
+}
+
+.btn-techassess .fa-rocket {
+  transition: all 0.3s ease;
+}
+
+.btn-techassess:hover .fa-rocket {
+  transform: translateX(5px);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Icône de certification vide */
+.empty-icon .fa-certificate {
+  position: relative;
+  color: #dee2e6;
+}
+
+.empty-icon .fa-certificate:after {
+  content: "?";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #6c757d;
+}
+
+/* Logo SVG */
+.platform-logo svg {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.platform-logo:hover svg {
+  transform: rotate(15deg);
+  filter: drop-shadow(0 4px 8px rgba(67, 97, 238, 0.3));
+}
+
+/* Icônes dans les cartes */
+.certification-card .fa-certificate {
+  font-size: 3rem;
+  color: #4361ee;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.certification-card .fa-certificate:before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  border: 2px dashed rgba(67, 97, 238, 0.3);
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive pour les icônes */
+@media (max-width: 768px) {
+  .verification-icon {
+    font-size: 1rem;
+  }
+  
+  .platform-logo svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .certification-card .fa-certificate {
+    font-size: 2.5rem;
+  }
+}

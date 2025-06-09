@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChefDeProjetService } from '../services/chef-de-projet.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -37,7 +37,11 @@ export class EditProfileChefComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       specialite: [''], 
       oldPassword: [''],
-      newPassword: ['', [Validators.minLength(6)]],
+    newPassword: ['', [
+    Validators.required,
+    Validators.minLength(8),
+    this.passwordComplexityValidator()
+  ]],
       currentPassword: ['']
     });
   }
@@ -83,6 +87,18 @@ export class EditProfileChefComponent implements OnInit {
       }
     });
   }
+passwordComplexityValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    if (!value) return null;
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+    const valid = hasUpperCase && hasNumber;
+
+    return !valid ? { passwordComplexity: true } : null;
+  };
+}
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;

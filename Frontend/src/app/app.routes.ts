@@ -46,7 +46,7 @@ import { DashboardDeveloppeurComponent } from './dashboard-developpeur/dashboard
 import { AnalyseReponsesComponent } from './components/analyse-reponses/analyse-reponses.component'
 import { ReviewTestComponent } from './components/review/review-test-component/review-test-component.component'
 import { TestStatistiquesComponent } from './test-statistiques/test-statistiques.component'
-
+import { CertificationComponent } from './certification/certification.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -71,6 +71,7 @@ export const routes: Routes = [
   },
  
   { path: 'analyse-test/:testId', component: AnalyseReponsesComponent},
+  { path: 'Certif/:level', component: CertificationComponent },
 
  
 
@@ -111,7 +112,7 @@ export const routes: Routes = [
       { path: 'edit-Chef/:id', component: EditChefsComponent, canActivate: [ChefGuard] },
       { path: 'list-Chefs', component: ListChefsComponent, canActivate: [ChefGuard] },
       { path: 'assign-developpeur/:id', component: AssignDeveloppeurComponent, canActivate: [ChefGuard] },
-      { path: 'developpeurs-assignes/:id', component: ChefDeveloppeurComponent, canActivate: [ChefGuard] },
+      { path: 'developpeurs-assignes/:id', component: ChefDeveloppeurComponent },
       { path: 'activation-Compte', component: ActivationCompteComponent, canActivate: [ChefGuard] },
       { path: 'comptes-actifs', component: ComptesActifsComponent, canActivate: [ChefGuard] },
       { path: 'generate-test', component: GenerateTestComponent },

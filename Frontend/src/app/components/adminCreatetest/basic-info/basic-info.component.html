@@ -1,39 +1,3 @@
-<!-- 
-   <div class="page-container">
-    <h1 class="page-title">Créer un Nouveau Test</h1>
-    
-    <form (ngSubmit)="createTest()" class="test-form">
-      <div class="form-field">
-        <label for="titre">Titre du Test</label>
-        <input id="titre" type="text" placeholder="Titre du Test" [(ngModel)]="test.titre" name="titre" required>
-      </div>
-  
-      <div class="form-field">
-        <label for="description">Description</label>
-        <textarea id="description" placeholder="Description" [(ngModel)]="test.description" name="description"></textarea>
-      </div>
-  
-      <div class="form-field">
-        <label for="type">Type de Test</label>
-        <input id="type" type="text" placeholder="Type de Test" [(ngModel)]="test.type" name="type">
-      </div>
-  
-      <div class="form-field">
-        <label for="duree">Durée (en minutes)</label>
-        <input id="duree" type="number" placeholder="Durée" [(ngModel)]="test.duree" name="duree">
-      </div>
-  
-      <div class="form-field">
-        <label for="limiteTentatives">Limite de Tentatives</label>
-        <input id="limiteTentatives" type="number" placeholder="Limite Tentatives" [(ngModel)]="test.limiteTentatives" name="limiteTentatives">
-      </div>
-  
-      <div class="button-group">
-        <button class="btn-submit" type="submit">Créer le Test</button>
-      </div>
-    </form>
-  </div>
-   -->
 <div class="page-container">
   <h1 class="page-title">{{ testId ? 'Modifier le Test' : 'Créer un Nouveau Test' }}</h1>
 
@@ -47,11 +11,17 @@
       <label for="description">Description</label>
       <textarea id="description" placeholder="Description" [(ngModel)]="test.description" name="description"></textarea>
     </div>
-
     <div class="form-field">
       <label for="type">Type de Test</label>
-      <input id="type" type="text" placeholder="Type de Test" [(ngModel)]="test.type" name="type">
+      <select id="type" [(ngModel)]="test.type" name="type" required>
+        <option value="">-- Sélectionner --</option>
+        <option value="Code">Code</option>
+        <option value="Mixte">Mixte</option>
+        <option value="QCM">QCM</option>
+      </select>
     </div>
+
+
     <div class="form-field">
 
       <label for="niveauDifficulte">Niveau de difficulté :</label>
@@ -61,8 +31,23 @@
         <option value="Intermédiaire" style="background-color: #fff3cd;">Intermédiaire</option>
         <option value="Difficile" style="background-color: #f8d7da;">Difficile</option>
       </select>
-      
 
+
+    </div>
+    <div class="form-field">
+      <label for="Technologies">Technologies :</label>
+      <div class="form-group">
+        <!-- Sélecteur avec possibilité d'ajouter de nouvelles options -->
+        <select id="technologies" [(ngModel)]="selectedTech" name="technologies" class="form-control" multiple>
+          <option *ngFor="let tech of techOptions" [ngValue]="tech">{{ tech }}</option>
+        </select>
+        <!-- Champ pour ajouter une nouvelle technologie -->
+        <div class="add-tech-container">
+          <input type="text" [(ngModel)]="newTech" placeholder="Ajouter une nouvelle technologie"
+            (keyup.enter)="addTech()" class="tech-input">
+          <button type="button" (click)="addTech()" class="btn-add-tech">+</button>
+        </div>
+      </div>
     </div>
 
     <div class="form-field">
@@ -70,11 +55,11 @@
       <input id="duree" type="number" placeholder="Durée" [(ngModel)]="test.duree" name="duree">
     </div>
 
-    <div class="form-field">
+    <!-- <div class="form-field">
       <label for="limiteTentatives">Limite de Tentatives</label>
       <input id="limiteTentatives" type="number" placeholder="Limite Tentatives" [(ngModel)]="test.limiteTentatives"
         name="limiteTentatives">
-    </div>
+    </div> -->
 
     <div class="form-field" *ngIf="testId">
       <label for="dateCreation">Date de Création</label>

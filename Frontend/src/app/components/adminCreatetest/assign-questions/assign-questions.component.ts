@@ -227,75 +227,76 @@ goToPage(page: number): void {
     }
   }
 
-  // Fonction de filtrage basée sur la recherche
-  /*filterQuestions() {
-    if (this.searchTerm.trim() === '') {
-      this.filteredQuestions = this.questions;
-    } else {
-      this.filteredQuestions = this.questions.filter((question) =>
-        question.enonce.toLowerCase().includes(this.searchTerm.toLowerCase()) || 
-        question.type.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    }
-    this.currentPage = 1; // Réinitialiser à la première page après filtrage
-  }*/
 
-  assignQuestionToTest(question: Question) {
-    // Vérification des points et ordre
-    if (!question.selectedPoints || question.selectedPoints <= 0) {
-      alert('Veuillez définir un nombre de points pour cette question avant de l\'assigner.');
-      return;
-    }
-    if (!question.selectedOrdre) {
-      question.selectedOrdre = this.lastOrdre + 1;
-      this.lastOrdre = question.selectedOrdre;
-    }
-  
-    // Vérification si la question a déjà été assignée
-    if (question.isAssigned) {
-      // Si les points ou l'ordre ont changé, réactiver le bouton "Assigner"
-      if (question.selectedPoints !== question.previousPoints || question.selectedOrdre !== question.previousOrdre) {
-        question.isAssigned = false; // Autoriser la réassignation
-      } else {
-        return; // Ne rien faire si la question n'a pas changé
-      }
-    }
-  
-    // Ajouter ou réassigner la question au test
-    if (this.testId !== null) {
-      const token = localStorage.getItem('accessToken') || '';
-      const testQuestion = {
-        question: { id: question.id },
-        points: question.selectedPoints,
-        ordre: question.selectedOrdre
-      };
-  
-      this.testService.addQuestionsToTest(this.testId, [testQuestion], token).subscribe(
-        (response) => {
-          console.log('Questions ajoutées au test avec succès', response);
-          question.isAssigned = true;
-  
-          // Mettre à jour les points et l'ordre précédents pour comparer lors de futures modifications
-          question.previousPoints = question.selectedPoints;
-          question.previousOrdre = question.selectedOrdre;
-  
-          // Notifier le parent si besoin
-          this.questionsAssignedEvent.emit();
-  
-          alert('La question a été assignée ou réassignée au test avec succès!');
-        },
-        (error) => {
-          console.error('Erreur lors de l\'ajout des questions', error);
-        }
-      );
+assignQuestionToTest(question: Question) {
+  // Vérification des points et ordre
+  if (!question.selectedPoints || question.selectedPoints <= 0) {
+    alert('Veuillez définir un nombre de points pour cette question avant de l\'assigner.');
+    return;
+  }
+
+  // Vérification que l'ordre n'est pas déjà utilisé par une autre question assignée
+  const isOrderAlreadyUsed = this.questions.some(q => 
+    q.isAssigned && 
+    q.selectedOrdre === question.selectedOrdre && 
+    q.id !== question.id
+  );
+
+  if (isOrderAlreadyUsed) {
+    alert('Cet ordre est déjà utilisé par une autre question. Veuillez choisir un ordre différent.');
+    return;
+  }
+
+  if (!question.selectedOrdre) {
+    question.selectedOrdre = this.lastOrdre + 1;
+    this.lastOrdre = question.selectedOrdre;
+  }
+
+  // Vérification si la question a déjà été assignée
+  if (question.isAssigned) {
+    // Si les points ou l'ordre ont changé, réactiver le bouton "Assigner"
+    if (question.selectedPoints !== question.previousPoints || question.selectedOrdre !== question.previousOrdre) {
+      question.isAssigned = false; // Autoriser la réassignation
+    } else {
+      return; // Ne rien faire si la question n'a pas changé
     }
   }
+
+  // Ajouter ou réassigner la question au test
+  if (this.testId !== null) {
+    const token = localStorage.getItem('accessToken') || '';
+    const testQuestion = {
+      question: { id: question.id },
+      points: question.selectedPoints,
+      ordre: question.selectedOrdre
+    };
+
+    this.testService.addQuestionsToTest(this.testId, [testQuestion], token).subscribe(
+      (response) => {
+        console.log('Questions ajoutées au test avec succès', response);
+        question.isAssigned = true;
+
+        // Mettre à jour les points et l'ordre précédents pour comparer lors de futures modifications
+        question.previousPoints = question.selectedPoints;
+        question.previousOrdre = question.selectedOrdre;
+
+        // Notifier le parent si besoin
+        this.questionsAssignedEvent.emit();
+
+        alert('La question a été assignée ou réassignée au test avec succès!');
+      },
+      (error) => {
+        console.error('Erreur lors de l\'ajout des questions', error);
+      }
+    );
+  }
+}
   // Dans votre composant
 // Dans votre composant
 questionTypes = [
-  { value: 'QCM', label: 'Multiple Choice' },
-  { value: 'Text', label: 'Text Answer' },
-  { value: 'Code', label: 'Code Answer' }
+   { value: 'QCM', label: 'Choix multiple' },
+  { value: 'Text', label: 'Réponse texte' },
+  { value: 'Code', label: 'Réponse code' }
 ];
 
 questionLevels = [

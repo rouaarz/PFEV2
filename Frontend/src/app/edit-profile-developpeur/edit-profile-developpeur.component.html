@@ -178,18 +178,41 @@
 
                   
                   <div class="form-field password-field">
-                    <label>Nouveau mot de passe</label>
-                    <div class="password-input">
-                      <input formControlName="newPassword" 
-                             [type]="showNewPassword ? 'text' : 'password'" 
-                             placeholder="••••••••">
-                      <i class="fas {{showNewPassword ? 'fa-eye-slash' : 'fa-eye'}} toggle-password"
-                         (click)="showNewPassword = !showNewPassword"></i>
-                    </div>
-                    <div class="error-message" *ngIf="profileForm.get('newPassword')?.invalid && profileForm.get('newPassword')?.touched">
-                      Minimum 6 caractères
-                    </div>
-                  </div>
+  <label>Nouveau mot de passe</label>
+  <div class="password-input">
+    <input formControlName="newPassword" 
+           [type]="showNewPassword ? 'text' : 'password'" 
+           placeholder="••••••••">
+    <i class="fas {{showNewPassword ? 'fa-eye-slash' : 'fa-eye'}} toggle-password"
+       (click)="showNewPassword = !showNewPassword"></i>
+  </div>
+
+  <div class="error-message mt-1" *ngIf="profileForm.get('newPassword')?.touched">
+    <span *ngIf="profileForm.get('newPassword')?.hasError('required')">
+      Le mot de passe est requis
+    </span>
+
+    <div *ngIf="!profileForm.get('newPassword')?.hasError('required')">
+      <ul class="error-list">
+        <li [class.invalid]="profileForm.get('newPassword')?.hasError('minlength')">
+          <i class="fas" [ngClass]="{
+            'fa-times': profileForm.get('newPassword')?.hasError('minlength'),
+            'fa-check': !profileForm.get('newPassword')?.hasError('minlength')
+          }"></i>
+          Minimum 8 caractères
+        </li>
+        <li [class.invalid]="profileForm.get('newPassword')?.hasError('passwordComplexity')">
+          <i class="fas" [ngClass]="{
+            'fa-times': profileForm.get('newPassword')?.hasError('passwordComplexity'),
+            'fa-check': !profileForm.get('newPassword')?.hasError('passwordComplexity')
+          }"></i>
+          Contenir une majuscule et un chiffre
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
                   
                   <button class="btn-update-password"
                           (click)="updatePassword()"

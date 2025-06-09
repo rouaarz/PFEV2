@@ -1,7 +1,7 @@
 <div class="container">
     <div class="card">
       <div class="card-header">
-        <h2><i class="fas fa-user-cog me-2"></i>Profil du Chef de Projet</h2>
+        <h2><i class="fas fa-user-cog me-2"></i>Profil du chef d'équipe</h2>
       </div>
       
       <div class="card-body">
@@ -84,17 +84,42 @@
                   </div>
                   
                   <div class="form-group password-field">
-                    <label class="form-label">Nouveau mot de passe</label>
-                    <input formControlName="newPassword" 
-                           class="form-control" 
-                           [type]="showNewPassword ? 'text' : 'password'">
-                    <i class="fas {{showNewPassword ? 'fa-eye-slash' : 'fa-eye'}} toggle-password" 
-                       (click)="showNewPassword = !showNewPassword"></i>
-                    <div *ngIf="chefForm.get('newPassword')?.invalid && chefForm.get('newPassword')?.touched" 
-                         class="invalid-feedback">
-                      Minimum 6 caractères requis
-                    </div>
-                  </div>
+  <label class="form-label">Nouveau mot de passe</label>
+  <input formControlName="newPassword" 
+         class="form-control" 
+         [type]="showNewPassword ? 'text' : 'password'">
+  <i class="fas {{showNewPassword ? 'fa-eye-slash' : 'fa-eye'}} toggle-password" 
+     (click)="showNewPassword = !showNewPassword"></i>
+
+  <div class="error-content mt-2" *ngIf="chefForm.get('newPassword')?.touched">
+    <span *ngIf="chefForm.get('newPassword')?.hasError('required')">
+      Le mot de passe est requis
+    </span>
+
+    <div *ngIf="!chefForm.get('newPassword')?.hasError('required')">
+      <span>Le mot de passe doit :</span>
+      <ul class="error-list">
+        <li [class.invalid]="chefForm.get('newPassword')?.hasError('minlength')">
+          <svg width="16" height="16" viewBox="0 0 24 24">
+            <path [attr.d]="chefForm.get('newPassword')?.hasError('minlength') 
+              ? 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'
+              : 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'"/>
+          </svg>
+          Contenir au moins 8 caractères
+        </li>
+        <li [class.invalid]="chefForm.get('newPassword')?.hasError('passwordComplexity')">
+          <svg width="16" height="16" viewBox="0 0 24 24">
+            <path [attr.d]="chefForm.get('newPassword')?.hasError('passwordComplexity') 
+              ? 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'
+              : 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'"/>
+          </svg>
+          Inclure un chiffre et une lettre majuscule
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
                   
                   <button class="btn btn-primary" 
                           type="button"
@@ -147,4 +172,3 @@
       </div>
     </div>
   </div>
-  

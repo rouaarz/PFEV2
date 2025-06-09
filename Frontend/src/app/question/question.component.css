@@ -152,30 +152,45 @@ pre.output {
 /* Boutons */
 button {
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 16px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 button + button {
-    margin-left: 10px;
+    margin-left: 12px;
 }
 
 button[type="button"] {
     background-color: #07012f;
     color: white;
-    font-size: 14px;
-    padding: 8px 12px;
-    margin-top: 10px;
+    padding: 10px 18px;
+    margin-top: 12px;
 }
 
 button[type="button"]:hover {
     background-color: #0c0142;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+button[type="button"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button[type="button"].delete {
     background-color: #e74c3c;
-    padding: 5px 8px;
+    padding: 8px 14px;
 }
 
 button[type="button"].delete:hover {
@@ -189,6 +204,42 @@ button[type="button"]:first-child {
 
 button[type="button"]:first-child:hover {
     background-color: #0c0142;
+}
+
+/* Animation spécifique pour les boutons d'assignation */
+.assign-btn {
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.assign-btn:hover {
+    transform: scale(1.03);
+}
+
+.assign-btn.assigned {
+    background-color: #2ecc71;
+}
+
+/* Style pour les boutons de pagination */
+.pagination-nav {
+    background-color: #f8f9fa;
+    color: #07012f;
+    border: 1px solid #dee2e6;
+}
+
+.pagination-nav:hover:not([disabled]) {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.pagination-nav[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Style pour les boutons actifs */
+.active {
+    background-color: #07012f !important;
+    color: white !important;
 }
 /* Styling spécifique aux options de réponse QCM */
 .answer-option {

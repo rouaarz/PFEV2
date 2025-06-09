@@ -1,6 +1,9 @@
 <!-- Container principal -->
 <div class="container p-4" *ngIf="test">
     <!-- En-tête du test -->
+    <button (click)="goBack()" class="btn btn-outline-primary">
+        <i class="bi bi-arrow-left-circle me-2"></i>
+    </button>
     <div class="d-flex align-items-center justify-content-between mb-4">
         <h2 class="test-title">
             <i class="bi bi-file-earmark-earphones me-3"></i> {{ test.titre }}
@@ -25,17 +28,20 @@
             <p><i class="bi bi-question-circle me-2"></i><strong>Type :</strong> {{ test.type }}</p>
         </div>
         <div class="col-12 col-md-6 mb-2">
-            <p><i class="bi bi-arrow-repeat me-2"></i><strong>Limite de Tentatives :</strong> {{ test.limiteTentatives }}</p>
+            <p><i class="bi bi-arrow-repeat me-2"></i><strong>Limite de Tentatives :</strong> {{ test.limiteTentatives
+                }}</p>
         </div>
         <div class="col-12 col-md-6 mb-2">
-            <p><i class="bi" [ngClass]="test.accesPublic ? 'bi-globe' : 'bi-lock'"></i><strong>Accès :</strong> {{ test.accesPublic ? 'Public' : 'Privé' }}</p>
+            <p><i class="bi" [ngClass]="test.accesPublic ? 'bi-globe' : 'bi-lock'"></i><strong>Accès :</strong> {{
+                test.accesPublic ? 'Public' : 'Privé' }}</p>
         </div>
     </div>
 
     <!-- Statut -->
     <div class="mb-4">
         <p><strong><i class="bi bi-flag me-2"></i>Statut :</strong>
-            <span class="badge rounded-pill" [ngClass]="{'bg-success': test.statut === 'PUBLIE', 'bg-warning': test.statut === 'Brouillon'}">
+            <span class="badge rounded-pill"
+                [ngClass]="{'bg-success': test.statut === 'PUBLIE', 'bg-warning': test.statut === 'Brouillon'}">
                 {{ test.statut }}
             </span>
         </p>
@@ -45,8 +51,8 @@
 
     <div *ngIf="questions.length > 0; else noQuestions">
         <div *ngFor="let question of questions" class="question-card">
-            <p class="font-weight-semibold mb-2"> {{ question.enonce }}</p>
-            <p class="text-muted mb-2">Niveau : <span class="badge bg-info">{{ question.niveau }}</span></p>
+            <p class="font-weight-semibold mb-2"> {{ question.enonce }} | niveau : {{ question.niveau }} | Type : {{
+                question.type }}</p>
 
             <ul class="list-unstyled">
                 <li *ngFor="let option of question.answerOptions"

@@ -210,7 +210,7 @@ export class EditProfileDeveloppeurComponent implements OnInit {
 }*/
 
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeveloppeurService } from '../services/developpeur.service';
 import { CommonModule } from '@angular/common';
@@ -250,7 +250,11 @@ export class EditProfileDeveloppeurComponent implements OnInit {
       experience: [0, [Validators.required, Validators.min(0)]],
       score: [{ value: 0, disabled: true }],
       oldPassword: [''],
-      newPassword: ['', [Validators.minLength(6), Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{6,}$')]]
+      newPassword: ['', [
+    Validators.required,
+    Validators.minLength(8),
+    this.passwordComplexityValidator()
+  ]]
 
     });
   }
@@ -498,6 +502,19 @@ logout() {
     // Rediriger vers la page de login
     this.router.navigate(['/signin']);
   }
+
+  passwordComplexityValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    if (!value) return null;
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+    const valid = hasUpperCase && hasNumber;
+
+    return !valid ? { passwordComplexity: true } : null;
+  };
+}
 
 
 }

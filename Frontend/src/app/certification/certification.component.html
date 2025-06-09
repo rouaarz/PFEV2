@@ -1,0 +1,108 @@
+<div class="certification-portfolio">
+  <!-- En-tête avec logo et bannière -->
+  <div class="certification-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <a [routerLink]="['/']" class="platform-logo" style="text-decoration: none; color: inherit;">
+        <svg viewBox="0 0 24 24" fill="#4361ee">
+          <path d="M12 2L1 12l3 9h16l3-9L12 2zm0 4.5l7.53 5.5L20 19H4l.47-7.5L12 6.5z"/>
+        </svg>
+        <span>TechAssess</span>
+      </a>
+        <div class="col-md-10 text-center">
+          <h1 class="platform-title">
+            <span class="text-tech">Tech</span><span class="text-assess">Assess</span> Certifications
+          </h1>
+          <p class="platform-subtitle">Certifications accréditées par notre comité d'experts techniques</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container certification-container">
+    <!-- Section de vérification -->
+    <div class="verification-banner bg-light py-3 mb-4 text-center">
+      <div class="container">
+        <i class="fas fa-shield-alt verification-icon"></i>
+        <span class="verification-text">Certifications vérifiables en ligne </span>
+      </div>
+    </div>
+
+    <!-- Grille de certifications -->
+    <div class="row">
+      <div class="col-lg-4 col-md-6 mb-4" *ngFor="let certif of certifications">
+        <div class="card certification-card h-100 shadow-lg">
+          <!-- En-tête avec badge de sécurité -->
+          <div class="card-header bg-techassess-gradient">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="card-title mb-0 text-white">{{ certif.niveau | uppercase }}</h5>
+              <span class="security-badge" title="Certification vérifiée">
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+          </div>
+          
+          <!-- Corps de la carte -->
+          <div class="card-body">
+            <!-- Badge holographique -->
+           <a [routerLink]="['/']" class="platform-logo" style="text-decoration: none; color: inherit;">
+        <svg viewBox="0 0 24 24" fill="#4361ee">
+          <path d="M12 2L1 12l3 9h16l3-9L12 2zm0 4.5l7.53 5.5L20 19H4l.47-7.5L12 6.5z"/>
+        </svg>
+        <span>TechAssess</span>
+      </a>
+            
+            <!-- Détails de certification -->
+            <div class="certification-details">
+              <div class="detail-item">
+                <span class="detail-label">ID Certification:</span>
+                <span class="detail-value mono">{{ certif.id }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Date d'obtention:</span>
+                <span class="detail-value">{{ certif.dateObtention | date: 'longDate' }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Nom du candidat:</span>
+                <span class="detail-value highlight">{{ certif.developpeur.username }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Spécialité:</span>
+                <span class="detail-value">{{ certif.developpeur.specialite }}</span>
+              </div>
+            </div>
+            
+            <!-- QR Code de vérification -->
+            
+          </div>
+          
+          <!-- Pied de carte avec actions -->
+          <div class="card-footer bg-transparent">
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-techassess" (click)="downloadCertification(certif)">
+                <i class="fas fa-file-pdf"></i> PDF
+              </button>
+              <button class="btn btn-success" (click)="shareCertification(certif)">
+                <i class="fas fa-share-alt"></i> Partager
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signature officielle -->
+   
+    <!-- Message quand aucune certification -->
+    <div *ngIf="certifications.length === 0" class="empty-certification text-center py-5">
+      <div class="empty-icon mb-4">
+        <i class="fas fa-certificate fa-4x text-muted"></i>
+      </div>
+      <h3 class="text-tech">Aucune certification enregistrée</h3>
+      <p class="text-muted">Votre portfolio de certifications TechAssess apparaîtra ici après obtention.</p>
+      <button class="btn btn-techassess mt-3">
+        <i class="fas fa-rocket"></i> Passer une certification
+      </button>
+    </div>
+  </div>
+</div>

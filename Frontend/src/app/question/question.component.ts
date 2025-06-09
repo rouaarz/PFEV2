@@ -104,7 +104,8 @@ export class QuestionComponent implements OnInit, OnDestroy {
   removeCodeAnswer(index: number) {
     this.codeAnswers.removeAt(index);
   }
-
+techOptions: string[] = ['C', 'C++', 'Java', 'Python', 'JavaScript', 'TypeScript', 
+  'PHP', 'SQL',  'Kotlin','React.js', 'Vue.js', 'Angular','HTML','CSS'];
   validateQCM(): boolean {
     return !this.isQCM || this.answerOptions.controls.some(option => option.get('isCorrect')?.value);
   }
@@ -138,89 +139,111 @@ export class QuestionComponent implements OnInit, OnDestroy {
   }
 
 
-  // submitQuestion() {
-  //   // if (!this.validateQCM()) {
-  //   //   alert('Vérifiez que tous les champs sont bien remplis et choisir une reponse correcte !');
-  //   //   return;
-  //   // }
-  //   if (!this.validateQCM()) {
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Erreur',
-  //       text: 'Vérifiez que tous les champs sont bien remplis et choisir une réponse correcte !'
-  //     });
-  //     return;
-  //   }
+// submitQuestion() {
+//   if (!this.validateQCM()) {
+//     Swal.fire({
+//       icon: 'error',
+//       title: 'Erreur',
+//       text: 'Vérifiez que tous les champs sont bien remplis et choisir une réponse correcte !'
+//     });
+//     return;
+//   }
 
-  //   const questionData: Question = this.questionForm.value;
-  //   if (questionData.type === 'Code' && this.codeAnswers.length > 0) {
-  //     questionData.language = this.codeAnswers.at(0).get('language')?.value;
-  //   }
+//   const questionData: Question = this.questionForm.value;
+//   if (questionData.type === 'Code' && this.codeAnswers.length > 0) {
+//     questionData.language = this.codeAnswers.at(0).get('language')?.value;
+//   }
 
-  //   if (this.editingQuestion) {
-  //     this.subscriptions.add(
-  //       this.questionService.updateQuestion(this.editingQuestion.id, questionData).subscribe(() => {
-  //         this.resetForm();
-  //         this.loadQuestions();
-  //         this.router.navigate(['/admin/List-Question']);
-  //       })
-  //     );
-  //   } else {
-  //     this.subscriptions.add(
-  //       this.questionService.addQuestion(questionData, this.token).subscribe(() => {
-  //         this.resetForm();
-  //         this.loadQuestions();
-  //         this.router.navigate(['/admin/List-Question']);
-  //       })
-  //     );
-  //   }
-  // }
+//   if (this.editingQuestion) {
+//     this.subscriptions.add(
+//       this.questionService.updateQuestion(this.editingQuestion.id, questionData).subscribe(() => {
+//         Swal.fire({
+//           icon: 'success',
+//           title: 'Question mise à jour avec succès !',
+//           showConfirmButton: false,
+//           timer: 1500
+//         }).then(() => {
+//           this.resetForm();
+//           this.loadQuestions();
+//           this.router.navigate(['/admin/List-Question']);
+//         });
+//       })
+//     );
+//   } else {
+//     this.subscriptions.add(
+//       this.questionService.addQuestion(questionData, this.token).subscribe(() => {
+//         Swal.fire({
+//           icon: 'success',
+//           title: 'Question ajoutée avec succès !',
+//           showConfirmButton: false,
+//           timer: 1500
+//         }).then(() => {
+//           this.resetForm();
+//           this.loadQuestions();
+//           this.router.navigate(['/admin/List-Question']);
+//         });
+//       })
+//     );
+//   }
+// }
 submitQuestion() {
   if (!this.validateQCM()) {
     Swal.fire({
       icon: 'error',
       title: 'Erreur',
-      text: 'Vérifiez que tous les champs sont bien remplis et choisir une réponse correcte !'
+      text: 'Vérifiez que tous les champs sont bien remplis et choisissez une réponse correcte !'
     });
     return;
   }
 
-  const questionData: Question = this.questionForm.value;
-  if (questionData.type === 'Code' && this.codeAnswers.length > 0) {
-    questionData.language = this.codeAnswers.at(0).get('language')?.value;
-  }
+  Swal.fire({
+    title: 'Confirmer l\'enregistrement ?',
+    text: this.editingQuestion ? 'Voulez-vous vraiment mettre à jour cette question ?' : 'Voulez-vous vraiment ajouter cette nouvelle question ?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Oui',
+    cancelButtonText: 'Annuler'
+  }).then(result => {
+    if (result.isConfirmed) {
+      const questionData: Question = this.questionForm.value;
 
-  if (this.editingQuestion) {
-    this.subscriptions.add(
-      this.questionService.updateQuestion(this.editingQuestion.id, questionData).subscribe(() => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Question mise à jour avec succès !',
-          showConfirmButton: false,
-          timer: 1500
-        }).then(() => {
-          this.resetForm();
-          this.loadQuestions();
-          this.router.navigate(['/admin/List-Question']);
-        });
-      })
-    );
-  } else {
-    this.subscriptions.add(
-      this.questionService.addQuestion(questionData, this.token).subscribe(() => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Question ajoutée avec succès !',
-          showConfirmButton: false,
-          timer: 1500
-        }).then(() => {
-          this.resetForm();
-          this.loadQuestions();
-          this.router.navigate(['/admin/List-Question']);
-        });
-      })
-    );
-  }
+      if (questionData.type === 'Code' && this.codeAnswers.length > 0) {
+        questionData.language = this.codeAnswers.at(0).get('language')?.value;
+      }
+
+      if (this.editingQuestion) {
+        this.subscriptions.add(
+          this.questionService.updateQuestion(this.editingQuestion.id, questionData).subscribe(() => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Question mise à jour avec succès !',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              this.resetForm();
+              this.loadQuestions();
+              this.router.navigate(['/admin/List-Question']);
+            });
+          })
+        );
+      } else {
+        this.subscriptions.add(
+          this.questionService.addQuestion(questionData, this.token).subscribe(() => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Question ajoutée avec succès !',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              this.resetForm();
+              this.loadQuestions();
+              this.router.navigate(['/admin/List-Question']);
+            });
+          })
+        );
+      }
+    }
+  });
 }
 
 

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { PublishTestComponent } from '../../../components/adminCreatetest/publish-test/publish-test.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-test-management',
@@ -86,9 +87,39 @@ export class TestManagementComponent implements OnInit {
     this.router.navigate(['/admin/test-details', testId]);
   }
 
-  deleteTest(testId: number) {
-    // À implémenter plus tard
-  }
+ deleteTest(testId: number) {
+  Swal.fire({
+    title: 'Êtes-vous sûr ?',
+    text: 'Cette action est irréversible ! Le test sera définitivement supprimé.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Oui, supprimer',
+    cancelButtonText: 'Annuler'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.testService.deleteTest(testId, this.token).subscribe(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Test supprimé avec succès !',
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+        // Tu peux aussi actualiser la liste après suppression
+        this.loadTests?.();
+      }, error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur',
+          text: 'Une erreur est survenue lors de la suppression du test.'
+        });
+      });
+    }
+  });
+}
+
 
   // ✅ Méthode pour filtrer les tests dynamiquement
   filteredTests() {

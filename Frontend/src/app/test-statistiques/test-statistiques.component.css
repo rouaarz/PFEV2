@@ -48,7 +48,27 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 15px;
 }
+.btn-export-pdf {
+  background-color: #3498db; 
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
 
+.btn-export-pdf:hover {
+  background-color: blue; /* Rouge plus foncé au survol */
+}
+
+.btn-export-pdf i {
+  font-size: 1rem;
+}
 /* Carte KPI */
 .card.kpi {
   background-color: #f9f9f9;
