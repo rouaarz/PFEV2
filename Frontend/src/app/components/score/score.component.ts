@@ -146,6 +146,7 @@ export class ScoreComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
     this.testId = Number(this.route.snapshot.paramMap.get('testId'));
     this.developpeurId = Number(this.route.snapshot.paramMap.get('developpeurId'));
     this.token = localStorage.getItem('accessToken') || '';
@@ -179,6 +180,12 @@ export class ScoreComponent implements OnInit {
   }
 
   fetchScore() {
+    if (!localStorage.getItem('hasRefreshed')) {
+    localStorage.setItem('hasRefreshed', 'true');
+    window.location.reload();
+    return;
+  }
+  localStorage.removeItem('hasRefreshed');
   this.scoreService.getScore(this.testId, this.developpeurId, this.token).subscribe({
     next: (data) => {
       if (data.status === 'success') {
@@ -223,33 +230,6 @@ export class ScoreComponent implements OnInit {
 }
 
 
-  // suggestNewTest(isNext: boolean) {
-  //   let nextLevel = this.testNiveau;
-
-  //   switch (this.testNiveau.toLowerCase()) {
-  //     case 'facile':
-  //       nextLevel = isNext ? 'Intermédiaire' : 'Facile';
-  //       break;
-  //     case 'intermédiaire':
-  //       nextLevel = isNext ? 'Difficile' : 'Intermédiaire';
-  //       break;
-  //     case 'difficile':
-  //       nextLevel = 'Difficile'; // Pas de niveau supérieur
-  //       break;
-  //     default:
-  //       nextLevel = 'Facile';
-  //   }
-
-  //   this.testService.getTestsSuggeres(this.email, this.testTechnologie, nextLevel, isNext).subscribe({
-  //     next: (tests) => {
-        
-  //         this.suggestedTest = tests;
-  //     },
-  //     error: () => {
-  //       console.error('Erreur lors de la récupération des tests suggérés');
-  //     }
-  //   });
-  // }
 
   repasserTest() {
     this.router.navigateByUrl(`/test/${this.testId}/questions`);

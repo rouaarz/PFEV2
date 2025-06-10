@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination'; // Ajoutez l'import pour la pagination
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-comptes-actifs',
@@ -36,22 +37,64 @@ export class ComptesActifsComponent implements OnInit {
     });
   }
 
-  deactivateUser(email: string) {
-    // Afficher la boîte de confirmation
-    const confirmDeactivation = window.confirm('Êtes-vous sûr de vouloir désactiver ce compte ?');
+  // deactivateUser(email: string) {
+  //   // Afficher la boîte de confirmation
+  //   const confirmDeactivation = window.confirm('Êtes-vous sûr de vouloir désactiver ce compte ?');
   
-    if (confirmDeactivation) {
-      // Si l'utilisateur confirme, procéder à la désactivation
+  //   if (confirmDeactivation) {
+  //     // Si l'utilisateur confirme, procéder à la désactivation
+  //     this.adminService.desactiverCompte(email).subscribe({
+  //       next: () => {
+  //         this.filteredUsers = this.filteredUsers.filter(user => user.email !== email);
+  //         this.loadActiveUsers(); // Rafraîchir la liste
+  //       },
+  //       error: () => this.error = 'Erreur lors de la désactivation'
+  //     });
+  //   }
+  // }
+  deactivateUser(email: string) {
+  Swal.fire({
+    title: 'Désactiver ce compte ?',
+    text: 'Cette action désactivera le compte utilisateur.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Oui, désactiver',
+    cancelButtonText: 'Annuler'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Afficher un loader pendant le traitement
+      Swal.fire({
+        title: 'Traitement en cours...',
+        text: 'Veuillez patienter pendant la désactivation du compte.',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       this.adminService.desactiverCompte(email).subscribe({
         next: () => {
           this.filteredUsers = this.filteredUsers.filter(user => user.email !== email);
-          this.loadActiveUsers(); // Rafraîchir la liste
+          this.loadActiveUsers(); // Actualiser la liste
+          
+          Swal.fire(
+            'Désactivé',
+            'Le compte a été désactivé avec succès.',
+            'success'
+          );
         },
-        error: () => this.error = 'Erreur lors de la désactivation'
+        error: () => {
+          this.error = 'Erreur lors de la désactivation';
+          Swal.fire(
+            'Erreur',
+            'Une erreur est survenue lors de la désactivation.',
+            'error'
+          );
+        }
       });
     }
-  }
-  
+  });
+}
   searchComptes() {
     if (this.searchTerm.trim()) {
       this.filteredUsers = this.usersActifs.filter(user =>

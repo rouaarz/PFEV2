@@ -180,7 +180,8 @@ export class NavbarCompComponent implements OnInit {
   newItemsCount = 0;
   roles = JSON.parse(localStorage.getItem('roles') || '[]');
   user!: User ;
-  
+ userId = localStorage.getItem('developpeurId');
+
 
   userPhotoUrl: string | null = null;
   isUserMenuOpen=false;
@@ -228,9 +229,8 @@ export class NavbarCompComponent implements OnInit {
     ngOnInit(): void {
       this.loadNotifications();
     
-      const userId = localStorage.getItem('developpeurId');
-      if (userId) {
-        this.userService.getUserById(+userId).subscribe({
+      if (this.userId) {
+        this.userService.getUserById(+this.userId).subscribe({
           next: (userData) => {
             this.user = userData;
           },
@@ -270,14 +270,15 @@ export class NavbarCompComponent implements OnInit {
    
       // Logique pour aller au profil utilisateur
    viewProfile() {
-    
+        this.router.navigate(['admin/edit', this.userId]);
+
   }
 
   
     manageAccounts() {
       this.isUserMenuOpen = false;
       // Logique pour la gestion des comptes (ex: redirection vers une autre page)
-      this.router.navigate(['/admin/users']); // exemple
+      this.router.navigate(['admin/activation-Compte']); // exemple
     }
   
 

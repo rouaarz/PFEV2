@@ -22,7 +22,26 @@
   .logout-btn:hover {
     background-color: #ff0000; /* Rouge foncé au survol */
   }
-  
+  .platform-logo {
+  max-height: 80px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.platform-logo svg {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.platform-logo:hover svg {
+  transform: rotate(15deg);
+  filter: drop-shadow(0 4px 8px rgba(67, 97, 238, 0.3));
+}
+
   a{
     text-decoration: none;
   }
@@ -72,6 +91,18 @@
   box-shadow: none;
 }
 
+.platform-logo svg {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.platform-logo:hover svg {
+  transform: rotate(15deg);
+  filter: drop-shadow(0 4px 8px rgba(67, 97, 238, 0.3));
+}
 
 .log{
 width: 465px;

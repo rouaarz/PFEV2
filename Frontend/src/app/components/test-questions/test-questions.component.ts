@@ -634,10 +634,7 @@ export class TestQuestionsComponent implements OnInit {
   }
 
   terminerTest() {
-    if (Object.keys(this.responses).length === 0) {
-      alert("⚠ Vous devez répondre à au moins une question avant de terminer le test.");
-      return;
-    }
+    
     // if (this.markedQuestions.length > 0) {
     //   const confirmFinish = confirm(`⚠ Vous avez ${this.markedQuestions.length} question(s) marquée(s). Voulez-vous vraiment terminer le test ?`);
     //   if (!confirmFinish) {
@@ -653,6 +650,8 @@ export class TestQuestionsComponent implements OnInit {
     if (this.testTermine) return; // ✅ Évite double soumission
     this.testTermine = true; // ✅ Bloque une autre tentative
     // 🟢 Supprimer le temps sauvegardé
+    clearInterval(this.timerInterval); // Stopper le timer
+
     localStorage.removeItem(`remainingTime_test_${this.testId}`);
     console.log("🔍 developpeurId dans terminerTest():", this.developpeurId);
     if (!this.developpeurId || !this.testId) {
@@ -668,6 +667,10 @@ export class TestQuestionsComponent implements OnInit {
       this.ngOnInit();
     }
     else {
+      if (Object.keys(this.responses).length === 0) {
+      alert("⚠ Vous devez répondre à au moins une question avant de terminer le test.");
+      return;
+    }
       this.onFinishTest();
     }
     this.router.navigate(['/test', this.testId, 'score', this.developpeurId]);
@@ -832,29 +835,29 @@ export class TestQuestionsComponent implements OnInit {
     );
   }
 
-  
+
   saveProgressToLocalStorage() {
-  const progressList = JSON.parse(localStorage.getItem('test_progress_list') || '[]');
-  
-  // Compter seulement les réponses pour CE test
-  const answeredQuestions = Object.keys(this.responses).length;
-  
-  const currentProgress = {
-    testId: this.testId,
-    totalQuestions: this.questions.length,
-    answeredQuestions: answeredQuestions,
-    lastUpdated: new Date().toISOString()
-  };
+    const progressList = JSON.parse(localStorage.getItem('test_progress_list') || '[]');
 
-  const existingIndex = progressList.findIndex((p: any) => p.testId === this.testId);
-  if (existingIndex !== -1) {
-    progressList[existingIndex] = currentProgress;
-  } else {
-    progressList.push(currentProgress);
+    // Compter seulement les réponses pour CE test
+    const answeredQuestions = Object.keys(this.responses).length;
+
+    const currentProgress = {
+      testId: this.testId,
+      totalQuestions: this.questions.length,
+      answeredQuestions: answeredQuestions,
+      lastUpdated: new Date().toISOString()
+    };
+
+    const existingIndex = progressList.findIndex((p: any) => p.testId === this.testId);
+    if (existingIndex !== -1) {
+      progressList[existingIndex] = currentProgress;
+    } else {
+      progressList.push(currentProgress);
+    }
+
+    localStorage.setItem('test_progress_list', JSON.stringify(progressList));
   }
-
-  localStorage.setItem('test_progress_list', JSON.stringify(progressList));
-}
   fetchScore() {
     this.scoreService.getScore(this.testId, this.developpeurId, this.token).subscribe({
       next: (data) => {

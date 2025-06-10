@@ -1,73 +1,28 @@
-<div class="app-container">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <div class="sidebar-modern">
-    <div class="sidebar-brand">
-      <div class="brand-logo">
-        <i class="fas fa-code"></i>
+<div>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <div class="main-content-full">
+    <div class="welcome-section">
+    <div class="welcome-card">
+      <div class="developer-avatar">
+      <img [src]="userPhotoUrl || 'assets/default-avatar.png'" alt="User">
       </div>
-      <span class="brand-name">DevProfile</span>
-    </div>
-    
-    <div class="sidebar-user">
-      <img [src]="devPhoto" alt="Photo" class="user-avatar">
-      <div class="user-meta">
-        <h4 class="user-name">{{ profileForm.get('username')?.value || 'Utilisateur' }}</h4>
-        <p class="user-title">{{ profileForm.get('specialite')?.value || 'Développeur' }}</p>
+      <div class="welcome-message">
+        <h1>Bienvenue sur votre profil</h1>
       </div>
-    </div>
-    
-    <nav class="sidebar-nav">
-      <ul>
-        <li class="active">
-          <a href="#">
-            <i class="fas fa-user"></i>
-            <span>Informations</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-shield-alt"></i>
-            <span>Sécurité</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-cog"></i>
-            <span>Paramètres</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-bell"></i>
-            <span>Notifications</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    
-    <div class="sidebar-footer">
-      <button class="btn-logout"(click)="logout()">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Déconnexion</span>
-      </button>
     </div>
   </div>
-
-  <!-- Main Content -->
-  <div class="main-content-modern">
-    <div class="content-header">
-      <h1><i class="fas fa-user-cog me-2"></i>Profil Développeur</h1>
-      <div class="breadcrumb">
-        <span>Tableau de bord</span> / <span>Profil</span>
-      </div>
-    </div>
     
     <div class="content-body">
       <div class="profile-card">
         <div class="card-tabs">
-          <button class="tab-btn active">Profil</button>
-          <button class="tab-btn">Sécurité</button>
-          <button class="tab-btn">Préférences</button>
+          <button class="tab-btn active" (click)="scrollToSection('profil-section')">
+  <i class="fas fa-user"></i> Profil
+</button>
+<button class="tab-btn" (click)="scrollToSection('securite-section')">
+  <i class="fas fa-shield-alt"></i> Sécurité
+</button>
+         
         </div>
         
         <div class="card-content">
@@ -76,7 +31,7 @@
             <div class="profile-form">
               <form [formGroup]="profileForm" novalidate>
                 <!-- Section Informations -->
-                <section class="form-section">
+                <section class="form-section" id="profil-section">
                   <h3 class="section-title">
                     <i class="fas fa-user"></i>
                     Informations Personnelles
@@ -157,62 +112,60 @@
                 </section>
                 
                 <!-- Section Sécurité -->
-                <section class="form-section">
+                <section class="form-section" id="securite-section">
                   <h3 class="section-title">
                     <i class="fas fa-shield-alt"></i>
                     Sécurité
                   </h3>
                   
                   <!-- Password -->
-                 <div class="form-field password-field">
-  <label>Ancien mot de passe</label>
-  <div class="password-input">
-    <input formControlName="oldPassword"
-           [type]="showOldPassword ? 'text' : 'password'"
-           placeholder="••••••••">
-    <i class="fas toggle-password"
-       [ngClass]="showOldPassword ? 'fa-eye-slash' : 'fa-eye'"
-       (click)="showOldPassword = !showOldPassword"></i>
-  </div>
-</div>
-
+                  <div class="form-field password-field">
+                    <label>Ancien mot de passe</label>
+                    <div class="password-input">
+                      <input formControlName="oldPassword"
+                             [type]="showOldPassword ? 'text' : 'password'"
+                             placeholder="••••••••">
+                      <i class="fas toggle-password"
+                         [ngClass]="showOldPassword ? 'fa-eye-slash' : 'fa-eye'"
+                         (click)="showOldPassword = !showOldPassword"></i>
+                    </div>
+                  </div>
                   
                   <div class="form-field password-field">
-  <label>Nouveau mot de passe</label>
-  <div class="password-input">
-    <input formControlName="newPassword" 
-           [type]="showNewPassword ? 'text' : 'password'" 
-           placeholder="••••••••">
-    <i class="fas {{showNewPassword ? 'fa-eye-slash' : 'fa-eye'}} toggle-password"
-       (click)="showNewPassword = !showNewPassword"></i>
-  </div>
+                    <label>Nouveau mot de passe</label>
+                    <div class="password-input">
+                      <input formControlName="newPassword" 
+                             [type]="showNewPassword ? 'text' : 'password'" 
+                             placeholder="••••••••">
+                      <i class="fas {{showNewPassword ? 'fa-eye-slash' : 'fa-eye'}} toggle-password"
+                         (click)="showNewPassword = !showNewPassword"></i>
+                    </div>
 
-  <div class="error-message mt-1" *ngIf="profileForm.get('newPassword')?.touched">
-    <span *ngIf="profileForm.get('newPassword')?.hasError('required')">
-      Le mot de passe est requis
-    </span>
+                    <div class="error-message mt-1" *ngIf="profileForm.get('newPassword')?.touched">
+                      <span *ngIf="profileForm.get('newPassword')?.hasError('required')">
+                        Le mot de passe est requis
+                      </span>
 
-    <div *ngIf="!profileForm.get('newPassword')?.hasError('required')">
-      <ul class="error-list">
-        <li [class.invalid]="profileForm.get('newPassword')?.hasError('minlength')">
-          <i class="fas" [ngClass]="{
-            'fa-times': profileForm.get('newPassword')?.hasError('minlength'),
-            'fa-check': !profileForm.get('newPassword')?.hasError('minlength')
-          }"></i>
-          Minimum 8 caractères
-        </li>
-        <li [class.invalid]="profileForm.get('newPassword')?.hasError('passwordComplexity')">
-          <i class="fas" [ngClass]="{
-            'fa-times': profileForm.get('newPassword')?.hasError('passwordComplexity'),
-            'fa-check': !profileForm.get('newPassword')?.hasError('passwordComplexity')
-          }"></i>
-          Contenir une majuscule et un chiffre
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
+                      <div *ngIf="!profileForm.get('newPassword')?.hasError('required')">
+                        <ul class="error-list">
+                          <li [class.invalid]="profileForm.get('newPassword')?.hasError('minlength')">
+                            <i class="fas" [ngClass]="{
+                              'fa-times': profileForm.get('newPassword')?.hasError('minlength'),
+                              'fa-check': !profileForm.get('newPassword')?.hasError('minlength')
+                            }"></i>
+                            Minimum 8 caractères
+                          </li>
+                          <li [class.invalid]="profileForm.get('newPassword')?.hasError('passwordComplexity')">
+                            <i class="fas" [ngClass]="{
+                              'fa-times': profileForm.get('newPassword')?.hasError('passwordComplexity'),
+                              'fa-check': !profileForm.get('newPassword')?.hasError('passwordComplexity')
+                            }"></i>
+                            Contenir une majuscule et un chiffre
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                   
                   <button class="btn-update-password"
                           (click)="updatePassword()"
@@ -223,12 +176,11 @@
                 
                 <!-- Actions -->
                 <div class="form-actions">
-                  <button class="btn-cancel" (click)="cancel()">
+                  <button class="btn-cancel" (click)="resetForm()">
                     <i class="fas fa-times"></i> Annuler
                   </button>
                   <button class="btn-save-all"
-                          (click)="updateAll()"
-                          [disabled]="profileForm.invalid">
+                          (click)="updateAll()">
                     <i class="fas fa-save"></i> Enregistrer tout
                   </button>
                 </div>
@@ -268,13 +220,13 @@
                   <div class="stat-label">Années d'expérience</div>
                 </div>
                 <div class="stat-item">
-  <div class="stat-value tech-stat" 
-       [attr.data-tooltip]="getTechNames()"
-       [class.has-tooltip]="hasTechnologies()">
-    {{ (profileForm.get('technologies')?.value?.length || '0') }}
-  </div>
-  <div class="stat-label">Technologies</div>
-</div>
+                  <div class="stat-value tech-stat" 
+                       [attr.data-tooltip]="getTechNames()"
+                       [class.has-tooltip]="hasTechnologies()">
+                    {{ (profileForm.get('technologies')?.value?.length || '0') }}
+                  </div>
+                  <div class="stat-label">Technologies</div>
+                </div>
               </div>
             </div>
           </div>

@@ -9,6 +9,7 @@ import { Router } from '@angular/router'; // <-- en haut
 
 import { TestGenerationRequest } from '../../models/TestGenerationRequest ';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-generate-test',
@@ -42,8 +43,8 @@ export class GenerateTestComponent {
     pointsParQuestion: 5,
   };
 
-  techOptions = ['C', 'C++', 'Java', 'Python', 'JavaScript', 'TypeScript', 
-  'PHP', 'SQL',  'Kotlin','React.js', 'Vue.js', 'Angular','HTML','CSS'];
+  techOptions = ['C', 'C++', 'Java', 'Python', 'JavaScript', 'TypeScript',
+    'PHP', 'SQL', 'Kotlin', 'React.js', 'Vue.js', 'Angular', 'HTML', 'CSS'];
   questionsPreview: any[] = [];
   selectedTech: string[] = [];
 
@@ -53,7 +54,7 @@ export class GenerateTestComponent {
   }
   token = localStorage.getItem('accessToken') ?? '';
   testId: number | null = null;
-  constructor(private testService: TestService, private questionService: QuestionService, private modalService: NgbModal, private router: Router 
+  constructor(private testService: TestService, private questionService: QuestionService, private modalService: NgbModal, private router: Router
   ) { }
   // openPublishTestModal() {
   //   const modalRef = this.modalService.open(PublishTestComponent); // Ouvre la modal
@@ -71,115 +72,267 @@ export class GenerateTestComponent {
 
 
   // Ajout de logs dans la fonction generateTest
+  // validateForm() {
+  //   // Vérification du titre
+  //   if (!this.request.titre.trim()) {
+  //     alert('Titre est obligatoire.');
+  //     return false;
+  //   }
+
+  //   // Vérification de la durée (doit être supérieur à 0)
+  //   if (this.request.duree <= 0) {
+  //     alert('La durée doit être supérieure à 0.');
+  //     return false;
+  //   }
+
+  //   // Vérification du nombre total de questions (doit être supérieur à 0)
+  //   if (this.request.nbQuestions <= 0) {
+  //     alert('Le nombre total de questions doit être supérieur à 0.');
+  //     return false;
+  //   }
+
+  //   // Vérification de la sélection du type de test
+  //   if (!this.request.type) {
+  //     alert('Veuillez sélectionner un type de test.');
+  //     return false;
+  //   }
+  //   this.request.technologies = [...this.selectedTech];
+
+  //   // Vérification des technologies sélectionnées
+  //   if (this.request.technologies.length === 0) {
+  //     alert('Veuillez sélectionner au moins une technologie.');
+  //     return false;
+  //   }
+
+  //   // Validation spécifique aux types de test pour les questions
+  //   if (this.request.type === 'QCM' || this.request.type === 'Mixte') {
+  //     if (this.request.nbQcmFacile <= 0 && this.request.nbQcmMoyen <= 0 && this.request.nbQcmDifficile <= 0) {
+  //       alert('Vous devez définir au moins une question QCM.');
+  //       return false;
+  //     }
+  //   }
+
+  //   if (this.request.type === 'Code' || this.request.type === 'Mixte') {
+  //     if (this.request.nbCodeFacile <= 0 && this.request.nbCodeMoyen <= 0 && this.request.nbCodeDifficile <= 0) {
+  //       alert('Vous devez définir au moins une question de code.');
+  //       return false;
+  //     }
+  //   }
+
+  //   if (this.request.type === 'text' || this.request.type === 'Mixte') {
+  //     if (this.request.nbTexteFacile <= 0 && this.request.nbTexteMoyen <= 0 && this.request.nbTexteDifficile <= 0) {
+  //       alert('Vous devez définir au moins une question texte.');
+  //       return false;
+  //     }
+  //   }
+
+  //   return true; // Si tout est valide
+  // }
   validateForm() {
     // Vérification du titre
     if (!this.request.titre.trim()) {
-      alert('Titre est obligatoire.');
+      Swal.fire('Champ requis', 'Le titre est obligatoire.', 'warning');
       return false;
     }
 
-    // Vérification de la durée (doit être supérieur à 0)
+    // Vérification de la durée
     if (this.request.duree <= 0) {
-      alert('La durée doit être supérieure à 0.');
+      Swal.fire('Durée invalide', 'La durée doit être supérieure à 0.', 'warning');
       return false;
     }
 
-    // Vérification du nombre total de questions (doit être supérieur à 0)
+    // Vérification du nombre total de questions
     if (this.request.nbQuestions <= 0) {
-      alert('Le nombre total de questions doit être supérieur à 0.');
+      Swal.fire('Nombre de questions requis', 'Le nombre total de questions doit être supérieur à 0.', 'warning');
       return false;
     }
 
-    // Vérification de la sélection du type de test
+    // Vérification du type de test
     if (!this.request.type) {
-      alert('Veuillez sélectionner un type de test.');
+      Swal.fire('Type de test', 'Veuillez sélectionner un type de test.', 'warning');
       return false;
     }
+
+    // Affecter les technologies sélectionnées
     this.request.technologies = [...this.selectedTech];
 
-    // Vérification des technologies sélectionnées
+    // Vérification des technologies
     if (this.request.technologies.length === 0) {
-      alert('Veuillez sélectionner au moins une technologie.');
+      Swal.fire('Technologies manquantes', 'Veuillez sélectionner au moins une technologie.', 'warning');
       return false;
     }
 
-    // Validation spécifique aux types de test pour les questions
+    // Vérification des questions QCM
     if (this.request.type === 'QCM' || this.request.type === 'Mixte') {
-      if (this.request.nbQcmFacile <= 0 && this.request.nbQcmMoyen <= 0 && this.request.nbQcmDifficile <= 0) {
-        alert('Vous devez définir au moins une question QCM.');
+      if (
+        this.request.nbQcmFacile <= 0 &&
+        this.request.nbQcmMoyen <= 0 &&
+        this.request.nbQcmDifficile <= 0
+      ) {
+        Swal.fire('Questions QCM', 'Vous devez définir au moins une question QCM.', 'warning');
         return false;
       }
     }
 
+    // Vérification des questions de code
     if (this.request.type === 'Code' || this.request.type === 'Mixte') {
-      if (this.request.nbCodeFacile <= 0 && this.request.nbCodeMoyen <= 0 && this.request.nbCodeDifficile <= 0) {
-        alert('Vous devez définir au moins une question de code.');
+      if (
+        this.request.nbCodeFacile <= 0 &&
+        this.request.nbCodeMoyen <= 0 &&
+        this.request.nbCodeDifficile <= 0
+      ) {
+        Swal.fire('Questions Code', 'Vous devez définir au moins une question de code.', 'warning');
         return false;
       }
     }
 
+    // Vérification des questions texte
     if (this.request.type === 'text' || this.request.type === 'Mixte') {
-      if (this.request.nbTexteFacile <= 0 && this.request.nbTexteMoyen <= 0 && this.request.nbTexteDifficile <= 0) {
-        alert('Vous devez définir au moins une question texte.');
+      if (
+        this.request.nbTexteFacile <= 0 &&
+        this.request.nbTexteMoyen <= 0 &&
+        this.request.nbTexteDifficile <= 0
+      ) {
+        Swal.fire('Questions Texte', 'Vous devez définir au moins une question texte.', 'warning');
         return false;
       }
     }
 
-    return true; // Si tout est valide
+    // ✅ Tout est bon
+    return true;
   }
-
-
-generateQuestionsPreview() {
-  if (!this.validateForm()) {
-    return;
-  }
-
-  const token = localStorage.getItem('accessToken');
-  if (!token) return alert('🚫 Token manquant');
-
-  this.request.technologies = [...this.selectedTech];
-
-  console.log('📤 Données envoyées pour générer les questions:', this.request);
-
-  const requestData = this.request;
-
-  // 1. Générer les questions en premier
-  this.testService.generateQuestions(requestData, token).subscribe({
-    next: (response) => {
-      this.questionsPreview = response.questions;
-      console.log('✅ Questions générées:', response.questions);
-      console.log('ℹ️ Message:', response.message);
-
-      // 2. Une fois les questions générées, créer le test
-      const testToSend = {
-        titre: requestData.titre,
-        description: requestData.description,
-        duree: requestData.duree,
-        nbQuestions: requestData.nbQuestions,
-        niveauDifficulte: requestData.niveauDifficulte,
-        type: requestData.type,
-        technologies: requestData.technologies,
-      };
-
-      this.testService.createTest(testToSend, token).subscribe({
-        next: (response) => {
-          this.testId = response.id;
-          console.log('📝 Test créé avec succès:', response);
-          alert('✅ Test créé avec succès après génération des questions !');
-        },
-        error: (err) => {
-          console.error('❌ Erreur lors de la création du test:', err);
-          alert('❌ Erreur lors de la création du test');
-        }
-      });
-    },
-    error: (err) => {
-      console.error('❌ Erreur lors de la génération des questions:', err);
-      const errorMessage = err.error?.error || 'Erreur inconnue lors de la génération';
-      alert('❌ ' + errorMessage);
+  generateQuestionsPreview() {
+    if (!this.validateForm()) {
+      return;
     }
-  });
-}
+
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Token manquant',
+        text: '🚫 Veuillez vous reconnecter.',
+      });
+      return;
+    }
+
+    this.request.technologies = [...this.selectedTech];
+    const requestData = this.request;
+
+    console.log('📤 Données envoyées pour générer les questions:', requestData);
+
+    Swal.fire({
+      title: 'Génération des questions...',
+      text: 'Veuillez patienter...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    this.testService.generateQuestions(requestData, token).subscribe({
+      next: (response) => {
+        this.questionsPreview = response.questions;
+        console.log('✅ Questions générées:', response.questions);
+        console.log('ℹ️ Message:', response.message);
+
+        // Créer ensuite le test
+        const testToSend = {
+          titre: requestData.titre,
+          description: requestData.description,
+          duree: requestData.duree,
+          nbQuestions: requestData.nbQuestions,
+          niveauDifficulte: requestData.niveauDifficulte,
+          type: requestData.type,
+          technologies: requestData.technologies,
+        };
+
+        this.testService.createTest(testToSend, token).subscribe({
+          next: (response) => {
+            this.testId = response.id;
+            console.log('📝 Test créé avec succès:', response);
+
+            Swal.fire({
+              icon: 'success',
+              title: 'Test créé avec succès 🎉',
+              text: 'Les questions ont été générées et le test a été enregistré.',
+            });
+          },
+          error: (err) => {
+            console.error('❌ Erreur lors de la création du test:', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur lors de la création du test',
+              text: err.error?.message || 'Une erreur est survenue lors de l\'enregistrement.',
+            });
+          }
+        });
+      },
+      error: (err) => {
+        console.error('❌ Erreur lors de la génération des questions:', err);
+        const errorMessage = err.error?.error || 'Erreur inconnue lors de la génération';
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur lors de la génération des questions',
+          text: '❌ ' + errorMessage,
+        });
+      }
+    });
+  }
+
+
+  // generateQuestionsPreview() {
+  //   if (!this.validateForm()) {
+  //     return;
+  //   }
+
+  //   const token = localStorage.getItem('accessToken');
+  //   if (!token) return alert('🚫 Token manquant');
+
+  //   this.request.technologies = [...this.selectedTech];
+
+  //   console.log('📤 Données envoyées pour générer les questions:', this.request);
+
+  //   const requestData = this.request;
+
+  //   // 1. Générer les questions en premier
+  //   this.testService.generateQuestions(requestData, token).subscribe({
+  //     next: (response) => {
+  //       this.questionsPreview = response.questions;
+  //       console.log('✅ Questions générées:', response.questions);
+  //       console.log('ℹ️ Message:', response.message);
+
+  //       // 2. Une fois les questions générées, créer le test
+  //       const testToSend = {
+  //         titre: requestData.titre,
+  //         description: requestData.description,
+  //         duree: requestData.duree,
+  //         nbQuestions: requestData.nbQuestions,
+  //         niveauDifficulte: requestData.niveauDifficulte,
+  //         type: requestData.type,
+  //         technologies: requestData.technologies,
+  //       };
+
+  //       this.testService.createTest(testToSend, token).subscribe({
+  //         next: (response) => {
+  //           this.testId = response.id;
+  //           console.log('📝 Test créé avec succès:', response);
+  //           alert('✅ Test créé avec succès après génération des questions !');
+  //         },
+  //         error: (err) => {
+  //           console.error('❌ Erreur lors de la création du test:', err);
+  //           alert('❌ Erreur lors de la création du test');
+  //         }
+  //       });
+  //     },
+  //     error: (err) => {
+  //       console.error('❌ Erreur lors de la génération des questions:', err);
+  //       const errorMessage = err.error?.error || 'Erreur inconnue lors de la génération';
+  //       alert('❌ ' + errorMessage);
+  //     }
+  //   });
+  // }
 
 
   // Ajout de logs dans la fonction generateQuestionsPreview
@@ -243,28 +396,28 @@ generateQuestionsPreview() {
       // Maintenant, passer à la dernière étape
     }, 2500); // Temps de chargement simulé
   }
-regenerateQuestions() {
-  const token = localStorage.getItem('accessToken');
-  if (!token) return alert('🚫 Token manquant');
+  regenerateQuestions() {
+    const token = localStorage.getItem('accessToken');
+    if (!token) return alert('🚫 Token manquant');
 
-  this.request.technologies = [...this.selectedTech];
+    this.request.technologies = [...this.selectedTech];
 
-  console.log('🔁 Régénération des questions avec :', this.request);
+    console.log('🔁 Régénération des questions avec :', this.request);
 
-  this.testService.generateQuestions(this.request, token).subscribe({
-    next: (response) => {
-      this.questionsPreview = response.questions;
-      console.log('✅ Questions régénérées:', response.questions);
-      console.log('ℹ️ Message:', response.message);
-      alert('✔️ Les questions ont été régénérées avec succès.');
-    },
-    error: (err) => {
-      console.error('❌ Erreur lors de la régénération des questions:', err);
-      const errorMessage = err.error?.error || 'Erreur inconnue lors de la régénération';
-      alert('❌ ' + errorMessage);
-    }
-  });
-}
+    this.testService.generateQuestions(this.request, token).subscribe({
+      next: (response) => {
+        this.questionsPreview = response.questions;
+        console.log('✅ Questions régénérées:', response.questions);
+        console.log('ℹ️ Message:', response.message);
+        Swal.fire('Succès', '✔️ Les questions ont été régénérées avec succès.', 'success');
+      },
+      error: (err) => {
+        console.error('❌ Erreur lors de la régénération des questions:', err);
+        const errorMessage = err.error?.error || 'Erreur inconnue lors de la régénération';
+        Swal.fire('Erreur', '❌ ' + errorMessage, 'error');
+      }
+    });
+  }
 
   supprimerQuestion(index: number): void {
     this.questionsPreview.splice(index, 1);

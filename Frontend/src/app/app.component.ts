@@ -33,7 +33,6 @@ export class AppComponent {
       '/forgot-password',
       '/Confirmationemail',
       '/reset-password',
-      '/editDev',
       '/Certif',
 
     ];

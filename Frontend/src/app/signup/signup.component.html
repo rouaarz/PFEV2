@@ -44,7 +44,7 @@
       <form [formGroup]="signupForm" (ngSubmit)="signUp()" class="form-content">
         <div class="input-group">
           <input id="username" formControlName="username" type="text" required>
-          <label for="username">Username</label>
+          <label for="username">Nom d'utilisateur</label>
           <div class="underline"></div>
           <p *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched" class="input-error">
             ❌Le nom d'utilisateur doit contenir entre 3 et 20 caractères
@@ -62,7 +62,7 @@
         
         <div class="input-group password-group">
           <input id="password" formControlName="password" [type]="showPassword ? 'text' : 'password'" required>
-          <label for="password">Password</label>
+          <label for="password">Mot de passe</label>
           <div class="underline"></div>
           <!-- Icône eye -->
           <span class="toggle-password" (click)="togglePasswordVisibility()">

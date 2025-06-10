@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { SignupData } from '../models/SignupData';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -90,51 +91,112 @@ export class SignupComponent implements AfterViewInit, OnDestroy {
       }, 3000);
     }
   }
+signUp() {
+  // Marquer tous les champs comme touchés pour afficher les erreurs
+  if (this.signupForm.invalid) {
+    this.signupForm.markAllAsTouched();
 
-  signUp() {
-    // Marquer tous les champs comme touchés pour afficher les erreurs
-    if (this.signupForm.invalid) {
-      this.signupForm.markAllAsTouched();
-      
-      // Vérification spécifique pour la complexité du mot de passe
-      if (this.signupForm.get('password')?.errors?.['passwordComplexity']) {
-        this.errorMessage = 'Le mot de passe doit contenir au moins un chiffre et une lettre majuscule';
-      } else {
-        this.errorMessage = 'Veuillez remplir correctement tous les champs';
-      }
-      
-      return;
+    // Vérification spécifique pour la complexité du mot de passe
+    if (this.signupForm.get('password')?.errors?.['passwordComplexity']) {
+      this.errorMessage = 'Le mot de passe doit contenir au moins un chiffre et une lettre majuscule';
+    } else {
+      this.errorMessage = 'Veuillez remplir correctement tous les champs';
     }
 
-    const signupData: SignupData = {
-      username: this.signupForm.value.username,
-      email: this.signupForm.value.email,
-      password: this.signupForm.value.password,
-      role: [this.signupForm.value.role]
-    };
+    Swal.fire('Erreur', this.errorMessage, 'error');
+    return;
+  }
 
-    this.authService.signup(signupData).subscribe({
-      next: () => {
-        alert('✅ Inscription réussie !');
+  const signupData: SignupData = {
+    username: this.signupForm.value.username,
+    email: this.signupForm.value.email,
+    password: this.signupForm.value.password,
+    role: [this.signupForm.value.role]
+  };
+
+  // Afficher le loader
+  Swal.fire({
+    title: 'Inscription en cours...',
+    text: 'Veuillez patienter pendant l\'envoi de l\'e-mail...',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    didOpen: () => {
+      Swal.showLoading();
+    }
+  });
+
+  this.authService.signup(signupData).subscribe({
+    next: () => {
+      Swal.close(); // Ferme le loader
+
+      Swal.fire('✅ Inscription réussie !', 'Votre compte a été créé avec succès.', 'success').then(() => {
         this.signupForm.reset();
         Object.keys(this.signupForm.controls).forEach(key => {
           this.signupForm.get(key)?.setErrors(null);
         });
         this.router.navigate(['/signin']);
-      },
-      error: (err) => {
-        console.error('Erreur d\'inscription:', err);
-        
-        if (err.status === 400) {
-          this.errorMessage = 'Nom d\'utilisateur ou email déjà utilisé';
-        } else if (err.status === 500) {
-          this.errorMessage = '⛔ Erreur serveur. Veuillez réessayer plus tard.';
-        } else {
-          this.errorMessage = '⚠️ Une erreur inattendue s\'est produite';
-        }
-        
-        alert(this.errorMessage);
+      });
+    },
+    error: (err) => {
+      Swal.close(); // Ferme le loader
+
+      if (err.status === 400) {
+        this.errorMessage = 'Nom d\'utilisateur ou email déjà utilisé';
+      } else if (err.status === 500) {
+        this.errorMessage = '⛔ Erreur serveur. Veuillez réessayer plus tard.';
+      } else {
+        this.errorMessage = '⚠️ Une erreur inattendue s\'est produite';
       }
-    });
-  }
+
+      Swal.fire('Erreur', this.errorMessage, 'error');
+    }
+  });
+}
+
+  // signUp() {
+  //   // Marquer tous les champs comme touchés pour afficher les erreurs
+  //   if (this.signupForm.invalid) {
+  //     this.signupForm.markAllAsTouched();
+      
+  //     // Vérification spécifique pour la complexité du mot de passe
+  //     if (this.signupForm.get('password')?.errors?.['passwordComplexity']) {
+  //       this.errorMessage = 'Le mot de passe doit contenir au moins un chiffre et une lettre majuscule';
+  //     } else {
+  //       this.errorMessage = 'Veuillez remplir correctement tous les champs';
+  //     }
+      
+  //     return;
+  //   }
+
+  //   const signupData: SignupData = {
+  //     username: this.signupForm.value.username,
+  //     email: this.signupForm.value.email,
+  //     password: this.signupForm.value.password,
+  //     role: [this.signupForm.value.role]
+  //   };
+
+  //   this.authService.signup(signupData).subscribe({
+  //     next: () => {
+  //       alert('✅ Inscription réussie !');
+  //       this.signupForm.reset();
+  //       Object.keys(this.signupForm.controls).forEach(key => {
+  //         this.signupForm.get(key)?.setErrors(null);
+  //       });
+  //       this.router.navigate(['/signin']);
+  //     },
+  //     error: (err) => {
+  //       console.error('Erreur d\'inscription:', err);
+        
+  //       if (err.status === 400) {
+  //         this.errorMessage = 'Nom d\'utilisateur ou email déjà utilisé';
+  //       } else if (err.status === 500) {
+  //         this.errorMessage = '⛔ Erreur serveur. Veuillez réessayer plus tard.';
+  //       } else {
+  //         this.errorMessage = '⚠️ Une erreur inattendue s\'est produite';
+  //       }
+        
+  //       alert(this.errorMessage);
+  //     }
+  //   });
+  // }
 }

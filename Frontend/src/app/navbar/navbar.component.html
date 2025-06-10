@@ -1,10 +1,16 @@
 <header id="header" class="header">
   <div class="nav-container">
     <div class="header-left">
-      <a href="#" class="logo">
-        <i class="fas fa-code"></i>
-        <span>TechAssess</span>
-      </a>
+      <nav class="nav-links">
+        <a [routerLink]="['/']" class="platform-logo">
+          <svg viewBox="0 0 24 24" fill="#4361ee">
+            <path d="M12 2L1 12l3 9h16l3-9L12 2zm0 4.5l7.53 5.5L20 19H4l.47-7.5L12 6.5z" />
+          </svg>
+
+          <span>TechAssess</span>
+        </a>
+      </nav>
+
       <button class="mobile-menu-btn" (click)="toggleMobileMenu()">
         <i class="fas fa-bars"></i>
       </button>
@@ -25,11 +31,12 @@
         </ng-container>
 
         <ng-container *ngIf="isLoggedIn">
-          <a [routerLink]="['/board-developpeur']" routerLinkActive="active" (click)="closeAllMenus()">Dashboard</a>
+          <a [routerLink]="['/board-developpeur']" routerLinkActive="active" (click)="closeAllMenus()">Tableau de
+            Bord</a>
           <a routerLink="/testsbyadmin" routerLinkActive="active" (click)="closeAllMenus()">Tests</a>
           <a routerLink="/tests" routerLinkActive="active" (click)="closeAllMenus()">Tests technique</a>
-          <a class="btn btn-outline" [routerLink]="['/editDev', developpeur.id]" routerLinkActive="active">Mon
-            Profil</a>
+          <a class="btn btn-outline" [routerLink]="['/Certif/:level']" routerLinkActive="active">Mes
+            Certifications</a>
         </ng-container>
 
       </nav>
